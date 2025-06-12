@@ -1,5 +1,5 @@
 import psutil
-from PySide6.QtGui import QPen, QColor
+from PySide6.QtGui import QPen, QColor,QPainter
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from PySide6.QtCharts import QChart, QChartView, QLineSeries
 from PySide6.QtCore import QTimer, QPointF, QMargins
@@ -25,36 +25,40 @@ class Page1(QWidget):
         self.chart.legend().setVisible(True)
         self.chart.setTitle("실시간 네트워크 트래픽")
 
-        # 🔧 차트 뷰 여백 제거
-        self.chart_view = QChartView(self.chart)
-        self.chart_view.setContentsMargins(0, 0, 0, 0)
-        self.chart_view.setRenderHint(self.chart_view.renderHints())  # 렌더링 힌트 유지
-
-        # 🔧 차트 자체 여백 제거
-        self.chart.setMargins(QMargins(0, 0, 0, 0))  # 마진 제거
-        self.chart.setBackgroundRoundness(0)  # 배경 둥근 모서리 제거
-        self.chart.setBackgroundVisible(False)  # 배경 자체 안 보이게 하고 싶으면 이걸로
-
         # ✅ 선 색상 명시 (선택)
         self.series_sent.setPen(QPen(QColor("red"), 2))
         self.series_recv.setPen(QPen(QColor("blue"), 2))
 
         # ✅ 축 범위 강제 지정 (초기값)
         self.chart.axisX().setRange(0, 60)
-        self.chart.axisY().setRange(0, 200)
+        self.chart.axisY().setRange(0, 2000)
+
+        self.chart.setMargins(QMargins(0, 0, 0, 0))
+        self.chart.setTitle("")            # 제목 제거
+        self.chart.legend().hide()         # 범례 제거
 
         # 차트 뷰 생성
         self.chart_view = QChartView(self.chart)
+        self.chart.setBackgroundVisible(False)
+        self.chart.setBackgroundRoundness(0)
+        self.chart.setPlotAreaBackgroundVisible(False)
+        self.chart.setPlotAreaBackgroundBrush(QColor(0, 0, 0, 0))
+        self.chart.setMargins(QMargins(0, 0, 0, 0))
+
+        self.chart_view.setStyleSheet("background: transparent; border: none;")
+        self.chart_view.setContentsMargins(0, 0, 0, 0)
 
         # .ui의 chartContainer에 chart_view 삽입
         if hasattr(self.ui, 'chartContainer'):
             container_layout = self.ui.chartContainer.layout()
             if container_layout is not None:
+                container_layout.setContentsMargins(0, 0, 0, 0)  # 여백 제거 🔥
+                container_layout.setSpacing(0)                   # 위젯 간 간격 제거
                 container_layout.addWidget(self.chart_view)
             else:
-                # layout이 설정되어 있지 않으면 새로 생성
                 new_layout = QVBoxLayout(self.ui.chartContainer)
                 new_layout.setContentsMargins(0, 0, 0, 0)
+                new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
 
         # 초기 네트워크 상태 저장
@@ -78,7 +82,7 @@ class Page1(QWidget):
         self.series_sent.append(QPointF(self.x, sent_speed))
         self.series_recv.append(QPointF(self.x, recv_speed))
         self.x += 1
-
+        self.chart.axisY().setRange(0, recv_speed+500)
         if self.series_sent.count() > 60:
             self.series_sent.removePoints(0, self.series_sent.count() - 60)
             self.series_recv.removePoints(0, self.series_recv.count() - 60)
