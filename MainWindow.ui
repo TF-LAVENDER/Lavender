@@ -87,7 +87,7 @@
       <x>0</x>
       <y>45</y>
       <width>960</width>
-      <height>545</height>
+      <height>545</height> <!--500-->
      </rect>
     </property>
     <layout class="QHBoxLayout" name="contentArea">
