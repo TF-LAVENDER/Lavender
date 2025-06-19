@@ -32,7 +32,7 @@ class Ui_MainWindow(object):
         self.widget.setStyleSheet(u"# border-image:url(\"images/page1.png\")")
         self.verticalLayoutWidget = QWidget(self.widget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(-10, 0, 971, 271))
+        self.verticalLayoutWidget.setGeometry(QRect(0, -30, 961, 361))
         self.chartContainer = QVBoxLayout(self.verticalLayoutWidget)
         self.chartContainer.setSpacing(0)
         self.chartContainer.setObjectName(u"chartContainer")

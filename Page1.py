@@ -91,6 +91,9 @@ class Page1(QWidget):
         self.timer.timeout.connect(self.update_chart)
         self.timer.start(500)
 
+        self.series_sent.hovered.connect(self.on_point_hovered_sent)
+        self.series_recv.hovered.connect(self.on_point_hovered_recv)
+
     def get_network_bytes(self):
         counters = psutil.net_io_counters()
         return counters.bytes_sent, counters.bytes_recv
@@ -106,11 +109,12 @@ class Page1(QWidget):
 
 
         # self.chart.axisY().setRange(0, recv_speed + 500)
+
         # 최근 데이터에서 최대값 찾기
         all_points = self.series_sent.pointsVector() + self.series_recv.pointsVector()
         if all_points:
             max_y = max(point.y() for point in all_points)
-            self.chart.axisY().setRange(0, max_y * 1.2)  # 살짝 여유 두기 (20%)
+            self.chart.axisY().setRange(0, max_y * 1.2)
 
         if self.series_sent.count() > 60:
             self.series_sent.removePoints(0, self.series_sent.count() - 60)
@@ -118,10 +122,6 @@ class Page1(QWidget):
 
         self.prev_sent, self.prev_recv = sent, recv
         self.chart.axisX().setRange(max(0, self.x - 60), self.x)
-
-        self.series_sent.hovered.connect(self.on_point_hovered_sent)
-        self.series_recv.hovered.connect(self.on_point_hovered_recv)
-
 
     def on_point_hovered_sent(self, point, state):
         if state:

@@ -22,8 +22,6 @@ class MainWindow(QMainWindow):
         self.content_container = self.ui.findChild(QHBoxLayout, "contentArea")
         print(self.content_container)
 
-        # self.widget.setContentsMargins(0, 0, 0, 0)
-
         self.page1 = Page1()
         self.page2 = Page2()
         self.page3 = Page3()
