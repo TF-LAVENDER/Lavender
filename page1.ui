@@ -32,16 +32,62 @@
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>-30</y>
-       <width>961</width>
-       <height>361</height>
+       <x>-10</x>
+       <y>-10</y>
+       <width>980</width>
+       <height>320</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="chartContainer">
       <property name="spacing">
        <number>0</number>
       </property>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>300</y>
+       <width>374</width>
+       <height>200</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="trafficContainer">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="trafficContent">
+        <property name="styleSheet">
+         <string notr="true">border-image:url(&quot;images/image1.png&quot;)</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>374</x>
+       <y>300</y>
+       <width>586</width>
+       <height>200</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="NetworkContainer">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="NetworkContent">
+        <property name="styleSheet">
+         <string notr="true">border-image:url(&quot;images/image2.png&quot;)</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2"/>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>

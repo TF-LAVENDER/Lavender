@@ -1,13 +1,11 @@
 # Page1.py
 
 import psutil
-from PySide6.QtGui import QPen, QColor,QBrush
+from PySide6.QtGui import QPen, QColor,QBrush, QPainter
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
 from PySide6.QtCore import QTimer, QPointF, QMargins, Qt
 from utils import load_ui_file
-from PySide6.QtCharts import QValueAxis, QCategoryAxis
-from PySide6.QtGui import QPainter
 
 class Page1(QWidget):
     def __init__(self):
@@ -42,9 +40,7 @@ class Page1(QWidget):
 
 
         # ✅ 선 색상 명시 (선택)
-        # self.series_sent.setPen(QPen(QColor("red"), 4))
         self.series_sent.setPen(QPen(QColor.fromRgbF(1.0, 0.3176, 0.3176, 1.0), 5))
-        # self.series_recv.setPen(QPen(QColor("yellow"), 4))
         self.series_recv.setPen(QPen(QColor.fromRgbF(1.0, 0.9686, 0.0, 0.86), 5))
 
         # ✅ 축 범위 강제 지정 (초기값)
@@ -61,13 +57,24 @@ class Page1(QWidget):
         self.chart.setBackgroundVisible(True)
         self.chart.setBackgroundRoundness(0)
         self.chart.setPlotAreaBackgroundVisible(False)
-        # self.chart.setPlotAreaBackgroundBrush(QColor(0, 0, 0, 0))
         self.chart.setBackgroundBrush(QBrush(QColor("#44407A")))
         self.chart.setPlotAreaBackgroundVisible(True)
 
-        self.chart_view.setStyleSheet("background: transparent; border: none;")
+        self.chart_view.setStyleSheet("background: transparent; border: none; margin: 0; padding: 0;")
         self.chart_view.setContentsMargins(0, 0, 0, 0)
         self.chart_view.setRenderHint(QPainter.Antialiasing)
+        
+        # 초기 네트워크 상태 저장
+        self.prev_sent, self.prev_recv = self.get_network_bytes()
+        self.x = 0
+
+        # 타이머 설정 (1초 간격)
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_chart)
+        self.timer.start(500)
+
+        self.series_sent.hovered.connect(self.on_point_hovered_sent)
+        self.series_recv.hovered.connect(self.on_point_hovered_recv)
 
         # .ui의 chartContainer에 chart_view 삽입
         if hasattr(self.ui, 'chartContainer'):
@@ -82,17 +89,17 @@ class Page1(QWidget):
                 new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
 
-        # 초기 네트워크 상태 저장
-        self.prev_sent, self.prev_recv = self.get_network_bytes()
-        self.x = 0
+        
 
-        # 타이머 설정 (1초 간격)
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_chart)
-        self.timer.start(500)
 
-        self.series_sent.hovered.connect(self.on_point_hovered_sent)
-        self.series_recv.hovered.connect(self.on_point_hovered_recv)
+
+
+        # 트래픽 차트 설정
+
+
+
+
+
 
     def get_network_bytes(self):
         counters = psutil.net_io_counters()
@@ -106,9 +113,6 @@ class Page1(QWidget):
         self.series_sent.append(QPointF(self.x, sent_speed))
         self.series_recv.append(QPointF(self.x, recv_speed))
         self.x += 1
-
-
-        # self.chart.axisY().setRange(0, recv_speed + 500)
 
         # 최근 데이터에서 최대값 찾기
         all_points = self.series_sent.pointsVector() + self.series_recv.pointsVector()
