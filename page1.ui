@@ -6,9 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
+    <width>937</width>
     <height>500</height>
    </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -83,9 +86,173 @@
       <item>
        <widget class="QFrame" name="NetworkContent">
         <property name="styleSheet">
-         <string notr="true">border-image:url(&quot;images/image2.png&quot;)</string>
+         <string/>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2"/>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QGroupBox" name="groupBox">
+           <property name="title">
+            <string/>
+           </property>
+           <widget class="QProgressBar" name="WAN">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="geometry">
+             <rect>
+              <x>90</x>
+              <y>70</y>
+              <width>345</width>
+              <height>10</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>1</pointsize>
+              <fontweight>Thin</fontweight>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LayoutDirection::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QProgressBar {
+    border-radius: 5px;
+    background-color: #ff5151;
+    text-align: center;
+    color: black;
+}
+
+QProgressBar::chunk {
+    background-color: #fff700;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}</string>
+            </property>
+            <property name="maximum">
+             <number>0</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>66</y>
+              <width>41</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255,255);</string>
+            </property>
+            <property name="text">
+             <string>WAN</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
+             <rect>
+              <x>44</x>
+              <y>96</y>
+              <width>31</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255,255);</string>
+            </property>
+            <property name="text">
+             <string>LAN</string>
+            </property>
+           </widget>
+           <widget class="QProgressBar" name="LAN">
+            <property name="geometry">
+             <rect>
+              <x>90</x>
+              <y>100</y>
+              <width>200</width>
+              <height>10</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>1</pointsize>
+              <fontweight>Thin</fontweight>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QProgressBar {
+    border-radius: 5px;
+    background-color: #ff5151;
+    text-align: center;
+    color: black;
+}
+
+QProgressBar::chunk {
+    background-color: #fff700;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}</string>
+            </property>
+            <property name="value">
+             <number>45</number>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="Line" name="line">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="geometry">
+             <rect>
+              <x>130</x>
+              <y>-10</y>
+              <width>293</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: #a3a3a3;</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -97,8 +264,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>960</width>
-     <height>36</height>
+     <width>937</width>
+     <height>33</height>
     </rect>
    </property>
   </widget>
