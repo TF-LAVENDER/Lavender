@@ -1,16 +1,20 @@
 # Page1.py
 
+import time
 import psutil
 from PySide6.QtGui import QPen, QColor,QBrush, QPainter
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
 from PySide6.QtCore import QTimer, QPointF, QMargins, Qt
+
+import page1_ui
+# from LavenderMain import MainWindow
 from utils import load_ui_file
 
 class Page1(QWidget):
     def __init__(self):
         super().__init__()
-        
+
         # .ui 파일 로딩 및 레이아웃 세팅
         self.ui = load_ui_file("page1.ui")
         self.setLayout(self.ui.layout())
@@ -47,7 +51,7 @@ class Page1(QWidget):
         self.chart.axisX().setRange(0, 60)
         self.chart.axisY().setRange(0, 2000)
 
-        self.chart.setMargins(QMargins(0, 0, 0, 0)) 
+        self.chart.setMargins(QMargins(0, 0, 0, 0))
         self.chart.setTitle("")            # 제목 제거
         self.chart.legend().hide()         # 범례 제거
 
@@ -63,7 +67,7 @@ class Page1(QWidget):
         self.chart_view.setStyleSheet("background: transparent; border: none; margin: 0; padding: 0;")
         self.chart_view.setContentsMargins(0, 0, 0, 0)
         self.chart_view.setRenderHint(QPainter.Antialiasing)
-        
+
         # 초기 네트워크 상태 저장
         self.prev_sent, self.prev_recv = self.get_network_bytes()
         self.x = 0
@@ -71,7 +75,7 @@ class Page1(QWidget):
         # 타이머 설정 (1초 간격)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_chart)
-        self.timer.start(500)
+        self.timer.start(1000)
 
         self.series_sent.hovered.connect(self.on_point_hovered_sent)
         self.series_recv.hovered.connect(self.on_point_hovered_recv)
@@ -88,8 +92,8 @@ class Page1(QWidget):
                 new_layout.setContentsMargins(0, 0, 0, 0)
                 new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
-
         
+
 
 
 
@@ -144,3 +148,4 @@ class Page1(QWidget):
                 )),
                 f"Recv: {point.y():.1f} KB/s"
             )
+

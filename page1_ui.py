@@ -48,9 +48,68 @@ class Ui_MainWindow(object):
         self.trafficContainer.setContentsMargins(0, 0, 0, 0)
         self.trafficContent = QFrame(self.verticalLayoutWidget_2)
         self.trafficContent.setObjectName(u"trafficContent")
-        self.trafficContent.setStyleSheet(u"border-image:url(\"images/image1.png\")")
+        self.trafficContent.setStyleSheet(u"")
         self.verticalLayout = QVBoxLayout(self.trafficContent)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.groupBox_2 = QGroupBox(self.trafficContent)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.WAN_2 = QProgressBar(self.groupBox_2)
+        self.WAN_2.setObjectName(u"WAN_2")
+        self.WAN_2.setEnabled(True)
+        self.WAN_2.setGeometry(QRect(110, 50, 131, 75))
+        font = QFont()
+        font.setPointSize(1)
+        font.setWeight(QFont.Thin)
+        self.WAN_2.setFont(font)
+        self.WAN_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.WAN_2.setStyleSheet(u"QProgressBar {\n"
+"    border-radius: 37px;\n"
+"    background-color: #ff5151;\n"
+"    text-align: center;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QProgressBar::chunk {\n"
+"    background-color: #fff700;\n"
+"    border-top-left-radius: 37px;\n"
+"    border-bottom-left-radius: 37px;\n"
+"}")
+        self.WAN_2.setMaximum(100)
+        self.WAN_2.setValue(45)
+        self.WAN_2.setTextVisible(False)
+        self.WAN_2.setInvertedAppearance(False)
+        self.label_3 = QLabel(self.groupBox_2)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(40, 80, 41, 20))
+        font1 = QFont()
+        font1.setPointSize(14)
+        font1.setBold(True)
+        self.label_3.setFont(font1)
+        self.label_3.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.label_3.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_4 = QLabel(self.groupBox_2)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setGeometry(QRect(250, 80, 41, 20))
+        self.label_4.setFont(font1)
+        self.label_4.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.label_4.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.line_2 = QFrame(self.groupBox_2)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setEnabled(False)
+        self.line_2.setGeometry(QRect(80, -10, 187, 20))
+        self.line_2.setStyleSheet(u"color: #a3a3a3;")
+        self.line_2.setFrameShadow(QFrame.Shadow.Plain)
+        self.line_2.setLineWidth(2)
+        self.line_2.setFrameShape(QFrame.Shape.HLine)
+        self.line_3 = QFrame(self.groupBox_2)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setGeometry(QRect(337, 42, 21, 100))
+        self.line_3.setStyleSheet(u"color: #a3a3a3;")
+        self.line_3.setFrameShadow(QFrame.Shadow.Plain)
+        self.line_3.setFrameShape(QFrame.Shape.VLine)
+
+        self.verticalLayout.addWidget(self.groupBox_2)
+
 
         self.trafficContainer.addWidget(self.trafficContent)
 
@@ -71,9 +130,6 @@ class Ui_MainWindow(object):
         self.WAN.setObjectName(u"WAN")
         self.WAN.setEnabled(True)
         self.WAN.setGeometry(QRect(90, 70, 345, 10))
-        font = QFont()
-        font.setPointSize(1)
-        font.setWeight(QFont.Thin)
         self.WAN.setFont(font)
         self.WAN.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.WAN.setStyleSheet(u"QProgressBar {\n"
@@ -95,9 +151,6 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.groupBox)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(40, 66, 41, 16))
-        font1 = QFont()
-        font1.setPointSize(14)
-        font1.setBold(True)
         self.label.setFont(font1)
         self.label.setStyleSheet(u"color: rgb(255, 255,255);")
         self.label_2 = QLabel(self.groupBox)
@@ -141,7 +194,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 937, 33))
+        self.menubar.setGeometry(QRect(0, 0, 937, 30))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -154,6 +207,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.groupBox_2.setTitle("")
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"KB", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"KB", None))
         self.NetworkContent.setStyleSheet("")
         self.groupBox.setTitle("")
         self.label.setText(QCoreApplication.translate("MainWindow", u"WAN", None))
