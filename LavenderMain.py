@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
 # from PySide6.QtCore import QFile, QIODevice
 from Page1 import Page1
 from Page2 import Page2
-from Page3 import Page3
+from page3.Page3 import Page3
 from utils import load_ui_file
 
 
@@ -92,4 +92,3 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     sys.exit(app.exec())
-    

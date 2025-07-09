@@ -165,4 +165,3 @@ class Ui_Page3(object):
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("Page3", u"Description", None));
     # retranslateUi
-
