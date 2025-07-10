@@ -56,14 +56,15 @@ class Ui_MainWindow(object):
         self.WAN_2 = QProgressBar(self.groupBox_2)
         self.WAN_2.setObjectName(u"WAN_2")
         self.WAN_2.setEnabled(True)
-        self.WAN_2.setGeometry(QRect(110, 50, 131, 75))
+        self.WAN_2.setGeometry(QRect(150, 50, 91, 75))
         font = QFont()
         font.setPointSize(1)
         font.setWeight(QFont.Thin)
         self.WAN_2.setFont(font)
         self.WAN_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.WAN_2.setStyleSheet(u"QProgressBar {\n"
-"    border-radius: 37px;\n"
+"    border-top-right-radius: 37px;\n"
+"    border-bottom-right-radius: 37px;\n"
 "    background-color: #ff5151;\n"
 "    text-align: center;\n"
 "    color: black;\n"
@@ -71,28 +72,27 @@ class Ui_MainWindow(object):
 "\n"
 "QProgressBar::chunk {\n"
 "    background-color: #fff700;\n"
-"    border-top-left-radius: 37px;\n"
-"    border-bottom-left-radius: 37px;\n"
 "}")
+        self.WAN_2.setMinimum(0)
         self.WAN_2.setMaximum(100)
         self.WAN_2.setValue(45)
         self.WAN_2.setTextVisible(False)
         self.WAN_2.setInvertedAppearance(False)
-        self.recv_kbs = QLabel(self.groupBox_2)
-        self.recv_kbs.setObjectName(u"recv_kbs")
-        self.recv_kbs.setGeometry(QRect(40, 80, 41, 20))
+        self.label_3 = QLabel(self.groupBox_2)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(20, 80, 61, 20))
         font1 = QFont()
         font1.setPointSize(14)
         font1.setBold(True)
-        self.recv_kbs.setFont(font1)
-        self.recv_kbs.setStyleSheet(u"color: rgb(255, 255,255);")
-        self.recv_kbs.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.send_kbs = QLabel(self.groupBox_2)
-        self.send_kbs.setObjectName(u"send_kbs")
-        self.send_kbs.setGeometry(QRect(250, 80, 41, 20))
-        self.send_kbs.setFont(font1)
-        self.send_kbs.setStyleSheet(u"color: rgb(255, 255,255);")
-        self.send_kbs.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_3.setFont(font1)
+        self.label_3.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.label_3.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_4 = QLabel(self.groupBox_2)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setGeometry(QRect(270, 80, 41, 20))
+        self.label_4.setFont(font1)
+        self.label_4.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.label_4.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.line_2 = QFrame(self.groupBox_2)
         self.line_2.setObjectName(u"line_2")
         self.line_2.setEnabled(False)
@@ -107,6 +107,15 @@ class Ui_MainWindow(object):
         self.line_3.setStyleSheet(u"color: #a3a3a3;")
         self.line_3.setFrameShadow(QFrame.Shadow.Plain)
         self.line_3.setFrameShape(QFrame.Shape.VLine)
+        self.frame = QFrame(self.groupBox_2)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(110, 50, 40, 75))
+        self.frame.setStyleSheet(u"background-color: #fff700;\n"
+"border-top-left-radius: 37px;\n"
+"border-bottom-left-radius: 37px;\n"
+"")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
@@ -126,43 +135,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.groupBox = QGroupBox(self.NetworkContent)
         self.groupBox.setObjectName(u"groupBox")
-        self.WAN_BAR = QProgressBar(self.groupBox)
-        self.WAN_BAR.setObjectName(u"WAN_BAR")
-        self.WAN_BAR.setEnabled(True)
-        self.WAN_BAR.setGeometry(QRect(90, 70, 345, 10))
-        self.WAN_BAR.setFont(font)
-        self.WAN_BAR.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.WAN_BAR.setStyleSheet(u"QProgressBar {\n"
-"    border-radius: 5px;\n"
-"    background-color: #ff5151;\n"
-"    text-align: center;\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QProgressBar::chunk {\n"
-"    background-color: #fff700;\n"
-"    border-top-left-radius: 5px;\n"
-"    border-bottom-left-radius: 5px;\n"
-"}")
-        self.WAN_BAR.setMaximum(0)
-        self.WAN_BAR.setValue(-1)
-        self.WAN_BAR.setTextVisible(False)
-        self.WAN_BAR.setInvertedAppearance(False)
-        self.WAN = QLabel(self.groupBox)
+        self.WAN = QProgressBar(self.groupBox)
         self.WAN.setObjectName(u"WAN")
-        self.WAN.setGeometry(QRect(40, 66, 41, 16))
-        self.WAN.setFont(font1)
-        self.WAN.setStyleSheet(u"color: rgb(255, 255,255);")
-        self.LAN = QLabel(self.groupBox)
-        self.LAN.setObjectName(u"LAN")
-        self.LAN.setGeometry(QRect(44, 96, 31, 16))
-        self.LAN.setFont(font1)
-        self.LAN.setStyleSheet(u"color: rgb(255, 255,255);")
-        self.LAN_BAR = QProgressBar(self.groupBox)
-        self.LAN_BAR.setObjectName(u"LAN_BAR")
-        self.LAN_BAR.setGeometry(QRect(90, 100, 200, 10))
-        self.LAN_BAR.setFont(font)
-        self.LAN_BAR.setStyleSheet(u"QProgressBar {\n"
+        self.WAN.setEnabled(True)
+        self.WAN.setGeometry(QRect(90, 70, 345, 10))
+        self.WAN.setFont(font)
+        self.WAN.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.WAN.setStyleSheet(u"QProgressBar {\n"
 "    border-radius: 5px;\n"
 "    background-color: #ff5151;\n"
 "    text-align: center;\n"
@@ -174,9 +153,39 @@ class Ui_MainWindow(object):
 "    border-top-left-radius: 5px;\n"
 "    border-bottom-left-radius: 5px;\n"
 "}")
-        self.LAN_BAR.setValue(45)
-        self.LAN_BAR.setTextVisible(False)
-        self.LAN_BAR.setInvertedAppearance(False)
+        self.WAN.setMaximum(0)
+        self.WAN.setValue(-1)
+        self.WAN.setTextVisible(False)
+        self.WAN.setInvertedAppearance(False)
+        self.label = QLabel(self.groupBox)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(40, 66, 41, 16))
+        self.label.setFont(font1)
+        self.label.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.label_2 = QLabel(self.groupBox)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(44, 96, 31, 16))
+        self.label_2.setFont(font1)
+        self.label_2.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.LAN = QProgressBar(self.groupBox)
+        self.LAN.setObjectName(u"LAN")
+        self.LAN.setGeometry(QRect(90, 100, 200, 10))
+        self.LAN.setFont(font)
+        self.LAN.setStyleSheet(u"QProgressBar {\n"
+"    border-radius: 5px;\n"
+"    background-color: #ff5151;\n"
+"    text-align: center;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QProgressBar::chunk {\n"
+"    background-color: #fff700;\n"
+"    border-top-left-radius: 5px;\n"
+"    border-bottom-left-radius: 5px;\n"
+"}")
+        self.LAN.setValue(45)
+        self.LAN.setTextVisible(False)
+        self.LAN.setInvertedAppearance(False)
         self.line = QFrame(self.groupBox)
         self.line.setObjectName(u"line")
         self.line.setEnabled(False)
@@ -185,12 +194,6 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QFrame.Shadow.Plain)
         self.line.setLineWidth(2)
         self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line_4 = QFrame(self.groupBox)
-        self.line_4.setObjectName(u"line_4")
-        self.line_4.setGeometry(QRect(-8, 42, 21, 100))
-        self.line_4.setStyleSheet(u"color: #a3a3a3;")
-        self.line_4.setFrameShadow(QFrame.Shadow.Plain)
-        self.line_4.setFrameShape(QFrame.Shape.VLine)
 
         self.verticalLayout_2.addWidget(self.groupBox)
 
@@ -200,7 +203,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 937, 36))
+        self.menubar.setGeometry(QRect(0, 0, 937, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -214,11 +217,11 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.groupBox_2.setTitle("")
-        self.recv_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
-        self.send_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"KB", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"KB", None))
         self.NetworkContent.setStyleSheet("")
         self.groupBox.setTitle("")
-        self.WAN.setText(QCoreApplication.translate("MainWindow", u"WAN", None))
-        self.LAN.setText(QCoreApplication.translate("MainWindow", u"LAN", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"WAN", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"LAN", None))
     # retranslateUi
 
