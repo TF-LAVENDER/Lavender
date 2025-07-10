@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
 from Page1 import Page1
 from Page2 import Page2
 from page3.Page3 import Page3
+from Page4 import Page4
 from utils import load_ui_file
 
 
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow):
         self.page1 = Page1()
         self.page2 = Page2()
         self.page3 = Page3()
+        self.page4 = Page4()
 
     
         self.ui.munuButton1.clicked.connect(self.menu1_clicked)
@@ -48,6 +50,8 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(Page2())
     def show_page3(self):
         self.setCentralWidget(Page3())
+    def show_page4(self):
+        self.setCentralWidget(Page4())
 
     def load_page1(self):
         self.clear_content()
@@ -58,7 +62,9 @@ class MainWindow(QMainWindow):
     def load_page3(self):
         self.clear_content()
         self.content_container.layout().addWidget(self.page3)
-
+    def load_page4(self):
+        self.clear_content()
+        self.content_container.layout().addWidget(self.page4)
 
 
     def menuChange(self, menuNum):    
@@ -77,7 +83,7 @@ class MainWindow(QMainWindow):
             self.load_page3()
         elif menuNum == 4:
             self.ui.munuButton4.setStyleSheet("border-image:url('images/menu4_on.png');")
-
+            self.load_page4()
 
     def menu1_clicked(self):
         self.menuChange(1)
