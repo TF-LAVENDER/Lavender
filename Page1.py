@@ -3,7 +3,7 @@
 import time
 import psutil
 from PySide6.QtGui import QPen, QColor, QBrush, QPainter
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip, QProgressBar, QLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip, QProgressBar, QLayout, QLabel
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
 from PySide6.QtCore import QTimer, QPointF, QMargins, Qt
 from typing import Tuple, cast, Optional
@@ -108,6 +108,12 @@ class Page1(QWidget):
         if hasattr(self.ui, 'WAN_2'):
             self.ui.WAN_2.setMaximum(self.max_speed)
 
+        # KB 라벨 초기화
+        if hasattr(self.ui, 'label_3'):
+            self.ui.label_3.setText("0 KB")  # 왼쪽에 받은 데이터 초기화
+        if hasattr(self.ui, 'label_4'):
+            self.ui.label_4.setText("0 KB")  # 오른쪽에 보낸 데이터 초기화
+
     def get_network_bytes(self) -> Tuple[int, int]:
         counters = psutil.net_io_counters()
         return counters.bytes_sent, counters.bytes_recv
@@ -129,6 +135,12 @@ class Page1(QWidget):
             self.ui.LAN.setValue(min(int(recv_speed), self.max_speed))
         if hasattr(self.ui, 'WAN_2'):
             self.ui.WAN_2.setValue(min(int((sent_speed + recv_speed) / 2), self.max_speed))
+
+        # KB 라벨 업데이트
+        if hasattr(self.ui, 'label_3'):
+            self.ui.label_3.setText(f"{int(recv_speed)} KB")  # 왼쪽에 받은 데이터
+        if hasattr(self.ui, 'label_4'):
+            self.ui.label_4.setText(f"{int(sent_speed)} KB")  # 오른쪽에 보낸 데이터
 
         # 최근 데이터에서 최대값 찾기
         all_points = self.series_sent.pointsVector() + self.series_recv.pointsVector()
