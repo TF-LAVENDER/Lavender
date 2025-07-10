@@ -39,6 +39,8 @@ class Page1(QWidget):
 
         axis_y.setLabelsVisible(False)
 
+        axis_y.setVisible(False)
+
         axis_x.setGridLineVisible(False)
         axis_y.setGridLineVisible(False)
 
