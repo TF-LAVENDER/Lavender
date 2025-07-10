@@ -2,22 +2,15 @@
 
 ################################################################################
 ## Form generated from reading UI file 'page3.ui'
-##
 ## Created by: Qt User Interface Compiler version 6.9.0
-##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHBoxLayout, QHeaderView,
-    QLabel, QSizePolicy, QSpacerItem, QTableWidget,
-    QTableWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, Qt)
+from PySide6.QtGui import (QFont)
+from PySide6.QtWidgets import (QAbstractItemView, QHBoxLayout, QLabel, QPushButton,
+    QSizePolicy, QSpacerItem, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 
 class Ui_Page3(object):
     def setupUi(self, Page3):
@@ -29,6 +22,7 @@ class Ui_Page3(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+
         self.headerWidget = QWidget(Page3)
         self.headerWidget.setObjectName(u"headerWidget")
         self.headerWidget.setMinimumSize(QSize(0, 40))
@@ -37,131 +31,115 @@ class Ui_Page3(object):
         self.headerLayout = QHBoxLayout(self.headerWidget)
         self.headerLayout.setObjectName(u"headerLayout")
         self.headerLayout.setContentsMargins(20, 0, 20, 0)
-        self.blockedWidget = QWidget(self.headerWidget)
-        self.blockedWidget.setObjectName(u"blockedWidget")
-        self.blockedWidget.setMinimumSize(QSize(100, 30))
-        self.blockedWidget.setMaximumSize(QSize(100, 30))
-        self.blockedWidget.setStyleSheet(u"background-color: #5056A5;\n"
-"border-radius: 15px;\n"
-"color: white;\n"
-"font-weight: bold;")
-        self.blockedLayout = QHBoxLayout(self.blockedWidget)
-        self.blockedLayout.setObjectName(u"blockedLayout")
-        self.blockedLayout.setContentsMargins(15, 0, 15, 0)
-        self.redIndicator = QLabel(self.blockedWidget)
-        self.redIndicator.setObjectName(u"redIndicator")
-        self.redIndicator.setMinimumSize(QSize(12, 12))
-        self.redIndicator.setMaximumSize(QSize(12, 12))
-        self.redIndicator.setStyleSheet(u"background-color: #ff4444;\n"
-"border-radius: 6px;")
 
-        self.blockedLayout.addWidget(self.redIndicator)
+        self.toggleWidget = QWidget(self.headerWidget)
+        self.toggleWidget.setMinimumSize(200, 30)
+        self.toggleWidget.setMaximumSize(200, 30)
+        self.toggleWidget.setObjectName(u"toggleWidget")
+        self.toggleWidget.setStyleSheet("background-color: #5056A5; border-radius: 15px;")
 
-        self.blockedLabel = QLabel(self.blockedWidget)
-        self.blockedLabel.setObjectName(u"blockedLabel")
-        self.blockedLabel.setStyleSheet(u"color: white; font-weight: bold;")
+        self.toggleLayout = QHBoxLayout(self.toggleWidget)
+        self.toggleLayout.setObjectName(u"toggleLayout")
+        self.toggleLayout.setSpacing(0)
+        self.toggleLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.blockedLayout.addWidget(self.blockedLabel)
+        self.blockedButton = QPushButton(self.toggleWidget)
+        self.blockedButton.setObjectName(u"blockedButton")
+        self.blockedButton.setMinimumSize(QSize(100, 30))
+        self.blockedButton.setMaximumSize(QSize(100, 30))
+        self.blockedButton.setCheckable(True)
+        self.toggleLayout.addWidget(self.blockedButton)
 
+        self.allowedButton = QPushButton(self.toggleWidget)
+        self.allowedButton.setObjectName(u"allowedButton")
+        self.allowedButton.setMinimumSize(QSize(100, 30))
+        self.allowedButton.setMaximumSize(QSize(100, 30))
+        self.allowedButton.setCheckable(True)
+        self.toggleLayout.addWidget(self.allowedButton)
 
-        self.headerLayout.addWidget(self.blockedWidget)
+        self.headerLayout.addWidget(self.toggleWidget)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.headerLayout.addItem(self.horizontalSpacer)
-
-        self.allowedWidget = QWidget(self.headerWidget)
-        self.allowedWidget.setObjectName(u"allowedWidget")
-        self.allowedWidget.setMinimumSize(QSize(100, 30))
-        self.allowedWidget.setMaximumSize(QSize(100, 30))
-        self.allowedWidget.setStyleSheet(u"background-color: #5056A5;\n"
-"border-radius: 15px;\n"
-"color: white;\n"
-"font-weight: bold;")
-        self.allowedLayout = QHBoxLayout(self.allowedWidget)
-        self.allowedLayout.setObjectName(u"allowedLayout")
-        self.allowedLayout.setContentsMargins(15, 0, 15, 0)
-        self.greenIndicator = QLabel(self.allowedWidget)
-        self.greenIndicator.setObjectName(u"greenIndicator")
-        self.greenIndicator.setMinimumSize(QSize(12, 12))
-        self.greenIndicator.setMaximumSize(QSize(12, 12))
-        self.greenIndicator.setStyleSheet(u"background-color: #44ff44;\n"
-"border-radius: 6px;")
-
-        self.allowedLayout.addWidget(self.greenIndicator)
-
-        self.allowedLabel = QLabel(self.allowedWidget)
-        self.allowedLabel.setObjectName(u"allowedLabel")
-        self.allowedLabel.setStyleSheet(u"color: white; font-weight: bold;")
-
-        self.allowedLayout.addWidget(self.allowedLabel)
-
-
-        self.headerLayout.addWidget(self.allowedWidget)
-
 
         self.verticalLayout.addWidget(self.headerWidget)
 
         self.tableWidget = QTableWidget(Page3)
-        if (self.tableWidget.columnCount() < 5):
-            self.tableWidget.setColumnCount(5)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.setStyleSheet(u"QTableWidget {\n"
-"    gridline-color: rgb(50, 55, 100);\n"
-"    background-color: rgb(45, 50, 95);\n"
-"    alternate-background-color: rgb(68, 64, 122);\n"
-"}\n"
-"QTableWidget::item {\n"
-"    padding: 5px;\n"
-"    border-bottom: 1px solid rgb(50, 55, 100);\n"
-"}\n"
-"QHeaderView::section {\n"
-"    background-color: rgb(39, 43, 77);\n"
-"    color: white;\n"
-"    padding: 5px;\n"
-"    border: none;\n"
-"    font-weight: bold;\n"
-"}\n"
-"QTableWidget::item:selected {\n"
-"    background-color: rgb(70, 77, 140);\n"
-"}")
+        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setHorizontalHeaderLabels(["ASC", "IP", "Date", "Description", "Description"])
+        self.tableWidget.setStyleSheet(u"""
+            QTableWidget {
+                gridline-color: rgb(50, 55, 100);
+                background-color: rgb(45, 50, 95);
+                alternate-background-color: rgb(68, 64, 122);
+            }
+            QTableWidget::item {
+                padding: 5px;
+                border-bottom: 1px solid rgb(50, 55, 100);
+            }
+            QHeaderView::section {
+                background-color: rgb(39, 43, 77);
+                color: white;
+                padding: 5px;
+                border: none;
+                font-weight: bold;
+            }
+            QTableWidget::item:selected {
+                background-color: rgb(70, 77, 140);
+            }
+        """)
         self.tableWidget.setAlternatingRowColors(False)
-        self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.verticalHeader().setVisible(False)
 
         self.verticalLayout.addWidget(self.tableWidget)
 
-
         self.retranslateUi(Page3)
-
         QMetaObject.connectSlotsByName(Page3)
-    # setupUi
+
+        # ✅ 버튼 스타일과 체크 상태 즉시 반영 함수
+        def updateToggleStyles(selected: str):
+            if selected == "blocked":
+                self.blockedButton.setChecked(True)
+                self.allowedButton.setChecked(False)
+            else:
+                self.blockedButton.setChecked(False)
+                self.allowedButton.setChecked(True)
+
+            self.blockedButton.setStyleSheet(f"""
+                QPushButton {{
+                    background-color: {"#5056A5" if self.blockedButton.isChecked() else "#272b4d"};
+                    border-top-left-radius: 15px;
+                    border-bottom-left-radius: 15px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                    color: white;
+                    font-weight: bold;
+                    border: none;
+                }}
+            """)
+            self.allowedButton.setStyleSheet(f"""
+                QPushButton {{
+                    background-color: {"#5056A5" if self.allowedButton.isChecked() else "#272b4d"};
+                    border-top-left-radius: 0px;
+                    border-bottom-left-radius: 0px;
+                    border-top-right-radius: 15px;
+                    border-bottom-right-radius: 15px;
+                    color: white;
+                    font-weight: bold;
+                    border: none;
+                }}
+            """)
+
+        # ✅ 연결: 클릭 시 버튼 상태 업데이트
+        self.blockedButton.clicked.connect(lambda: updateToggleStyles("blocked"))
+        self.allowedButton.clicked.connect(lambda: updateToggleStyles("allowed"))
+
+        updateToggleStyles("blocked")  # 초기 상태
 
     def retranslateUi(self, Page3):
         Page3.setWindowTitle(QCoreApplication.translate("Page3", u"Security Log", None))
-        self.redIndicator.setText("")
-        self.blockedLabel.setText(QCoreApplication.translate("Page3", u"Blocked", None))
-        self.greenIndicator.setText("")
-        self.allowedLabel.setText(QCoreApplication.translate("Page3", u"Allowed", None))
-        ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Page3", u"ASC", None));
-        ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Page3", u"IP", None));
-        ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Page3", u"Date", None));
-        ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Page3", u"Description", None));
-        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Page3", u"Description", None));
-    # retranslateUi
+        self.blockedButton.setText(QCoreApplication.translate("Page3", u"🔴 Blocked", None))
+        self.allowedButton.setText(QCoreApplication.translate("Page3", u"🟢 Allowed", None))
