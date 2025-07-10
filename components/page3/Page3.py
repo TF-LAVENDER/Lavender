@@ -1,10 +1,10 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QTableWidgetItem, QHeaderView, QPushButton, QMessageBox, QMenu, QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QTableWidgetItem, QHeaderView, QPushButton, QMessageBox, QMenu
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QBrush, QColor, QAction
-from page3.page3_ui import Ui_Page3
-from page3.add_data_dialog import AddDataDialog
-from page3.database_manager import DatabaseManager
+from PySide6.QtGui import QColor, QAction
+from components.page3.page3_ui import Ui_Page3
+from components.page3.add_data_dialog import AddDataDialog
+from components.page3.database_manager import DatabaseManager
 
 class Page3(QWidget):
     COLORS = {

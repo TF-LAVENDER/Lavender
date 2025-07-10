@@ -7,8 +7,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
 from PySide6.QtCore import QTimer, QPointF, QMargins, Qt
 
-import page1_ui
-# from LavenderMain import MainWindow
+from components.page1.page1_ui import Ui_MainWindow
 from utils import load_ui_file
 
 class Page1(QWidget):
@@ -16,7 +15,7 @@ class Page1(QWidget):
         super().__init__()
 
         # .ui 파일 로딩 및 레이아웃 세팅
-        self.ui = load_ui_file("page1.ui")
+        self.ui = load_ui_file("components/page1/page1.ui")
         self.setLayout(self.ui.layout())
 
         # 라인 시리즈 (보낸/받은 트래픽)
