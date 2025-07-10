@@ -5,7 +5,7 @@ import psutil
 from PySide6.QtGui import QPen, QColor,QBrush, QPainter
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
-from PySide6.QtCore import QTimer, QPointF, QMargins, Qt
+from PySide6.QtCore import QTimer, QPointF, QMargins
 
 import page1_ui
 # from LavenderMain import MainWindow
@@ -94,18 +94,6 @@ class Page1(QWidget):
                 new_layout.setContentsMargins(0, 0, 0, 0)
                 new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
-        
-
-
-
-
-
-        # 트래픽 차트 설정
-
-
-
-
-
 
     def get_network_bytes(self):
         counters = psutil.net_io_counters()
@@ -130,8 +118,58 @@ class Page1(QWidget):
             self.series_sent.removePoints(0, self.series_sent.count() - 60)
             self.series_recv.removePoints(0, self.series_recv.count() - 60)
 
+        # recv_send_ratio 프로그레스 바 업데이트
+        self.update_traffic_ratio(sent_speed, recv_speed)
+
         self.prev_sent, self.prev_recv = sent, recv
         self.chart.axisX().setRange(max(0, self.x - 60), self.x)
+
+    def update_traffic_ratio(self, sent_speed, recv_speed):
+        """받는 트래픽과 보내는 트래픽을 색으로 구분해서 표시"""
+        if hasattr(self.ui, 'recv_send_ratio'):
+            progress_bar = self.ui.recv_send_ratio
+            
+            # 총 트래픽 계산
+            total_traffic = sent_speed + recv_speed
+            
+            if total_traffic > 0:
+                # 받는 트래픽 비율 계산 (노란색 부분)
+                recv_ratio = (recv_speed / total_traffic) * 100
+                # 보내는 트래픽 비율 계산 (빨간색 부분)
+                sent_ratio = (sent_speed / total_traffic) * 100
+                
+                # 프로그레스 바 값 설정 (받는 트래픽 비율)
+                progress_bar.setValue(int(recv_ratio))
+                
+                # 스타일시트 업데이트 - 받는 트래픽(노란색)과 보내는 트래픽(빨간색) 구분
+                style_sheet = f"""
+                QProgressBar {{
+                    border-radius: 37px;
+                    background-color: #ff5151;
+                    text-align: center;
+                    color: black;
+                }}
+                
+                QProgressBar::chunk {{
+                    background-color: #fff700;
+                    border-top-left-radius: 37px;
+                    border-bottom-left-radius: 37px;
+                }}
+                """
+                progress_bar.setStyleSheet(style_sheet)
+                
+                # 라벨 업데이트
+                if hasattr(self.ui, 'recv_kbs'):
+                    self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
+                if hasattr(self.ui, 'send_kbs'):
+                    self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
+            else:
+                # 트래픽이 없을 때
+                progress_bar.setValue(0)
+                if hasattr(self.ui, 'recv_kbs'):
+                    self.ui.recv_kbs.setText("0.0 KB/s")
+                if hasattr(self.ui, 'send_kbs'):
+                    self.ui.send_kbs.setText("0.0 KB/s")
 
     def on_point_hovered_sent(self, point, state):
         if state:

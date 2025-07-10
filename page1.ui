@@ -71,7 +71,7 @@
            <property name="title">
             <string/>
            </property>
-           <widget class="QProgressBar" name="WAN_2">
+           <widget class="QProgressBar" name="recv_send_ratio">
             <property name="enabled">
              <bool>true</bool>
             </property>

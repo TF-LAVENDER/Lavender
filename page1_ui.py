@@ -53,16 +53,16 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.groupBox_2 = QGroupBox(self.trafficContent)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.WAN_2 = QProgressBar(self.groupBox_2)
-        self.WAN_2.setObjectName(u"WAN_2")
-        self.WAN_2.setEnabled(True)
-        self.WAN_2.setGeometry(QRect(110, 50, 131, 75))
+        self.recv_send_ratio = QProgressBar(self.groupBox_2)
+        self.recv_send_ratio.setObjectName(u"recv_send_ratio")
+        self.recv_send_ratio.setEnabled(True)
+        self.recv_send_ratio.setGeometry(QRect(110, 50, 131, 75))
         font = QFont()
         font.setPointSize(1)
         font.setWeight(QFont.Thin)
-        self.WAN_2.setFont(font)
-        self.WAN_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.WAN_2.setStyleSheet(u"QProgressBar {\n"
+        self.recv_send_ratio.setFont(font)
+        self.recv_send_ratio.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.recv_send_ratio.setStyleSheet(u"QProgressBar {\n"
 "    border-radius: 37px;\n"
 "    background-color: #ff5151;\n"
 "    text-align: center;\n"
@@ -74,10 +74,10 @@ class Ui_MainWindow(object):
 "    border-top-left-radius: 37px;\n"
 "    border-bottom-left-radius: 37px;\n"
 "}")
-        self.WAN_2.setMaximum(100)
-        self.WAN_2.setValue(45)
-        self.WAN_2.setTextVisible(False)
-        self.WAN_2.setInvertedAppearance(False)
+        self.recv_send_ratio.setMaximum(100)
+        self.recv_send_ratio.setValue(45)
+        self.recv_send_ratio.setTextVisible(False)
+        self.recv_send_ratio.setInvertedAppearance(False)
         self.recv_kbs = QLabel(self.groupBox_2)
         self.recv_kbs.setObjectName(u"recv_kbs")
         self.recv_kbs.setGeometry(QRect(40, 80, 41, 20))
