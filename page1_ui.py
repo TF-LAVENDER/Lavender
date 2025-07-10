@@ -56,14 +56,15 @@ class Ui_MainWindow(object):
         self.WAN_2 = QProgressBar(self.groupBox_2)
         self.WAN_2.setObjectName(u"WAN_2")
         self.WAN_2.setEnabled(True)
-        self.WAN_2.setGeometry(QRect(110, 50, 131, 75))
+        self.WAN_2.setGeometry(QRect(150, 50, 91, 75))
         font = QFont()
         font.setPointSize(1)
         font.setWeight(QFont.Thin)
         self.WAN_2.setFont(font)
         self.WAN_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.WAN_2.setStyleSheet(u"QProgressBar {\n"
-"    border-radius: 37px;\n"
+"    border-top-right-radius: 37px;\n"
+"    border-bottom-right-radius: 37px;\n"
 "    background-color: #ff5151;\n"
 "    text-align: center;\n"
 "    color: black;\n"
@@ -71,16 +72,15 @@ class Ui_MainWindow(object):
 "\n"
 "QProgressBar::chunk {\n"
 "    background-color: #fff700;\n"
-"    border-top-left-radius: 37px;\n"
-"    border-bottom-left-radius: 37px;\n"
 "}")
+        self.WAN_2.setMinimum(0)
         self.WAN_2.setMaximum(100)
         self.WAN_2.setValue(45)
         self.WAN_2.setTextVisible(False)
         self.WAN_2.setInvertedAppearance(False)
         self.label_3 = QLabel(self.groupBox_2)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(40, 80, 41, 20))
+        self.label_3.setGeometry(QRect(20, 80, 61, 20))
         font1 = QFont()
         font1.setPointSize(14)
         font1.setBold(True)
@@ -89,10 +89,10 @@ class Ui_MainWindow(object):
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.label_4 = QLabel(self.groupBox_2)
         self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(250, 80, 41, 20))
+        self.label_4.setGeometry(QRect(270, 80, 41, 20))
         self.label_4.setFont(font1)
         self.label_4.setStyleSheet(u"color: rgb(255, 255,255);")
-        self.label_4.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.label_4.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.line_2 = QFrame(self.groupBox_2)
         self.line_2.setObjectName(u"line_2")
         self.line_2.setEnabled(False)
@@ -107,6 +107,15 @@ class Ui_MainWindow(object):
         self.line_3.setStyleSheet(u"color: #a3a3a3;")
         self.line_3.setFrameShadow(QFrame.Shadow.Plain)
         self.line_3.setFrameShape(QFrame.Shape.VLine)
+        self.frame = QFrame(self.groupBox_2)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(110, 50, 40, 75))
+        self.frame.setStyleSheet(u"background-color: #fff700;\n"
+"border-top-left-radius: 37px;\n"
+"border-bottom-left-radius: 37px;\n"
+"")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
@@ -194,7 +203,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 937, 30))
+        self.menubar.setGeometry(QRect(0, 0, 937, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
