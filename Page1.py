@@ -39,6 +39,8 @@ class Page1(QWidget):
 
         axis_y.setLabelsVisible(False)
 
+        axis_y.setVisible(False)
+
         axis_x.setGridLineVisible(False)
         axis_y.setGridLineVisible(False)
 
@@ -92,18 +94,6 @@ class Page1(QWidget):
                 new_layout.setContentsMargins(0, 0, 0, 0)
                 new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
-        
-
-
-
-
-
-        # 트래픽 차트 설정
-
-
-
-
-
 
     def get_network_bytes(self):
         counters = psutil.net_io_counters()
