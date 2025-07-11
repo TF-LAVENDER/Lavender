@@ -4,9 +4,10 @@ import sys
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
 # from PySide6.QtUiTools import QUiLoader
 # from PySide6.QtCore import QFile, QIODevice
-from Page1 import Page1
-from Page2 import Page2
-from page3.Page3 import Page3
+from components.page1.Page1 import Page1
+from components.page2.Page2 import Page2
+from components.page3.Page3 import Page3
+from components.page4.Page4 import Page4
 from utils import load_ui_file
 
 

@@ -185,12 +185,6 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QFrame.Shadow.Plain)
         self.line.setLineWidth(2)
         self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line_4 = QFrame(self.groupBox)
-        self.line_4.setObjectName(u"line_4")
-        self.line_4.setGeometry(QRect(-8, 42, 21, 100))
-        self.line_4.setStyleSheet(u"color: #a3a3a3;")
-        self.line_4.setFrameShadow(QFrame.Shadow.Plain)
-        self.line_4.setFrameShape(QFrame.Shape.VLine)
 
         self.verticalLayout_2.addWidget(self.groupBox)
 
