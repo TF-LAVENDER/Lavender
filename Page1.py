@@ -5,7 +5,7 @@ import psutil
 from PySide6.QtGui import QPen, QColor,QBrush, QPainter
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
-from PySide6.QtCore import QTimer, QPointF, QMargins
+from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve, Property
 
 import page1_ui
 # from LavenderMain import MainWindow
@@ -82,6 +82,11 @@ class Page1(QWidget):
         self.series_sent.hovered.connect(self.on_point_hovered_sent)
         self.series_recv.hovered.connect(self.on_point_hovered_recv)
 
+        # 프로그레스바 애니메이션 설정
+        self.progress_animation = QPropertyAnimation(self.ui.recv_send_ratio, b"value")
+        self.progress_animation.setDuration(300)  # 300ms
+        self.progress_animation.setEasingCurve(QEasingCurve.Type.InOutQuad)
+
         # .ui의 chartContainer에 chart_view 삽입
         if hasattr(self.ui, 'chartContainer'):
             container_layout = self.ui.chartContainer.layout()
@@ -135,13 +140,13 @@ class Page1(QWidget):
             if total_traffic > 0:
                 # 받는 트래픽 비율 계산 (노란색 부분)
                 recv_ratio = (recv_speed / total_traffic) * 100
-                # 보내는 트래픽 비율 계산 (빨간색 부분)
-                sent_ratio = (sent_speed / total_traffic) * 100
                 
-                # 프로그레스 바 값 설정 (받는 트래픽 비율)
-                progress_bar.setValue(int(recv_ratio))
+                # 애니메이션으로 값 변경
+                self.progress_animation.setStartValue(progress_bar.value())
+                self.progress_animation.setEndValue(int(recv_ratio))
+                self.progress_animation.start()
                 
-                # 스타일시트 업데이트 - 받는 트래픽(노란색)과 보내는 트래픽(빨간색) 구분
+                # 스타일시트 업데이트
                 style_sheet = f"""
                 QProgressBar {{
                     border-radius: 37px;
@@ -165,7 +170,10 @@ class Page1(QWidget):
                     self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
             else:
                 # 트래픽이 없을 때
-                progress_bar.setValue(0)
+                self.progress_animation.setStartValue(progress_bar.value())
+                self.progress_animation.setEndValue(0)
+                self.progress_animation.start()
+                
                 if hasattr(self.ui, 'recv_kbs'):
                     self.ui.recv_kbs.setText("0.0 KB/s")
                 if hasattr(self.ui, 'send_kbs'):
