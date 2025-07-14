@@ -162,11 +162,20 @@ class Page1(QWidget):
                 
                 # 라벨 업데이트
                 if hasattr(self.ui, 'recv_kbs'):
-                    self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
+                    if recv_speed < 10000:
+                        self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
+                    else:
+                        self.ui.recv_kbs.setText(f"{recv_speed/1024:.1f} MB/s")
                 if hasattr(self.ui, 'send_kbs'):
-                    self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
+                    if sent_speed < 10000:
+                        self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
+                    else:
+                        self.ui.send_kbs.setText(f"{sent_speed / 1024:.1f} MB/s")
                 if hasattr(self.ui, 'sum_kbs'):
-                    self.ui.sum_kbs.setText(f"{total_traffic:.1f} KB/s")
+                    if total_traffic < 10000:
+                        self.ui.sum_kbs.setText(f"{total_traffic:.1f} KB/s")
+                    else:
+                        self.ui.sum_kbs.setText(f"{total_traffic/1024:.1f} MB/s")
             else:
                 # 트래픽이 없을 때
                 self.progress_animation.setStartValue(progress_bar.value())
