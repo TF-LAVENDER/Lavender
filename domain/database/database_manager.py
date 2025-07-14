@@ -2,9 +2,10 @@ import sqlite3
 import os
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from models.blockedIp import BlockedIp
 
 class DatabaseManager:
-    def __init__(self, db_path: str = "security_logs.db"):
+    def __init__(self, db_path: str = "blocked_ips.db"):
         self.db_path = db_path
         self.init_database()
     
@@ -13,9 +14,8 @@ class DatabaseManager:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             
-            # 보안 로그 테이블 생성
             cursor.execute('''
-                CREATE TABLE IF NOT EXISTS security_logs (
+                CREATE TABLE IF NOT EXISTS blocked_ips (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     source_ip TEXT NOT NULL,
                     date TEXT NOT NULL,
@@ -25,27 +25,26 @@ class DatabaseManager:
                 )
             ''')
             
-            # 인덱스 생성 (성능 향상)
             cursor.execute('''
-                CREATE INDEX IF NOT EXISTS idx_source_ip ON security_logs(source_ip)
+                CREATE INDEX IF NOT EXISTS idx_source_ip ON blocked_ips(source_ip)
             ''')
             cursor.execute('''
-                CREATE INDEX IF NOT EXISTS idx_event_type ON security_logs(event_type)
+                CREATE INDEX IF NOT EXISTS idx_event_type ON blocked_ips(event_type)
             ''')
             cursor.execute('''
-                CREATE INDEX IF NOT EXISTS idx_date ON security_logs(date)
+                CREATE INDEX IF NOT EXISTS idx_date ON blocked_ips(date)
             ''')
             
             conn.commit()
             
-    def add_log_entry(self, source_ip: str, date: str, event_type: str, description: str) -> int:
+    def add_log_entry(self, ip: BlockedIp) -> int:
         """새로운 로그 엔트리 추가"""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path) as conn: # TODO: sadasdasd
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO security_logs (source_ip, date, event_type, description)
+                INSERT INTO blocked_ips (source_ip, date, event_type, description)
                 VALUES (?, ?, ?, ?)
-            ''', (source_ip, date, event_type, description))
+            ''', (ip.ip, ip.date, ip.eventType, ip.description))
             conn.commit()
             return cursor.lastrowid
     
@@ -56,7 +55,7 @@ class DatabaseManager:
             cursor = conn.cursor()
             cursor.execute('''
                 SELECT id, source_ip, date, event_type, description, created_at
-                FROM security_logs
+                FROM blocked_ips
                 ORDER BY created_at DESC
             ''')
             return [dict(row) for row in cursor.fetchall()]
@@ -68,7 +67,7 @@ class DatabaseManager:
             cursor = conn.cursor()
             cursor.execute('''
                 SELECT id, source_ip, date, event_type, description, created_at
-                FROM security_logs
+                FROM blocked_ips
                 WHERE id = ?
             ''', (log_id,))
             row = cursor.fetchone()
@@ -79,7 +78,7 @@ class DatabaseManager:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute('''
-                UPDATE security_logs 
+                UPDATE blocked_ips 
                 SET source_ip = ?, date = ?, event_type = ?, description = ?
                 WHERE id = ?
             ''', (source_ip, date, event_type, description, log_id))
@@ -90,7 +89,7 @@ class DatabaseManager:
         """로그 엔트리 삭제"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM security_logs WHERE id = ?', (log_id,))
+            cursor.execute('DELETE FROM blocked_ips WHERE id = ?', (log_id,))
             conn.commit()
             return cursor.rowcount > 0
     
@@ -103,7 +102,7 @@ class DatabaseManager:
             
             query = '''
                 SELECT id, source_ip, date, event_type, description, created_at
-                FROM security_logs
+                FROM blocked_ips
                 WHERE 1=1
             '''
             params = []
@@ -133,21 +132,21 @@ class DatabaseManager:
         """모든 이벤트 타입 조회"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT DISTINCT event_type FROM security_logs ORDER BY event_type')
+            cursor.execute('SELECT DISTINCT event_type FROM blocked_ips ORDER BY event_type')
             return [row[0] for row in cursor.fetchall()]
     
     def get_log_count(self) -> int:
         """총 로그 수 조회"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT COUNT(*) FROM security_logs')
+            cursor.execute('SELECT COUNT(*) FROM blocked_ips')
             return cursor.fetchone()[0]
     
     def clear_all_logs(self) -> bool:
         """모든 로그 삭제"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM security_logs')
+            cursor.execute('DELETE FROM blocked_ips')
             conn.commit()
             return cursor.rowcount > 0
     

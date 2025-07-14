@@ -4,6 +4,7 @@ from PySide6.QtCore import QDate
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import re
+from domain.models.blockedIp import BlockedIp
 
 class AddDataDialog(QDialog):
     def __init__(self, parent=None):
@@ -116,14 +117,14 @@ class AddDataDialog(QDialog):
         
         layout.addLayout(button_layout)
         
-    def get_data(self):
+    def get_data(self) -> BlockedIp: 
         """입력된 데이터 반환"""
-        return {
-            'ip': self.ip_input.text().strip(),
-            'date': datetime.now(ZoneInfo("Asia/Seoul")).strftime("%Y.%m.%d"),
-            'event_type': self.event_input.currentText().strip(),
-            'description': self.desc_input.text().strip()
-        }
+        return BlockedIp(
+        self.ip_input.text().strip(),
+        datetime.now(ZoneInfo("Asia/Seoul")).strftime("%Y.%m.%d"),
+        self.event_input.currentText().strip(),
+        self.desc_input.text().strip()
+    )
         
     def validate_ip_address(self, ip):
         """IP 주소 유효성 검사"""

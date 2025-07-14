@@ -5,6 +5,7 @@ from PySide6.QtGui import QColor, QAction
 from components.page3.page3_ui import Ui_Page3
 from components.page3.add_data_dialog import AddDataDialog
 from database.database_manager import DatabaseManager
+from domain.models.blockedIp import BlockedIp
 
 class Page3(QWidget):
     COLORS = {
@@ -167,16 +168,11 @@ class Page3(QWidget):
         """데이터 추가 다이얼로그 열기"""
         dialog = AddDataDialog(self)
         if dialog.exec() == dialog.DialogCode.Accepted:
-            data = dialog.get_data()
+            data : BlockedIp = dialog.get_data()
             
             try:
                 # 데이터베이스에 데이터 추가
-                log_id = self.db_manager.add_log_entry(
-                    data['ip'], 
-                    data['date'], 
-                    data['event_type'], 
-                    data['description']
-                )
+                log_id = self.db_manager.add_log_entry(data)
                 
                 # 테이블 새로고침
                 self.load_data_from_db()
@@ -578,20 +574,6 @@ class Page3(QWidget):
         except Exception as e:
             QMessageBox.critical(self, "복원 오류", f"복원 실패: {str(e)}")
             return False
-
-    # 데모용 메서드들 (SQLite 버전)
-    def demo_add_data(self):
-        """데모용 데이터 추가 예시"""
-        try:
-            # 새로운 데이터 추가
-            self.db_manager.add_log_entry("192.168.1.100", "2025.01.07", "brute force", "Login attempt failed")
-            self.db_manager.add_log_entry("10.0.0.50", "2025.01.07", "malware", "Suspicious file detected")
-            
-            # 테이블 새로고침
-            self.load_data_from_db()
-            
-        except Exception as e:
-            QMessageBox.critical(self, "오류", f"데모 데이터 추가 실패: {str(e)}")
 
     # 키보드 단축키 지원
     def keyPressEvent(self, event):
