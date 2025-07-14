@@ -213,6 +213,31 @@ QProgressBar::chunk {
              <enum>Qt::Orientation::Vertical</enum>
             </property>
            </widget>
+           <widget class="QLabel" name="sum_kbs">
+            <property name="geometry">
+             <rect>
+              <x>126</x>
+              <y>20</y>
+              <width>91</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255,255);</string>
+            </property>
+            <property name="text">
+             <string>KB</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+            </property>
+           </widget>
           </widget>
          </item>
         </layout>

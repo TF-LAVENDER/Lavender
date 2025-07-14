@@ -107,6 +107,15 @@ class Ui_MainWindow(object):
         self.line_3.setStyleSheet(u"color: #a3a3a3;")
         self.line_3.setFrameShadow(QFrame.Shadow.Plain)
         self.line_3.setFrameShape(QFrame.Shape.VLine)
+        self.sum_kbs = QLabel(self.groupBox_2)
+        self.sum_kbs.setObjectName(u"sum_kbs")
+        self.sum_kbs.setGeometry(QRect(126, 20, 91, 20))
+        font2 = QFont()
+        font2.setPointSize(16)
+        font2.setBold(True)
+        self.sum_kbs.setFont(font2)
+        self.sum_kbs.setStyleSheet(u"color: rgb(255, 255,255);")
+        self.sum_kbs.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
@@ -210,6 +219,7 @@ class Ui_MainWindow(object):
         self.groupBox_2.setTitle("")
         self.recv_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
         self.send_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
+        self.sum_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
         self.NetworkContent.setStyleSheet("")
         self.groupBox.setTitle("")
         self.WAN.setText(QCoreApplication.translate("MainWindow", u"WAN", None))

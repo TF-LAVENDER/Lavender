@@ -159,6 +159,8 @@ class Page1(QWidget):
                     self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
                 if hasattr(self.ui, 'send_kbs'):
                     self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
+                if hasattr(self.ui, 'sum_kbs'):
+                    self.ui.sum_kbs.setText(f"{recv_speed + sent_speed:.1f} KB/s")
             else:
                 # 트래픽이 없을 때
                 progress_bar.setValue(0)
@@ -167,6 +169,8 @@ class Page1(QWidget):
                     self.ui.recv_kbs.setText("0.0 KB/s")
                 if hasattr(self.ui, 'send_kbs'):
                     self.ui.send_kbs.setText("0.0 KB/s")
+                if hasattr(self.ui, 'sum_kbs'):
+                    self.ui.sum_kbs.setText("0.0 KB/s")
 
     def on_point_hovered_sent(self, point, state):
         if state:
