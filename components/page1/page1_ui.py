@@ -217,9 +217,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.groupBox_2.setTitle("")
-        self.recv_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
-        self.send_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
-        self.sum_kbs.setText(QCoreApplication.translate("MainWindow", u"KB", None))
+        self.recv_kbs.setText("")
+        self.send_kbs.setText("")
+        self.sum_kbs.setText("")
         self.NetworkContent.setStyleSheet("")
         self.groupBox.setTitle("")
         self.WAN.setText(QCoreApplication.translate("MainWindow", u"WAN", None))

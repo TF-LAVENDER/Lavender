@@ -5,7 +5,7 @@ import psutil
 from PySide6.QtGui import QPen, QColor,QBrush, QPainter
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
-from PySide6.QtCore import QTimer, QPointF, QMargins
+from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve, Property
 
 from utils import load_ui_file
 
@@ -80,6 +80,11 @@ class Page1(QWidget):
         self.series_sent.hovered.connect(self.on_point_hovered_sent)
         self.series_recv.hovered.connect(self.on_point_hovered_recv)
 
+        # 프로그레스바 애니메이션 설정
+        self.progress_animation = QPropertyAnimation(self.ui.recv_send_ratio, b"value")
+        self.progress_animation.setDuration(300)  # 300ms
+        self.progress_animation.setEasingCurve(QEasingCurve.Type.InOutQuad)
+
         # .ui의 chartContainer에 chart_view 삽입
         if hasattr(self.ui, 'chartContainer'):
             container_layout = self.ui.chartContainer.layout()
@@ -133,9 +138,10 @@ class Page1(QWidget):
             if total_traffic > 0:
                 # 받는 트래픽 비율 계산 (노란색 부분)
                 recv_ratio = (recv_speed / total_traffic) * 100
-                
 
-                progress_bar.setValue(int(recv_ratio))
+                self.progress_animation.setStartValue(progress_bar.value())
+                self.progress_animation.setEndValue(int(recv_ratio))
+                self.progress_animation.start()
                 
                 # 스타일시트 업데이트
                 style_sheet = f"""
@@ -163,7 +169,9 @@ class Page1(QWidget):
                     self.ui.sum_kbs.setText(f"{recv_speed + sent_speed:.1f} KB/s")
             else:
                 # 트래픽이 없을 때
-                progress_bar.setValue(0)
+                self.progress_animation.setStartValue(progress_bar.value())
+                self.progress_animation.setEndValue(0)
+                self.progress_animation.start()
                 
                 if hasattr(self.ui, 'recv_kbs'):
                     self.ui.recv_kbs.setText("0.0 KB/s")

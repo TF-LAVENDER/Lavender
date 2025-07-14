@@ -138,7 +138,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string>KB</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -163,7 +163,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string>KB</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -232,7 +232,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string>KB</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
