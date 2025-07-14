@@ -36,7 +36,7 @@ class Page3(QWidget):
         super().__init__()
         self.ui = Ui_Page3()
         self.ui.setupUi(self)
-        
+
         # 데이터베이스 매니저 초기화
         try:
             self.db_manager = DatabaseManager()
@@ -173,7 +173,6 @@ class Page3(QWidget):
             try:
                 # 데이터베이스에 데이터 추가
                 log_id = self.db_manager.add_log_entry(data)
-                
                 # 테이블 새로고침
                 self.load_data_from_db()
                 

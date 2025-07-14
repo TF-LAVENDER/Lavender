@@ -1,10 +1,7 @@
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLineEdit, 
                              QLabel, QPushButton, QComboBox, QMessageBox, QDateEdit)
 from PySide6.QtCore import QDate
-from datetime import datetime
-from zoneinfo import ZoneInfo
-import re
-from domain.models.blockedIp import BlockedIp
+from validator import ValidateIpAddress
 
 class AddDataDialog(QDialog):
     def __init__(self, parent=None):
@@ -126,47 +123,35 @@ class AddDataDialog(QDialog):
         self.desc_input.text().strip()
     )
         
-    def validate_ip_address(self, ip):
-        """IP 주소 유효성 검사"""
-        # IPv4 주소 패턴
-        ipv4_pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
-        
-        # IPv6 주소 패턴 (간단한 버전)
-        ipv6_pattern = r'^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}'
-        
-        if re.match(ipv4_pattern, ip) or re.match(ipv6_pattern, ip):
-            return True
-        return False
-        
     def validate_data(self):
         """입력 데이터 유효성 검사"""
         data = self.get_data()
         
         # IP 주소 검사
-        if not data['ip']:
+        if not data.ip:
             QMessageBox.warning(self, "입력 오류", "IP 주소를 입력해주세요.")
             self.ip_input.setFocus()
             return False
             
-        if not self.validate_ip_address(data['ip']):
+        if not ValidateIpAddress(data.ip):
             QMessageBox.warning(self, "입력 오류", "올바른 IP 주소 형식을 입력해주세요.\n예: 192.168.1.100")
             self.ip_input.setFocus()
             return False
             
         # 이벤트 타입 검사
-        if not data['event_type']:
+        if not data.eventType:
             QMessageBox.warning(self, "입력 오류", "이벤트 타입을 선택해주세요.")
             self.event_input.setFocus()
             return False
             
         # 설명 검사
-        if not data['description']:
+        if not data.description:
             QMessageBox.warning(self, "입력 오류", "설명을 입력해주세요.")
             self.desc_input.setFocus()
             return False
             
         # 설명 길이 검사
-        if len(data['description']) > 255:
+        if len(data.description) > 255:
             QMessageBox.warning(self, "입력 오류", "설명은 255자 이하로 입력해주세요.")
             self.desc_input.setFocus()
             return False
