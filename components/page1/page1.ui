@@ -335,7 +335,7 @@ background-color : rgb(255,255,255,0);</string>
              <string notr="true">color: #c3c3c3;</string>
             </property>
             <property name="text">
-             <string>xx.x KB/s</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
@@ -360,7 +360,7 @@ background-color : rgb(255,255,255,0);</string>
              <string notr="true">color: #c3c3c3;</string>
             </property>
             <property name="text">
-             <string>xx.x KB/s</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop|Qt::AlignmentFlag::AlignTrailing</set>
