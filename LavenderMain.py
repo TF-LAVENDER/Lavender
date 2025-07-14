@@ -28,10 +28,10 @@ class MainWindow(QMainWindow):
         self.page3 = Page3()
 
     
-        self.ui.munuButton1.clicked.connect(self.menu1_clicked)
-        self.ui.munuButton2.clicked.connect(self.menu2_clicked)
-        self.ui.munuButton3.clicked.connect(self.menu3_clicked)
-        self.ui.munuButton4.clicked.connect(self.menu4_clicked)
+        self.ui.menuButton1.clicked.connect(self.menu1_clicked)
+        self.ui.menuButton2.clicked.connect(self.menu2_clicked)
+        self.ui.menuButton3.clicked.connect(self.menu3_clicked)
+        self.ui.menuButton4.clicked.connect(self.menu4_clicked)
 
         self.load_page1()
 
@@ -63,21 +63,21 @@ class MainWindow(QMainWindow):
 
 
     def menuChange(self, menuNum):    
-        self.ui.munuButton1.setStyleSheet("border-image:url('images/menu1_off.png');")
-        self.ui.munuButton2.setStyleSheet("border-image:url('images/menu2_off.png');")
-        self.ui.munuButton3.setStyleSheet("border-image:url('images/menu3_off.png');")
-        self.ui.munuButton4.setStyleSheet("border-image:url('images/menu4_off.png');")
+        self.ui.menuButton1.setStyleSheet("border-image:url('images/menu1_off.png');")
+        self.ui.menuButton2.setStyleSheet("border-image:url('images/menu2_off.png');")
+        self.ui.menuButton3.setStyleSheet("border-image:url('images/menu3_off.png');")
+        self.ui.menuButton4.setStyleSheet("border-image:url('images/menu4_off.png');")
         if menuNum == 1:
-            self.ui.munuButton1.setStyleSheet("border-image:url('images/menu1_on.png');")
+            self.ui.menuButton1.setStyleSheet("border-image:url('images/menu1_on.png');")
             self.load_page1()
         elif menuNum == 2:
-            self.ui.munuButton2.setStyleSheet("border-image:url('images/menu2_on.png');")
+            self.ui.menuButton2.setStyleSheet("border-image:url('images/menu2_on.png');")
             self.load_page2()
         elif menuNum == 3:
-            self.ui.munuButton3.setStyleSheet("border-image:url('images/menu3_on.png');")
+            self.ui.menuButton3.setStyleSheet("border-image:url('images/menu3_on.png');")
             self.load_page3()
         elif menuNum == 4:
-            self.ui.munuButton4.setStyleSheet("border-image:url('images/menu4_on.png');")
+            self.ui.menuButton4.setStyleSheet("border-image:url('images/menu4_on.png');")
 
 
     def menu1_clicked(self):
