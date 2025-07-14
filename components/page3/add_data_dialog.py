@@ -2,6 +2,7 @@ from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLineEdit,
                              QLabel, QPushButton, QComboBox, QMessageBox, QDateEdit)
 from PySide6.QtCore import QDate
 from validation.ValidateIpAddress import IPAddressValidator
+from domain.models.blockedIp import BlockedIp
 
 class AddDataDialog(QDialog):
     def __init__(self, parent=None):
