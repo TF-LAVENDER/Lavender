@@ -170,7 +170,7 @@ class Page1(QWidget):
                 
                 # 라벨 업데이트
                 if hasattr(self.ui, 'recv_kbs'):
-                    maxKb = 5000
+                    maxKb = 1500
 
                     if recv_speed < maxKb:
                         self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
