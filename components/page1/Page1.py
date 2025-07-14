@@ -166,7 +166,7 @@ class Page1(QWidget):
                 if hasattr(self.ui, 'send_kbs'):
                     self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
                 if hasattr(self.ui, 'sum_kbs'):
-                    self.ui.sum_kbs.setText(f"{recv_speed + sent_speed:.1f} KB/s")
+                    self.ui.sum_kbs.setText(f"{total_traffic:.1f} KB/s")
             else:
                 # 트래픽이 없을 때
                 self.progress_animation.setStartValue(progress_bar.value())
