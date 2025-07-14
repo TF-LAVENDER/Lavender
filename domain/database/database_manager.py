@@ -2,7 +2,7 @@ import sqlite3
 import os
 from datetime import datetime
 from typing import List, Dict, Any, Optional
-from models.blockedIp import BlockedIp
+from domain.models.blockedIp import BlockedIp
 
 class DatabaseManager:
     def __init__(self, db_path: str = "blocked_ips.db"):

@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QAction
 from components.page3.page3_ui import Ui_Page3
 from components.page3.add_data_dialog import AddDataDialog
-from database.database_manager import DatabaseManager
+from domain.database.database_manager import DatabaseManager
 from domain.models.blockedIp import BlockedIp
 
 class Page3(QWidget):
