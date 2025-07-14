@@ -123,7 +123,7 @@ QProgressBar::chunk {
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>78</y>
+              <y>70</y>
               <width>81</width>
               <height>20</height>
              </rect>
@@ -148,7 +148,7 @@ QProgressBar::chunk {
             <property name="geometry">
              <rect>
               <x>270</x>
-              <y>78</y>
+              <y>70</y>
               <width>71</width>
               <height>20</height>
              </rect>
@@ -301,8 +301,8 @@ background-color : rgb(255,255,255,0);</string>
             <property name="geometry">
              <rect>
               <x>89</x>
-              <y>85</y>
-              <width>10</width>
+              <y>86</y>
+              <width>11</width>
               <height>7</height>
              </rect>
             </property>
@@ -314,6 +314,56 @@ background-color : rgb(255,255,255,0);</string>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Shadow::Raised</enum>
+            </property>
+           </widget>
+           <widget class="QLabel" name="send_kbs_2">
+            <property name="geometry">
+             <rect>
+              <x>270</x>
+              <y>90</y>
+              <width>71</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: #c3c3c3;</string>
+            </property>
+            <property name="text">
+             <string>xx.x KB/s</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+           <widget class="QLabel" name="recv_kbs_2">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>90</y>
+              <width>81</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: #c3c3c3;</string>
+            </property>
+            <property name="text">
+             <string>xx.x KB/s</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop|Qt::AlignmentFlag::AlignTrailing</set>
             </property>
            </widget>
           </widget>
