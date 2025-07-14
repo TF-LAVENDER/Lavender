@@ -162,17 +162,19 @@ class Page1(QWidget):
                 
                 # 라벨 업데이트
                 if hasattr(self.ui, 'recv_kbs'):
-                    if recv_speed < 10000:
+                    maxKb = 5000
+
+                    if recv_speed < maxKb:
                         self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
                     else:
                         self.ui.recv_kbs.setText(f"{recv_speed/1024:.1f} MB/s")
                 if hasattr(self.ui, 'send_kbs'):
-                    if sent_speed < 10000:
+                    if sent_speed < maxKb:
                         self.ui.send_kbs.setText(f"{sent_speed:.1f} KB/s")
                     else:
                         self.ui.send_kbs.setText(f"{sent_speed / 1024:.1f} MB/s")
                 if hasattr(self.ui, 'sum_kbs'):
-                    if total_traffic < 10000:
+                    if total_traffic < maxKb:
                         self.ui.sum_kbs.setText(f"{total_traffic:.1f} KB/s")
                     else:
                         self.ui.sum_kbs.setText(f"{total_traffic/1024:.1f} MB/s")
