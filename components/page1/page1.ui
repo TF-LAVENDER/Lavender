@@ -238,6 +238,26 @@ QProgressBar::chunk {
              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
+           <widget class="QFrame" name="frame_2">
+            <property name="geometry">
+             <rect>
+              <x>204</x>
+              <y>50</y>
+              <width>37</width>
+              <height>75</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-image:url(&quot;images/Union1.pdf&quot;);
+background-color : rgb(255,255,255,0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+           </widget>
           </widget>
          </item>
         </layout>
