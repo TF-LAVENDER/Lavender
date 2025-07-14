@@ -11,10 +11,8 @@ jobs:
 
     steps:
     - name: Send notification to Discord
-      env:
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      run: |
-        curl -H "Content-Type: application/json" \
-             -X POST \
-             -d "{\"content\": \"🚀 A new push has been made to the main branch of the repository: **${{ github.repository }}** by **${{ github.actor }}**.\"}" \
-             $DISCORD_WEBHOOK_URL
+      uses: sarisia/actions-status-discord@v1
+      with:
+        title: Pushed
+        webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        color: 00FF00
