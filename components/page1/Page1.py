@@ -21,6 +21,10 @@ class Page1(QWidget):
         self.series_sent = QSplineSeries(name="보낸 데이터 (KB/s)")
         self.series_recv = QSplineSeries(name="받은 데이터 (KB/s)")
 
+        # 누적 트래픽 초기화
+        self.total_sent = 0
+        self.total_recv = 0
+
         # QChart 구성
         self.chart = QChart()
         self.chart.addSeries(self.series_sent)
@@ -135,6 +139,10 @@ class Page1(QWidget):
             # 총 트래픽 계산
             total_traffic = sent_speed + recv_speed
             
+            # 누적 트래픽 업데이트
+            self.total_sent += sent_speed
+            self.total_recv += recv_speed
+            
             if total_traffic > 0:
                 # 받는 트래픽 비율 계산 (노란색 부분)
                 recv_ratio = (recv_speed / total_traffic) * 100
@@ -178,6 +186,18 @@ class Page1(QWidget):
                         self.ui.sum_kbs.setText(f"{total_traffic:.1f} KB/s")
                     else:
                         self.ui.sum_kbs.setText(f"{total_traffic/1024:.1f} MB/s")
+                
+                # recv_kbs_2와 send_kbs_2 라벨에 누적 트래픽 표시
+                if hasattr(self.ui, 'recv_kbs_2'):
+                    if self.total_recv < maxKb:
+                        self.ui.recv_kbs_2.setText(f"{self.total_recv:.1f} KB")
+                    else:
+                        self.ui.recv_kbs_2.setText(f"{self.total_recv/1024:.1f} MB")
+                if hasattr(self.ui, 'send_kbs_2'):
+                    if self.total_sent < maxKb:
+                        self.ui.send_kbs_2.setText(f"{self.total_sent:.1f} KB")
+                    else:
+                        self.ui.send_kbs_2.setText(f"{self.total_sent/1024:.1f} MB")
             else:
                 # 트래픽이 없을 때
                 self.progress_animation.setStartValue(progress_bar.value())
@@ -190,6 +210,10 @@ class Page1(QWidget):
                     self.ui.send_kbs.setText("0.0 KB/s")
                 if hasattr(self.ui, 'sum_kbs'):
                     self.ui.sum_kbs.setText("0.0 KB/s")
+                # if hasattr(self.ui, 'recv_kbs_2'):
+                #     self.ui.recv_kbs_2.setText(f"{self.total_recv:.1f} KB")
+                # if hasattr(self.ui, 'send_kbs_2'):
+                #     self.ui.send_kbs_2.setText(f"{self.total_sent:.1f} KB")
 
     def on_point_hovered_sent(self, point, state):
         if state:
