@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLineEdit, 
                              QLabel, QPushButton, QComboBox, QMessageBox, QDateEdit)
 from PySide6.QtCore import QDate
-from validator import ValidateIpAddress
+from validation.ValidateIpAddress import IPAddressValidator
 
 class AddDataDialog(QDialog):
     def __init__(self, parent=None):
@@ -133,7 +133,7 @@ class AddDataDialog(QDialog):
             self.ip_input.setFocus()
             return False
             
-        if not ValidateIpAddress(data.ip):
+        if not IPAddressValidator.is_valid(data.ip):
             QMessageBox.warning(self, "입력 오류", "올바른 IP 주소 형식을 입력해주세요.\n예: 192.168.1.100")
             self.ip_input.setFocus()
             return False
