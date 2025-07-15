@@ -2,12 +2,16 @@
 
 import time
 import psutil
-from PySide6.QtGui import QPen, QColor,QBrush, QPainter
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
+from PySide6.QtGui import QPen, QColor,QBrush, QPainter, QCursor
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip, QProgressBar
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
-from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve, Property
+from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve, Property, QEvent
 
 from utils import load_ui_file
+
+# WAN/LAN 인터페이스 이름을 실제 환경에 맞게 지정하세요
+WAN_IFACE = "en0"  # 예시: 외부망 인터페이스
+LAN_IFACE = "en1"  # 예시: 내부망 인터페이스
 
 class Page1(QWidget):
     def __init__(self):
@@ -24,6 +28,11 @@ class Page1(QWidget):
         # 누적 트래픽 초기화
         self.total_sent = 0
         self.total_recv = 0
+        # WAN/LAN별 누적 트래픽 초기화
+        self.total_wan_sent = 0
+        self.total_wan_recv = 0
+        self.total_lan_sent = 0
+        self.total_lan_recv = 0
 
         # QChart 구성
         self.chart = QChart()
@@ -73,8 +82,12 @@ class Page1(QWidget):
         self.chart_view.setRenderHint(QPainter.Antialiasing)
 
         # 초기 네트워크 상태 저장
+        # 기존 전체 트래픽 초기화
         self.prev_sent, self.prev_recv = self.get_network_bytes()
         self.x = 0
+        # WAN/LAN별 이전 트래픽 초기화
+        self.prev_wan_sent, self.prev_wan_recv = self.get_network_bytes_by_iface(WAN_IFACE)
+        self.prev_lan_sent, self.prev_lan_recv = self.get_network_bytes_by_iface(LAN_IFACE)
 
         # 타이머 설정 (1초 간격)
         self.timer = QTimer(self)
@@ -102,18 +115,58 @@ class Page1(QWidget):
                 new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
 
+        # 툴팁용 변수 초기화
+        self._last_lan_tooltip = ''
+        self._last_wan_tooltip = ''
+        # findChild로 QProgressBar 객체 직접 참조
+        self._lan_bar = self.ui.findChild(QProgressBar, 'LAN_BAR')
+        self._wan_bar = self.ui.findChild(QProgressBar, 'WAN_BAR')
+        if self._lan_bar:
+            self._lan_bar.installEventFilter(self)
+        if self._wan_bar:
+            self._wan_bar.installEventFilter(self)
+
     def get_network_bytes(self):
         counters = psutil.net_io_counters()
         return counters.bytes_sent, counters.bytes_recv
 
+    def get_network_bytes_by_iface(self, iface_name):
+        counters = psutil.net_io_counters(pernic=True)
+        if iface_name in counters:
+            return counters[iface_name].bytes_sent, counters[iface_name].bytes_recv
+        else:
+            return 0, 0
+
     def update_chart(self):
+        # 전체 트래픽
         sent, recv = self.get_network_bytes()
         sent_speed = (sent - self.prev_sent) / 1024  # KB
         recv_speed = (recv - self.prev_recv) / 1024  # KB
-
+        # WAN 트래픽
+        wan_sent, wan_recv = self.get_network_bytes_by_iface(WAN_IFACE)
+        wan_sent_speed = (wan_sent - self.prev_wan_sent) / 1024
+        wan_recv_speed = (wan_recv - self.prev_wan_recv) / 1024
+        # LAN 트래픽
+        lan_sent, lan_recv = self.get_network_bytes_by_iface(LAN_IFACE)
+        lan_sent_speed = (lan_sent - self.prev_lan_sent) / 1024
+        lan_recv_speed = (lan_recv - self.prev_lan_recv) / 1024
+        # 기존 전체 트래픽 그래프
         self.series_sent.append(QPointF(self.x, sent_speed))
         self.series_recv.append(QPointF(self.x, recv_speed))
         self.x += 1
+        # WAN/LAN 누적 트래픽 업데이트
+        self.total_wan_sent += wan_sent_speed
+        self.total_wan_recv += wan_recv_speed
+        self.total_lan_sent += lan_sent_speed
+        self.total_lan_recv += lan_recv_speed
+        # WAN/LAN 이전값 갱신
+        self.prev_wan_sent, self.prev_wan_recv = wan_sent, wan_recv
+        self.prev_lan_sent, self.prev_lan_recv = lan_sent, lan_recv
+        # (옵션) WAN_BAR, LAN_BAR에 값 반영하려면 아래와 같이 사용
+        # if hasattr(self.ui, 'WAN_BAR'):
+        #     self.ui.WAN_BAR.setValue(int(min(wan_recv_speed, 100)))  # 예시: 0~100 스케일
+        # if hasattr(self.ui, 'LAN_BAR'):
+        #     self.ui.LAN_BAR.setValue(int(min(lan_recv_speed, 100)))  # 예시: 0~100 스케일
 
         # 최근 데이터에서 최대값 찾기
         all_points = self.series_sent.pointsVector() + self.series_recv.pointsVector()
@@ -127,6 +180,20 @@ class Page1(QWidget):
 
         # recv_send_ratio 프로그레스 바 업데이트
         self.update_traffic_ratio(sent_speed, recv_speed)
+
+        # WAN/LAN 비율로 BAR 길이 업데이트 (최대 400px)
+        total = lan_recv_speed + wan_recv_speed
+        max_width = 400
+        if total > 0:
+            lan_width = int((lan_recv_speed / total) * max_width)
+            wan_width = max_width - lan_width
+        else:
+            lan_width = 0
+            wan_width = 0
+        if hasattr(self.ui, 'LAN_BAR'):
+            self.ui.LAN_BAR.setFixedWidth(lan_width)
+        if hasattr(self.ui, 'WAN_BAR'):
+            self.ui.WAN_BAR.setFixedWidth(wan_width)
 
         self.prev_sent, self.prev_recv = sent, recv
         self.chart.axisX().setRange(max(0, self.x - 60), self.x)
@@ -214,6 +281,25 @@ class Page1(QWidget):
                 #     self.ui.recv_kbs_2.setText(f"{self.total_recv:.1f} KB")
                 # if hasattr(self.ui, 'send_kbs_2'):
                 #     self.ui.send_kbs_2.setText(f"{self.total_sent:.1f} KB")
+
+    def eventFilter(self, obj, event):
+        if obj == getattr(self, '_lan_bar', None):
+            if event.type() == QEvent.Enter:
+                tip = f"LAN\nRecv: {self.total_lan_recv:.1f} KB\nSend: {self.total_lan_sent:.1f} KB"
+                QToolTip.showText(event.globalPosition().toPoint(), tip, self._lan_bar)
+                self._last_lan_tooltip = tip
+            elif event.type() == QEvent.Leave:
+                QToolTip.hideText()
+            return False
+        if obj == getattr(self, '_wan_bar', None):
+            if event.type() == QEvent.Enter:
+                tip = f"WAN\nRecv: {self.total_wan_recv:.1f} KB\nSend: {self.total_wan_sent:.1f} KB"
+                QToolTip.showText(event.globalPosition().toPoint(), tip, self._wan_bar)
+                self._last_wan_tooltip = tip
+            elif event.type() == QEvent.Leave:
+                QToolTip.hideText()
+            return False
+        return super().eventFilter(obj, event)
 
     def on_point_hovered_sent(self, point, state):
         if state:
