@@ -1,5 +1,6 @@
 #LavenderMain.py
 
+import signal
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
 # from PySide6.QtUiTools import QUiLoader
@@ -9,7 +10,7 @@ from components.page2.Page2 import Page2
 from components.page3.Page3 import Page3
 from components.page4.Page4 import Page4
 from utils import load_ui_file
-
+import subprocess
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -96,7 +97,28 @@ class MainWindow(QMainWindow):
     def menu4_clicked(self):
         self.menuChange(4)
 
+    def start_daemon():
+        pid = os.fork()
+        if pid > 0:
+            return pid  # Parent process
+        else:
+            os.setsid()  # 새 세션
+            os.umask(0)
+            # 실제 데몬 실행
+            os.execvp("python3", ["python3", "services/IpBlockDaemon.py"])
+
 if __name__ == "__main__":
+    try:
+        pid = start_daemon()
+        print(f"[INFO] IP 차단 데몬 PID: {pid}")
+    except Exception as e:
+        print(f"[ERROR] 데몬 실행 실패: {e}")
+    
     app = QApplication(sys.argv)
     window = MainWindow()
-    sys.exit(app.exec())
+    exit_code = app.exec()
+
+    if pid:
+        os.kill(pid, signal.SIGTERM)
+
+    sys.exit(exit_code)
