@@ -179,7 +179,7 @@ class Page1(QWidget):
             self.series_recv.removePoints(0, self.series_recv.count() - 60)
 
         # recv_send_ratio 프로그레스 바 업데이트
-        self.update_traffic_ratio(sent_speed, recv_speed)
+        self.update_traffic_ratio(sent_speed, recv_speed, wan_sent_speed, wan_recv_speed, lan_sent_speed, lan_recv_speed)
 
         # WAN/LAN 비율로 BAR 길이 업데이트 (최대 400px)
         total = lan_recv_speed + wan_recv_speed
@@ -198,7 +198,7 @@ class Page1(QWidget):
         self.prev_sent, self.prev_recv = sent, recv
         self.chart.axisX().setRange(max(0, self.x - 60), self.x)
 
-    def update_traffic_ratio(self, sent_speed, recv_speed):
+    def update_traffic_ratio(self, sent_speed, recv_speed, wan_sent_speed, wan_recv_speed, lan_sent_speed, lan_recv_speed):
         """받는 트래픽과 보내는 트래픽을 색으로 구분해서 표시"""
         if hasattr(self.ui, 'recv_send_ratio'):
             progress_bar = self.ui.recv_send_ratio
@@ -281,6 +281,49 @@ class Page1(QWidget):
                 #     self.ui.recv_kbs_2.setText(f"{self.total_recv:.1f} KB")
                 # if hasattr(self.ui, 'send_kbs_2'):
                 #     self.ui.send_kbs_2.setText(f"{self.total_sent:.1f} KB")
+            
+        if hasattr(self.ui, 'WAN_BAR') and hasattr(self.ui, 'LAN_BAR'):
+            wan_progress_bar = self.ui.WAN_BAR
+            lan_progress_bar = self.ui.LAN_BAR
+            
+            # 총 트래픽 계산
+            # total_wan_traffic = sent_speed + recv_speed
+            
+            # 누적 트래픽 업데이트
+            self.total_wan_sent += wan_sent_speed
+            self.total_wan_recv += wan_recv_speed
+            self.total_lan_sent += lan_sent_speed
+            self.total_lan_recv += lan_recv_speed
+            print(f"Total WAN Sent: {self.total_wan_sent:.1f} KB, Total WAN Recv: {self.total_wan_recv:.1f} KB")
+            
+            if total_traffic > 0:
+                # 받는 트래픽 비율 계산 (노란색 부분)
+                wan_recv_ratio = (self.total_wan_sent / total_traffic) * 100
+                lan_recv_ratio = (self.total_lan_sent / total_traffic) * 100
+
+                # self.progress_animation.setStartValue(progress_bar.value())
+                # self.progress_animation.setEndValue(int(recv_ratio))
+                # self.progress_animation.start()
+                wan_progress_bar.setValue(int(wan_recv_ratio))
+                lan_progress_bar.setValue(int(lan_recv_ratio))
+                
+                # 스타일시트 업데이트
+
+                # style_sheet = f"""
+                # QProgressBar {{
+                #     border-radius: 37px;
+                #     background-color: #ff5151;
+                #     text-align: center;
+                #     color: black;
+                # }}
+                
+                # QProgressBar::chunk {{
+                #     background-color: #fff700;
+                #     border-top-left-radius: 37px;
+                #     border-bottom-left-radius: 37px;
+                # }}
+                # """
+                # wan_progress_bar.setStyleSheet(style_sheet)
 
     def eventFilter(self, obj, event):
         if obj == getattr(self, '_lan_bar', None):
