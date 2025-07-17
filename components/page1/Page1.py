@@ -227,6 +227,7 @@ class Page1(QWidget):
                 # 라벨 업데이트
                 if hasattr(self.ui, 'recv_kbs'):
                     maxKb = 1500
+                    maxMb = 1500 * 1024
 
                     if recv_speed < maxKb:
                         self.ui.recv_kbs.setText(f"{recv_speed:.1f} KB/s")
@@ -300,13 +301,17 @@ class Page1(QWidget):
             if hasattr(self.ui, 'WAN_LABEL') :
                 if total_wan < maxKb:
                     self.ui.WAN_LABEL.setText(f"{total_wan:.1f} KB")
-                else:
+                elif total_wan < maxMb:
                     self.ui.WAN_LABEL.setText(f"{total_wan / 1024:.1f} MB")
+                else:
+                    self.ui.WAN_LABEL.setText(f"{total_wan / (1024 * 1024):.1f} GB")
             if hasattr(self.ui, 'send_kbs'):
                 if total_lan < maxKb:
                     self.ui.LAN_LABEL.setText(f"{total_lan:.1f} KB")
-                else:
+                elif total_lan < maxMb:
                     self.ui.LAN_LABEL.setText(f"{total_lan / 1024:.1f} MB")
+                else:
+                    self.ui.LAN_LABEL.setText(f"{total_lan / (1024 * 1024):.1f} GB")
                 
                 # 스타일시트 업데이트
 
