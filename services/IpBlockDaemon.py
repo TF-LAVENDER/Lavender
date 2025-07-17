@@ -4,6 +4,7 @@ from IpBlockService import IpBlockService
 import os
 import sys
 import signal
+import subprocess
 
 DB_PATH = "blocked_ips.db"  # SQLite DB 경로
 CHECK_INTERVAL = 60  # 초 단위로 DB를 체크하는 주기
@@ -23,9 +24,11 @@ def get_blocklist_from_db():
         return set()
 
 def block_ip(ip):
+    service = IpBlockService()
+
     if ip not in BLOCKED_IPS:
         try:
-            IpBlockService.block_ip(ip)
+            service.block_ip(ip)
             print(f"[INFO] 차단된 IP: {ip}")
             BLOCKED_IPS.add(ip)
         except subprocess.CalledProcessError as e:
