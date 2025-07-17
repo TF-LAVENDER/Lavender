@@ -124,7 +124,7 @@ QProgressBar::chunk {
              <rect>
               <x>0</x>
               <y>70</y>
-              <width>81</width>
+              <width>80</width>
               <height>20</height>
              </rect>
             </property>
@@ -138,7 +138,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string/>
+             <string>0.0 KB/s</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -149,7 +149,7 @@ QProgressBar::chunk {
              <rect>
               <x>270</x>
               <y>70</y>
-              <width>71</width>
+              <width>80</width>
               <height>20</height>
              </rect>
             </property>
@@ -163,7 +163,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string/>
+             <string>0.0 KB/s</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -194,25 +194,6 @@ QProgressBar::chunk {
              <enum>Qt::Orientation::Horizontal</enum>
             </property>
            </widget>
-           <widget class="Line" name="line_3">
-            <property name="geometry">
-             <rect>
-              <x>337</x>
-              <y>42</y>
-              <width>21</width>
-              <height>100</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: #a3a3a3;</string>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Orientation::Vertical</enum>
-            </property>
-           </widget>
            <widget class="QLabel" name="sum_kbs">
             <property name="geometry">
              <rect>
@@ -232,7 +213,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string/>
+             <string>0.0 KB/s</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -321,7 +302,7 @@ background-color : rgb(255,255,255,0);</string>
              <rect>
               <x>270</x>
               <y>90</y>
-              <width>71</width>
+              <width>80</width>
               <height>20</height>
              </rect>
             </property>
@@ -335,7 +316,7 @@ background-color : rgb(255,255,255,0);</string>
              <string notr="true">color: #c3c3c3;</string>
             </property>
             <property name="text">
-             <string/>
+             <string>0.0 KB</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
@@ -346,7 +327,7 @@ background-color : rgb(255,255,255,0);</string>
              <rect>
               <x>0</x>
               <y>90</y>
-              <width>81</width>
+              <width>80</width>
               <height>20</height>
              </rect>
             </property>
@@ -360,7 +341,7 @@ background-color : rgb(255,255,255,0);</string>
              <string notr="true">color: #c3c3c3;</string>
             </property>
             <property name="text">
-             <string/>
+             <string>0.0 KB</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop|Qt::AlignmentFlag::AlignTrailing</set>
@@ -400,9 +381,9 @@ background-color : rgb(255,255,255,0);</string>
            <widget class="QLabel" name="WAN">
             <property name="geometry">
              <rect>
-              <x>40</x>
+              <x>0</x>
               <y>66</y>
-              <width>41</width>
+              <width>40</width>
               <height>16</height>
              </rect>
             </property>
@@ -422,9 +403,9 @@ background-color : rgb(255,255,255,0);</string>
            <widget class="QLabel" name="LAN">
             <property name="geometry">
              <rect>
-              <x>44</x>
+              <x>4</x>
               <y>96</y>
-              <width>31</width>
+              <width>30</width>
               <height>16</height>
              </rect>
             </property>
@@ -444,7 +425,7 @@ background-color : rgb(255,255,255,0);</string>
            <widget class="QProgressBar" name="LAN_BAR">
             <property name="geometry">
              <rect>
-              <x>90</x>
+              <x>130</x>
               <y>100</y>
               <width>400</width>
               <height>10</height>
@@ -508,7 +489,7 @@ QProgressBar::chunk {
            <widget class="QProgressBar" name="WAN_BAR">
             <property name="geometry">
              <rect>
-              <x>90</x>
+              <x>130</x>
               <y>70</y>
               <width>400</width>
               <height>10</height>
@@ -542,6 +523,50 @@ QProgressBar::chunk {
             </property>
             <property name="invertedAppearance">
              <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QLabel" name="WAN_LABEL">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>66</y>
+              <width>90</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: #c3c3c3;</string>
+            </property>
+            <property name="text">
+             <string>0.0 KB</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="LAN_LABEL">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>96</y>
+              <width>90</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: #c3c3c3;</string>
+            </property>
+            <property name="text">
+             <string>0.0 KB</string>
             </property>
            </widget>
           </widget>

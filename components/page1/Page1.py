@@ -115,17 +115,6 @@ class Page1(QWidget):
                 new_layout.setSpacing(0)
                 new_layout.addWidget(self.chart_view)
 
-        # 툴팁용 변수 초기화
-        self._last_lan_tooltip = ''
-        self._last_wan_tooltip = ''
-        # findChild로 QProgressBar 객체 직접 참조
-        self._lan_bar = self.ui.findChild(QProgressBar, 'LAN_BAR')
-        self._wan_bar = self.ui.findChild(QProgressBar, 'WAN_BAR')
-        if self._lan_bar:
-            self._lan_bar.installEventFilter(self)
-        if self._wan_bar:
-            self._wan_bar.installEventFilter(self)
-
     def get_network_bytes(self):
         counters = psutil.net_io_counters()
         return counters.bytes_sent, counters.bytes_recv
@@ -295,17 +284,29 @@ class Page1(QWidget):
             self.total_lan_sent += lan_sent_speed
             self.total_lan_recv += lan_recv_speed
             print(f"Total WAN Sent: {self.total_wan_sent:.1f} KB, Total WAN Recv: {self.total_wan_recv:.1f} KB")
-            
-            if total_traffic > 0:
-                # 받는 트래픽 비율 계산 (노란색 부분)
-                wan_recv_ratio = (self.total_wan_sent / total_traffic) * 100
-                lan_recv_ratio = (self.total_lan_sent / total_traffic) * 100
 
-                # self.progress_animation.setStartValue(progress_bar.value())
-                # self.progress_animation.setEndValue(int(recv_ratio))
-                # self.progress_animation.start()
+            total_wan = self.total_wan_recv + self.total_wan_sent
+            total_lan = self.total_lan_recv + self.total_lan_sent
+            
+            # if total_traffic > 0:
+            if total_wan > 0:
+                # 받는 트래픽 비율 계산 (노란색 부분)
+                wan_recv_ratio = (self.total_wan_recv / total_wan) * 100
                 wan_progress_bar.setValue(int(wan_recv_ratio))
+            if total_lan > 0:
+                lan_recv_ratio = (self.total_lan_recv / total_lan) * 100
                 lan_progress_bar.setValue(int(lan_recv_ratio))
+
+            if hasattr(self.ui, 'WAN_LABEL') :
+                if total_wan < maxKb:
+                    self.ui.WAN_LABEL.setText(f"{total_wan:.1f} KB")
+                else:
+                    self.ui.WAN_LABEL.setText(f"{total_wan / 1024:.1f} MB")
+            if hasattr(self.ui, 'send_kbs'):
+                if total_lan < maxKb:
+                    self.ui.LAN_LABEL.setText(f"{total_lan:.1f} KB")
+                else:
+                    self.ui.LAN_LABEL.setText(f"{total_lan / 1024:.1f} MB")
                 
                 # 스타일시트 업데이트
 
@@ -325,24 +326,24 @@ class Page1(QWidget):
                 # """
                 # wan_progress_bar.setStyleSheet(style_sheet)
 
-    def eventFilter(self, obj, event):
-        if obj == getattr(self, '_lan_bar', None):
-            if event.type() == QEvent.Enter:
-                tip = f"LAN\nRecv: {self.total_lan_recv:.1f} KB\nSend: {self.total_lan_sent:.1f} KB"
-                QToolTip.showText(event.globalPosition().toPoint(), tip, self._lan_bar)
-                self._last_lan_tooltip = tip
-            elif event.type() == QEvent.Leave:
-                QToolTip.hideText()
-            return False
-        if obj == getattr(self, '_wan_bar', None):
-            if event.type() == QEvent.Enter:
-                tip = f"WAN\nRecv: {self.total_wan_recv:.1f} KB\nSend: {self.total_wan_sent:.1f} KB"
-                QToolTip.showText(event.globalPosition().toPoint(), tip, self._wan_bar)
-                self._last_wan_tooltip = tip
-            elif event.type() == QEvent.Leave:
-                QToolTip.hideText()
-            return False
-        return super().eventFilter(obj, event)
+    # def eventFilter(self, obj, event):
+    #     if obj == getattr(self, '_lan_bar', None):
+    #         if event.type() == QEvent.Enter:
+    #             tip = f"LAN\nRecv: {self.total_lan_recv:.1f} KB\nSend: {self.total_lan_sent:.1f} KB"
+    #             QToolTip.showText(event.globalPosition().toPoint(), tip, self._lan_bar)
+    #             self._last_lan_tooltip = tip
+    #         elif event.type() == QEvent.Leave:
+    #             QToolTip.hideText()
+    #         return False
+    #     if obj == getattr(self, '_wan_bar', None):
+    #         if event.type() == QEvent.Enter:
+    #             tip = f"WAN\nRecv: {self.total_wan_recv:.1f} KB\nSend: {self.total_wan_sent:.1f} KB"
+    #             QToolTip.showText(event.globalPosition().toPoint(), tip, self._wan_bar)
+    #             self._last_wan_tooltip = tip
+    #         elif event.type() == QEvent.Leave:
+    #             QToolTip.hideText()
+    #         return False
+    #     return super().eventFilter(obj, event)
 
     def on_point_hovered_sent(self, point, state):
         if state:
