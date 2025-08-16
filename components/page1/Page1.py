@@ -2,10 +2,10 @@
 
 import time
 import psutil
-from PySide6.QtGui import QPen, QColor,QBrush, QPainter, QCursor
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip, QProgressBar
+from PySide6.QtGui import QPen, QColor,QBrush, QPainter
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
-from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve, Property, QEvent
+from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve
 
 from utils import load_ui_file
 
