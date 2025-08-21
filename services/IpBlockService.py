@@ -9,7 +9,7 @@ DB_PATH = "blocked_ips.db"
 class IpBlockService:
     def __init__(self):
         os = platform.system()
-      
+    
   # 차단
     def block_ip(self, ip):
         if self.os == "Linux":
