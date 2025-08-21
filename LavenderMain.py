@@ -34,9 +34,6 @@ class MainWindow(QMainWindow):
         self.ui.menuButton3.clicked.connect(self.menu3_clicked)
         self.ui.menuButton4.clicked.connect(self.menu4_clicked)
 
-        self.load_page1()
-
-
     def clear_content(self):
         # 기존 위젯 제거
         for i in reversed(range(self.content_container.layout().count())):
