@@ -38,9 +38,7 @@ class MainWindow(QMainWindow):
         self.ui.menuButton2.clicked.connect(self.menu2_clicked)
         self.ui.menuButton3.clicked.connect(self.menu3_clicked)
         self.ui.menuButton4.clicked.connect(self.menu4_clicked)
-
-        self.load_page1()
-
+        
     def clear_content(self):
         for i in reversed(range(self.content_container.count())):
             widget = self.content_container.itemAt(i).widget()
