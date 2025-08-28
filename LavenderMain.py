@@ -7,7 +7,7 @@ import os
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
 from components.page1.Page1 import Page1
 from components.page2.Page2 import Page2
-from components.page3.Page3 import Page3
+# from components.page3.Page3 import Page3
 from components.page4.Page4 import Page4
 from utils import load_ui_file
 
@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
 
         self.page1 = Page1()
         self.page2 = Page2()
-        self.page3 = Page3()
+        # self.page3 = Page3()
         self.page4 = Page4()
 
         self.ui.menuButton1.clicked.connect(self.menu1_clicked)
@@ -51,8 +51,8 @@ class MainWindow(QMainWindow):
     def show_page2(self):
         self.setCentralWidget(Page2())
 
-    def show_page3(self):
-        self.setCentralWidget(Page3())
+    # def show_page3(self):
+    #     self.setCentralWidget(Page3())
 
     def show_page4(self):
         self.setCentralWidget(Page4())
@@ -65,9 +65,9 @@ class MainWindow(QMainWindow):
         self.clear_content()
         self.content_container.addWidget(self.page2)
 
-    def load_page3(self):
-        self.clear_content()
-        self.content_container.addWidget(self.page3)
+    # def load_page3(self):
+    #     self.clear_content()
+    #     self.content_container.addWidget(self.page3)
 
     def load_page4(self):
         self.clear_content()
