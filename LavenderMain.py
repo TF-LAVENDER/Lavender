@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         # 둥근 모서리 마스크 적용
         path = QPainterPath()
         rect = self.rect()
-        path.addRoundedRect(rect, 10, 10)  # 20px radius
+        path.addRoundedRect(rect, 10,10)  # 10px radius
         region = QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
         self.old_pos = None
@@ -56,7 +56,8 @@ class MainWindow(QMainWindow):
         self.ui.menuButton2.clicked.connect(self.menu2_clicked)
         self.ui.menuButton3.clicked.connect(self.menu3_clicked)
         self.ui.menuButton4.clicked.connect(self.menu4_clicked)
-        
+        self.ui.exitbutton.clicked.connect(self.closeEvent)
+
     def clear_content(self):
         for i in reversed(range(self.content_container.count())):
             widget = self.content_container.itemAt(i).widget()
@@ -134,6 +135,8 @@ class MainWindow(QMainWindow):
     def mouseReleaseEvent(self, event):
         self.old_pos = None
 
+    def closeEvent(self, event):  # 종료 버튼 함수
+        self.close()
 
 # 🔁 기존 os.fork() 대신 subprocess 사용
 def start_daemon():
