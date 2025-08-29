@@ -5,11 +5,14 @@ import sys
 import subprocess
 import os
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
+from PySide6.QtGui import QRegion, QPainterPath
+from PySide6.QtCore import Qt, QPoint
 from components.page1.Page1 import Page1
 from components.page2.Page2 import Page2
 # from components.page3.Page3 import Page3
 from components.page4.Page4 import Page4
 from utils import load_ui_file
+
 
 
 class MainWindow(QMainWindow):
@@ -19,6 +22,20 @@ class MainWindow(QMainWindow):
         self.ui = load_ui_file("MainWindow.ui")
         self.setCentralWidget(self.ui)
         self.setFixedSize(960, 545)
+        self.setWindowFlag(Qt.FramelessWindowHint)
+
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        # 둥근 모서리 마스크 적용
+        path = QPainterPath()
+        rect = self.rect()
+        path.addRoundedRect(rect, 10, 10)  # 20px radius
+        region = QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
+
+        # 안쪽 위젯 배경색 지정 (투명 배경이므로 필수)
+        self.setStyleSheet("background-color: white;")
+
         self.show()
 
         # contentArea는 QWidget이고, 그 layout이 QHBoxLayout임
