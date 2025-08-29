@@ -32,6 +32,7 @@ class MainWindow(QMainWindow):
         path.addRoundedRect(rect, 10, 10)  # 20px radius
         region = QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
+        self.old_pos = None
 
         # 안쪽 위젯 배경색 지정 (투명 배경이므로 필수)
         self.setStyleSheet("background-color: white;")
@@ -119,6 +120,19 @@ class MainWindow(QMainWindow):
 
     def menu4_clicked(self):
         self.menuChange(4)
+
+    def mousePressEvent(self, event):       #마우스 드레그 함수
+        if event.button() == Qt.LeftButton:
+            self.old_pos = event.globalPosition().toPoint()
+
+    def mouseMoveEvent(self, event):
+        if self.old_pos:
+            delta = event.globalPosition().toPoint() - self.old_pos
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.old_pos = event.globalPosition().toPoint()
+
+    def mouseReleaseEvent(self, event):
+        self.old_pos = None
 
 
 # 🔁 기존 os.fork() 대신 subprocess 사용
