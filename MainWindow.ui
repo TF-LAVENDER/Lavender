@@ -115,7 +115,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="exitbutton">
+   <widget class="QPushButton" name="exitButton">
     <property name="geometry">
      <rect>
       <x>18</x>
@@ -126,7 +126,44 @@
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: #ff5f57;
-border-radius: 6px;</string>
+border-radius: 6px;
+border: 0.5px solid #cc4c46;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="minimizeButton">
+    <property name="geometry">
+     <rect>
+      <x>38</x>
+      <y>17</y>
+      <width>12</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #FEBC2E;
+border-radius: 6px;
+border: 0.5px solid #cb9625;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dummyButton">
+    <property name="geometry">
+     <rect>
+      <x>58</x>
+      <y>17</y>
+      <width>12</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #DED8DE;
+border-radius: 6px;
+border: 0.5px solid #bcb6bc;</string>
     </property>
     <property name="text">
      <string/>
