@@ -127,7 +127,7 @@
     <property name="styleSheet">
      <string notr="true">background-color: #ff5f57;
 border-radius: 6px;
-border: 0.5px solid #cc4c46;</string>
+border: 1px solid #cc4c46;</string>
     </property>
     <property name="text">
      <string/>
@@ -145,7 +145,7 @@ border: 0.5px solid #cc4c46;</string>
     <property name="styleSheet">
      <string notr="true">background-color: #FEBC2E;
 border-radius: 6px;
-border: 0.5px solid #cb9625;</string>
+border: 1px solid #cb9625;</string>
     </property>
     <property name="text">
      <string/>
@@ -163,7 +163,7 @@ border: 0.5px solid #cb9625;</string>
     <property name="styleSheet">
      <string notr="true">background-color: #DED8DE;
 border-radius: 6px;
-border: 0.5px solid #bcb6bc;</string>
+border: 1px solid #bcb6bc;</string>
     </property>
     <property name="text">
      <string/>
