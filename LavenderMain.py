@@ -5,11 +5,14 @@ import sys
 import subprocess
 import os
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
+from PySide6.QtGui import QRegion, QPainterPath
+from PySide6.QtCore import Qt, QPoint
 from components.page1.Page1 import Page1
 from components.page2.Page2 import Page2
 # from components.page3.Page3 import Page3
 from components.page4.Page4 import Page4
 from utils import load_ui_file
+
 
 
 class MainWindow(QMainWindow):
@@ -19,6 +22,21 @@ class MainWindow(QMainWindow):
         self.ui = load_ui_file("MainWindow.ui")
         self.setCentralWidget(self.ui)
         self.setFixedSize(960, 545)
+        self.setWindowFlag(Qt.FramelessWindowHint)
+
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        # 둥근 모서리 마스크 적용
+        path = QPainterPath()
+        rect = self.rect()
+        path.addRoundedRect(rect, 10,10)  # 10px radius
+        region = QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
+        self.old_pos = None
+
+        # 안쪽 위젯 배경색 지정 (투명 배경이므로 필수)
+        self.setStyleSheet("background-color: white;")
+
         self.show()
 
         # contentArea는 QWidget이고, 그 layout이 QHBoxLayout임
@@ -38,7 +56,9 @@ class MainWindow(QMainWindow):
         self.ui.menuButton2.clicked.connect(self.menu2_clicked)
         self.ui.menuButton3.clicked.connect(self.menu3_clicked)
         self.ui.menuButton4.clicked.connect(self.menu4_clicked)
-        
+        self.ui.exitButton.clicked.connect(self.close)
+        self.ui.minimizeButton.clicked.connect(self.showMinimized)
+
     def clear_content(self):
         for i in reversed(range(self.content_container.count())):
             widget = self.content_container.itemAt(i).widget()
@@ -103,6 +123,18 @@ class MainWindow(QMainWindow):
     def menu4_clicked(self):
         self.menuChange(4)
 
+    def mousePressEvent(self, event):       #마우스 드레그 함수
+        if event.button() == Qt.LeftButton:
+            self.old_pos = event.globalPosition().toPoint()
+
+    def mouseMoveEvent(self, event):
+        if self.old_pos:
+            delta = event.globalPosition().toPoint() - self.old_pos
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.old_pos = event.globalPosition().toPoint()
+
+    def mouseReleaseEvent(self, event):
+        self.old_pos = None
 
 # 🔁 기존 os.fork() 대신 subprocess 사용
 def start_daemon():
