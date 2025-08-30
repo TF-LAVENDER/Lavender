@@ -298,6 +298,8 @@ class Page2(QWidget):
                 lan_progress_bar.setValue(int(lan_recv_ratio))
 
             if hasattr(self.ui, 'WAN_LABEL') :
+                maxKb = 1500
+                maxMb = 1500 * 1024
                 if total_wan < maxKb:
                     self.ui.WAN_LABEL.setText(f"{total_wan:.1f} KB")
                 elif total_wan < maxMb:
