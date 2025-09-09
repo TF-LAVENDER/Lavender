@@ -152,12 +152,6 @@ class Ui_MainWindow(object):
         self.recv_kbs_2.setFont(font3)
         self.recv_kbs_2.setStyleSheet(u"color: #c3c3c3;")
         self.recv_kbs_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTop|Qt.AlignmentFlag.AlignTrailing)
-        self.line_3 = QFrame(self.frame_2)
-        self.line_3.setObjectName(u"line_3")
-        self.line_3.setGeometry(QRect(347, 42, 3, 88))
-        self.line_3.setStyleSheet(u"color: #a3a3a3;")
-        self.line_3.setFrameShadow(QFrame.Shadow.Plain)
-        self.line_3.setFrameShape(QFrame.Shape.VLine)
 
         self.verticalLayout.addWidget(self.frame_2)
 
@@ -253,7 +247,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 937, 33))
+        self.menubar.setGeometry(QRect(0, 0, 937, 36))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")

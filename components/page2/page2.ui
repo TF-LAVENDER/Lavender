@@ -230,7 +230,7 @@ QProgressBar::chunk {
             </property>
             <property name="styleSheet">
              <string notr="true">border-image:url(&quot;images/Union1.png&quot;);
-background-color : rgb(255,255,255,0);</string>
+background-color : rgb(0,0,0,0);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
@@ -250,7 +250,7 @@ background-color : rgb(255,255,255,0);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">border-image:url(&quot;images/Union2.png&quot;);
-background-color : rgb(255,255,255,0);</string>
+background-color : rgb(0,0,0,0);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
