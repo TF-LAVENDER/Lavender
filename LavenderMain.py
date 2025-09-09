@@ -41,20 +41,6 @@ class MainWindow(QMainWindow):
 
         self.show()
 
-    def paintEvent(self, event):
-        # 5) 메인 윈도우에 직접 둥근 배경을 그리고 AA 켜기
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing, True)
-
-        # 경계선 반픽셀 깔끔하게 하려고 살짝 안쪽으로
-        r = self.rect().adjusted(0, 0, -1, -1)
-
-        path = QPainterPath()
-        path.addRoundedRect(r, 10, 10)
-
-        painter.fillPath(path, QColor(34, 34, 34))
-
-
         self.content_widget = self.ui.findChild(QWidget, "horizontalLayoutWidget")
         if self.content_widget is None:
             raise RuntimeError("horizontalLayoutWidget 위젯을 찾을 수 없습니다. .ui 파일 확인 필요.")
@@ -73,6 +59,22 @@ class MainWindow(QMainWindow):
         self.ui.menuButton4.clicked.connect(self.menu4_clicked)
         self.ui.exitButton.clicked.connect(self.close)
         self.ui.minimizeButton.clicked.connect(self.showMinimized)
+
+    def paintEvent(self, event):
+        # 5) 메인 윈도우에 직접 둥근 배경을 그리고 AA 켜기
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+
+        # 경계선 반픽셀 깔끔하게 하려고 살짝 안쪽으로
+        r = self.rect().adjusted(0, 0, -1, -1)
+
+        path = QPainterPath()
+        path.addRoundedRect(r, 10, 10)
+
+        painter.fillPath(path, QColor(34, 34, 34))
+
+
+
 
     def clear_content(self):
         for i in reversed(range(self.content_container.count())):
