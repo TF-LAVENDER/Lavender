@@ -15,31 +15,46 @@ from utils import load_ui_file
 
 
 
+from PySide6.QtWidgets import QMainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPainter, QPainterPath, QColor
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.ui = load_ui_file("MainWindow.ui")
-        self.setCentralWidget(self.ui)
-        self.setFixedSize(960, 545)
+        # 1) 프레임리스 + 투명 배경
         self.setWindowFlag(Qt.FramelessWindowHint)
-
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        # 둥근 모서리 마스크 적용
-        path = QPainterPath()
-        rect = self.rect()
-        path.addRoundedRect(rect, 10,10)  # 10px radius
-        region = QRegion(path.toFillPolygon().toPolygon())
-        self.setMask(region)
-        self.old_pos = None
+        # 2) UI 로드 및 중앙 위젯 투명 처리 (중요!)
+        self.ui = load_ui_file("MainWindow.ui")
+        self.setCentralWidget(self.ui)
+        self.ui.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.ui.setAutoFillBackground(False)
+        self.ui.setStyleSheet("background: transparent;")  # UI 파일에서 배경색 줬다면 지워져야 함
 
-        # 안쪽 위젯 배경색 지정 (투명 배경이므로 필수)
-        self.setStyleSheet("background-color: white;")
+        # 3) 윈도우 크기
+        self.setFixedSize(960, 545)
+
+        # 4) 절대 쓰지 말 것: setMask(...)  ← 이거 있으면 모서리 계단짐(AA 불가)
 
         self.show()
 
-        # contentArea는 QWidget이고, 그 layout이 QHBoxLayout임
+    def paintEvent(self, event):
+        # 5) 메인 윈도우에 직접 둥근 배경을 그리고 AA 켜기
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+
+        # 경계선 반픽셀 깔끔하게 하려고 살짝 안쪽으로
+        r = self.rect().adjusted(0, 0, -1, -1)
+
+        path = QPainterPath()
+        path.addRoundedRect(r, 10, 10)
+
+        painter.fillPath(path, QColor(34, 34, 34))
+
+
         self.content_widget = self.ui.findChild(QWidget, "horizontalLayoutWidget")
         if self.content_widget is None:
             raise RuntimeError("horizontalLayoutWidget 위젯을 찾을 수 없습니다. .ui 파일 확인 필요.")
