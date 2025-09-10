@@ -115,14 +115,14 @@ class Ui_MainWindow(object):
         self.frame_21.setObjectName(u"frame_21")
         self.frame_21.setGeometry(QRect(204, 50, 37, 75))
         self.frame_21.setStyleSheet(u"border-image:url(\"images/Union1.png\");\n"
-"background-color : rgb(255,255,255,0);")
+"background-color : rgb(0,0,0,0);")
         self.frame_21.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_21.setFrameShadow(QFrame.Shadow.Raised)
         self.frame_3 = QFrame(self.frame_2)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setGeometry(QRect(110, 50, 37, 75))
         self.frame_3.setStyleSheet(u"border-image:url(\"images/Union2.png\");\n"
-"background-color : rgb(255,255,255,0);")
+"background-color : rgb(0,0,0,0);")
         self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
         self.frame = QFrame(self.frame_2)
@@ -152,6 +152,12 @@ class Ui_MainWindow(object):
         self.recv_kbs_2.setFont(font3)
         self.recv_kbs_2.setStyleSheet(u"color: #c3c3c3;")
         self.recv_kbs_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTop|Qt.AlignmentFlag.AlignTrailing)
+        self.line_3 = QFrame(self.frame_2)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setGeometry(QRect(347, 42, 3, 88))
+        self.line_3.setStyleSheet(u"color: #a3a3a3;")
+        self.line_3.setFrameShadow(QFrame.Shadow.Plain)
+        self.line_3.setFrameShape(QFrame.Shape.VLine)
 
         self.verticalLayout.addWidget(self.frame_2)
 
@@ -247,7 +253,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 937, 36))
+        self.menubar.setGeometry(QRect(0, 0, 937, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
