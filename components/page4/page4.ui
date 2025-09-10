@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>Page3</class>
+ <widget class="QWidget" name="Page3">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,24 +11,100 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Security Log</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <property name="styleSheet">
-    <string notr="true"/>
+  <property name="styleSheet">
+   <string notr="true">background-color: #2d3242;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
    </property>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>960</width>
-     <height>33</height>
-    </rect>
+   <property name="leftMargin">
+    <number>0</number>
    </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="styleSheet">
+      <string notr="true">QTableWidget {
+    gridline-color: rgb(50, 55, 100);
+    
+    alternate-background-color: rgb(68, 64, 122);
+}
+QTableWidget::item {
+    padding: 5px;
+    border-bottom: 1px solid rgb(50, 55, 100);
+}
+QHeaderView::section {
+    background-color: rgb(39, 43, 77);
+    color: white;
+    padding: 5px;
+    border: none;
+    font-weight: bold;
+}
+QTableWidget::item:selected {
+    background-color: rgb(70, 77, 140);
+}</string>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>false</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>ASC</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Source-IP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Source-Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Destination-IP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Destination-Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

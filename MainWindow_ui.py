@@ -62,25 +62,28 @@ class Ui_MainWindow(object):
         self.exitButton = QPushButton(self.centralwidget)
         self.exitButton.setObjectName(u"exitButton")
         self.exitButton.setGeometry(QRect(18, 17, 12, 12))
+        self.exitButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.exitButton.setStyleSheet(u"background-color: #ff5f57;\n"
 "border-radius: 6px;\n"
 "border: 1px solid #cc4c46;")
         self.minimizeButton = QPushButton(self.centralwidget)
         self.minimizeButton.setObjectName(u"minimizeButton")
         self.minimizeButton.setGeometry(QRect(38, 17, 12, 12))
+        self.minimizeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.minimizeButton.setStyleSheet(u"background-color: #FEBC2E;\n"
 "border-radius: 6px;\n"
 "border: 1px solid #cb9625;")
         self.dummyButton = QPushButton(self.centralwidget)
         self.dummyButton.setObjectName(u"dummyButton")
         self.dummyButton.setGeometry(QRect(58, 17, 12, 12))
+        self.dummyButton.setCursor(QCursor(Qt.CursorShape.ForbiddenCursor))
         self.dummyButton.setStyleSheet(u"background-color: #DED8DE;\n"
 "border-radius: 6px;\n"
 "border: 1px solid #bcb6bc;")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 960, 33))
+        self.menubar.setGeometry(QRect(0, 0, 960, 36))
         self.menubar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         MainWindow.setMenuBar(self.menubar)
 
