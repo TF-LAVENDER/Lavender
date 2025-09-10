@@ -15,15 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHBoxLayout, QHeaderView,
-    QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView, QPushButton,
+    QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
+    QWidget)
 
 class Ui_Page3(object):
     def setupUi(self, Page3):
         if not Page3.objectName():
             Page3.setObjectName(u"Page3")
-        Page3.resize(960, 400)
+        Page3.resize(960, 500)
         Page3.setStyleSheet(u"background-color: #2d3242;")
         self.verticalLayout = QVBoxLayout(Page3)
         self.verticalLayout.setSpacing(0)
@@ -35,75 +35,22 @@ class Ui_Page3(object):
         self.headerWidget.setMaximumSize(QSize(16777215, 40))
         self.headerWidget.setStyleSheet(u"background-color: #272b4d;\n"
 "color: white;")
-        self.headerLayout = QHBoxLayout(self.headerWidget)
-        self.headerLayout.setObjectName(u"headerLayout")
-        self.headerLayout.setContentsMargins(20, 0, 20, 0)
-        self.toggleWidget = QWidget(self.headerWidget)
-        self.toggleWidget.setObjectName(u"toggleWidget")
-        self.toggleWidget.setMinimumSize(QSize(200, 30))
-        self.toggleWidget.setMaximumSize(QSize(200, 30))
-        self.toggleWidget.setStyleSheet(u"background-color: #5056A5;\n"
-"border-radius: 15px;")
-        self.toggleLayout = QHBoxLayout(self.toggleWidget)
-        self.toggleLayout.setSpacing(0)
-        self.toggleLayout.setObjectName(u"toggleLayout")
-        self.toggleLayout.setContentsMargins(0, 0, 0, 0)
-        self.blockedButton = QPushButton(self.toggleWidget)
+        self.blockedButton = QPushButton(self.headerWidget)
         self.blockedButton.setObjectName(u"blockedButton")
-        self.blockedButton.setMinimumSize(QSize(100, 30))
-        self.blockedButton.setMaximumSize(QSize(100, 30))
-        self.blockedButton.setStyleSheet(u"QPushButton {\n"
-"    background-color: #ff4444;\n"
-"    border-top-left-radius: 15px;\n"
-"    border-bottom-left-radius: 15px;\n"
-"    border-top-right-radius: 0px;\n"
-"    border-bottom-right-radius: 0px;\n"
-"    color: white;\n"
-"    font-weight: bold;\n"
-"    border: none;\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: #ff6666;\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: #cc3333;\n"
-"}")
+        self.blockedButton.setGeometry(QRect(0, 0, 100, 40))
+        self.blockedButton.setMinimumSize(QSize(100, 40))
+        self.blockedButton.setMaximumSize(QSize(100, 40))
+        self.blockedButton.setStyleSheet(u"border-image: url(\"components/page3/images/blocked_on.png\")")
         self.blockedButton.setCheckable(True)
         self.blockedButton.setChecked(True)
-
-        self.toggleLayout.addWidget(self.blockedButton)
-
-        self.allowedButton = QPushButton(self.toggleWidget)
+        self.allowedButton = QPushButton(self.headerWidget)
         self.allowedButton.setObjectName(u"allowedButton")
-        self.allowedButton.setMinimumSize(QSize(100, 30))
-        self.allowedButton.setMaximumSize(QSize(100, 30))
-        self.allowedButton.setStyleSheet(u"QPushButton {\n"
-"    background-color: #5056A5;\n"
-"    border-top-left-radius: 0px;\n"
-"    border-bottom-left-radius: 0px;\n"
-"    border-top-right-radius: 15px;\n"
-"    border-bottom-right-radius: 15px;\n"
-"    color: white;\n"
-"    font-weight: bold;\n"
-"    border: none;\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: #6066B5;\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: #4046A5;\n"
-"}\n"
-"QPushButton:checked {\n"
-"    background-color: #44ff44;\n"
-"}")
+        self.allowedButton.setGeometry(QRect(101, 0, 100, 40))
+        self.allowedButton.setMinimumSize(QSize(100, 40))
+        self.allowedButton.setMaximumSize(QSize(100, 40))
+        self.allowedButton.setStyleSheet(u"border-image: url(\"components/page3/images/allowed_off.png\")")
         self.allowedButton.setCheckable(True)
         self.allowedButton.setChecked(False)
-
-        self.toggleLayout.addWidget(self.allowedButton)
-
-
-        self.headerLayout.addWidget(self.toggleWidget, 0, Qt.AlignmentFlag.AlignLeft)
-
 
         self.verticalLayout.addWidget(self.headerWidget)
 
@@ -154,9 +101,9 @@ class Ui_Page3(object):
     # setupUi
 
     def retranslateUi(self, Page3):
-        Page3.setWindowTitle(QCoreApplication.translate("Page3", u"Security Log", None))
-        self.blockedButton.setText(QCoreApplication.translate("Page3", u"\ud83d\udd34 Blocked", None))
-        self.allowedButton.setText(QCoreApplication.translate("Page3", u"\ud83d\udfe2 Allowed", None))
+        Page3.setWindowTitle(QCoreApplication.translate("Page3", u"IP List", None))
+        self.blockedButton.setText("")
+        self.allowedButton.setText("")
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Page3", u"ASC", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
