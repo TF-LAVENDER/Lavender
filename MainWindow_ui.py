@@ -23,27 +23,27 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(960, 545)
-        MainWindow.setStyleSheet(u"background-color: rgb(35, 35, 35); ")
+        MainWindow.setStyleSheet(u"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.menuButton1 = QPushButton(self.centralwidget)
         self.menuButton1.setObjectName(u"menuButton1")
-        self.menuButton1.setGeometry(QRect(240, 7, 120, 30))
+        self.menuButton1.setGeometry(QRect(240, 9, 120, 30))
         self.menuButton1.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.menuButton1.setStyleSheet(u"border-image:url(\"images/menu1_on.png\")")
         self.menuButton2 = QPushButton(self.centralwidget)
         self.menuButton2.setObjectName(u"menuButton2")
-        self.menuButton2.setGeometry(QRect(360, 7, 120, 30))
+        self.menuButton2.setGeometry(QRect(360, 9, 120, 30))
         self.menuButton2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.menuButton2.setStyleSheet(u"border-image:url(\"images/menu2_off.png\")")
         self.menuButton3 = QPushButton(self.centralwidget)
         self.menuButton3.setObjectName(u"menuButton3")
-        self.menuButton3.setGeometry(QRect(480, 7, 120, 30))
+        self.menuButton3.setGeometry(QRect(480, 9, 120, 30))
         self.menuButton3.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.menuButton3.setStyleSheet(u"border-image:url(\"images/menu3_off.png\")")
         self.menuButton4 = QPushButton(self.centralwidget)
         self.menuButton4.setObjectName(u"menuButton4")
-        self.menuButton4.setGeometry(QRect(600, 7, 120, 30))
+        self.menuButton4.setGeometry(QRect(600, 9, 120, 30))
         self.menuButton4.setStyleSheet(u"border-image:url(\"images/menu4_off.png\")")
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
@@ -59,10 +59,28 @@ class Ui_MainWindow(object):
 
         self.contentArea.addWidget(self.widget)
 
+        self.exitButton = QPushButton(self.centralwidget)
+        self.exitButton.setObjectName(u"exitButton")
+        self.exitButton.setGeometry(QRect(18, 17, 12, 12))
+        self.exitButton.setStyleSheet(u"background-color: #ff5f57;\n"
+"border-radius: 6px;\n"
+"border: 1px solid #cc4c46;")
+        self.minimizeButton = QPushButton(self.centralwidget)
+        self.minimizeButton.setObjectName(u"minimizeButton")
+        self.minimizeButton.setGeometry(QRect(38, 17, 12, 12))
+        self.minimizeButton.setStyleSheet(u"background-color: #FEBC2E;\n"
+"border-radius: 6px;\n"
+"border: 1px solid #cb9625;")
+        self.dummyButton = QPushButton(self.centralwidget)
+        self.dummyButton.setObjectName(u"dummyButton")
+        self.dummyButton.setGeometry(QRect(58, 17, 12, 12))
+        self.dummyButton.setStyleSheet(u"background-color: #DED8DE;\n"
+"border-radius: 6px;\n"
+"border: 1px solid #bcb6bc;")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 960, 36))
+        self.menubar.setGeometry(QRect(0, 0, 960, 33))
         self.menubar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         MainWindow.setMenuBar(self.menubar)
 
@@ -77,5 +95,8 @@ class Ui_MainWindow(object):
         self.menuButton2.setText("")
         self.menuButton3.setText("")
         self.menuButton4.setText("")
+        self.exitButton.setText("")
+        self.minimizeButton.setText("")
+        self.dummyButton.setText("")
     # retranslateUi
 
