@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>IP List</string>
+   <string>Security Log</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #2d3242;</string>
@@ -33,111 +33,19 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="headerWidget" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">margin: 0;
-padding: 0;
-color: white;</string>
-     </property>
-     <widget class="QPushButton" name="blockedButton">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>100</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-image: url(&quot;components/page3/images/blocked_on.png&quot;);
-margin: 0;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="allowedButton">
-      <property name="geometry">
-       <rect>
-        <x>101</x>
-        <y>0</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>100</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-image: url(&quot;components/page3/images/allowed_off.png&quot;);
-margin: 0;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-   </item>
-   <item>
     <widget class="QTableWidget" name="tableWidget">
      <property name="styleSheet">
       <string notr="true">QTableWidget {
     gridline-color: rgb(50, 55, 100);
+    border: 0;
     alternate-background-color: rgb(68, 64, 122);
-	padding: 0;
-	margin: 0;
 }
 QTableWidget::item {
     padding: 5px;
-    border-bottom: 1px solid rgb(68, 64, 122);
+    border-bottom: 1px solid rgb(50, 55, 100);
 }
 QHeaderView::section {
-    background-color: rgb(68, 64, 122);
+    background-color: rgb(39, 43, 77);
     color: white;
     padding: 5px;
     border: none;
@@ -166,12 +74,27 @@ QTableWidget::item:selected {
      </column>
      <column>
       <property name="text">
-       <string>IP</string>
+       <string>Date</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Date</string>
+       <string>Source-IP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Source-Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Destination-IP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Destination-Port</string>
       </property>
      </column>
      <column>

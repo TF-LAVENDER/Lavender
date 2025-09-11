@@ -20,7 +20,7 @@
    <widget class="QPushButton" name="menuButton1">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>300</x>
       <y>9</y>
       <width>120</width>
       <height>30</height>
@@ -39,7 +39,7 @@
    <widget class="QPushButton" name="menuButton2">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>420</x>
       <y>9</y>
       <width>120</width>
       <height>30</height>
@@ -58,7 +58,7 @@
    <widget class="QPushButton" name="menuButton3">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>540</x>
       <y>9</y>
       <width>120</width>
       <height>30</height>
@@ -69,22 +69,6 @@
     </property>
     <property name="styleSheet">
      <string notr="true">border-image: url(&quot;images/menu3_off.png&quot;)</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menuButton4">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>9</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image: url(&quot;images/menu4_off.png&quot;)</string>
     </property>
     <property name="text">
      <string/>

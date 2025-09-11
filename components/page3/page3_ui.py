@@ -15,9 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView, QPushButton,
-    QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView, QSizePolicy,
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_Page3(object):
     def setupUi(self, Page3):
@@ -29,37 +28,9 @@ class Ui_Page3(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.headerWidget = QWidget(Page3)
-        self.headerWidget.setObjectName(u"headerWidget")
-        self.headerWidget.setMinimumSize(QSize(0, 40))
-        self.headerWidget.setMaximumSize(QSize(16777215, 40))
-        self.headerWidget.setStyleSheet(u"margin: 0;\n"
-"padding: 0;\n"
-"color: white;")
-        self.blockedButton = QPushButton(self.headerWidget)
-        self.blockedButton.setObjectName(u"blockedButton")
-        self.blockedButton.setGeometry(QRect(0, 0, 100, 40))
-        self.blockedButton.setMinimumSize(QSize(100, 40))
-        self.blockedButton.setMaximumSize(QSize(100, 40))
-        self.blockedButton.setStyleSheet(u"border-image: url(\"components/page3/images/blocked_on.png\");\n"
-"margin: 0;")
-        self.blockedButton.setCheckable(True)
-        self.blockedButton.setChecked(True)
-        self.allowedButton = QPushButton(self.headerWidget)
-        self.allowedButton.setObjectName(u"allowedButton")
-        self.allowedButton.setGeometry(QRect(101, 0, 100, 40))
-        self.allowedButton.setMinimumSize(QSize(100, 40))
-        self.allowedButton.setMaximumSize(QSize(100, 40))
-        self.allowedButton.setStyleSheet(u"border-image: url(\"components/page3/images/allowed_off.png\");\n"
-"margin: 0;")
-        self.allowedButton.setCheckable(True)
-        self.allowedButton.setChecked(False)
-
-        self.verticalLayout.addWidget(self.headerWidget)
-
         self.tableWidget = QTableWidget(Page3)
-        if (self.tableWidget.columnCount() < 4):
-            self.tableWidget.setColumnCount(4)
+        if (self.tableWidget.columnCount() < 7):
+            self.tableWidget.setColumnCount(7)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -68,19 +39,24 @@ class Ui_Page3(object):
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(5, __qtablewidgetitem5)
+        __qtablewidgetitem6 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(6, __qtablewidgetitem6)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"QTableWidget {\n"
 "    gridline-color: rgb(50, 55, 100);\n"
+"    border: 0;\n"
 "    alternate-background-color: rgb(68, 64, 122);\n"
-"	padding: 0;\n"
-"	margin: 0;\n"
 "}\n"
 "QTableWidget::item {\n"
 "    padding: 5px;\n"
-"    border-bottom: 1px solid rgb(68, 64, 122);\n"
+"    border-bottom: 1px solid rgb(50, 55, 100);\n"
 "}\n"
 "QHeaderView::section {\n"
-"    background-color: rgb(68, 64, 122);\n"
+"    background-color: rgb(39, 43, 77);\n"
 "    color: white;\n"
 "    padding: 5px;\n"
 "    border: none;\n"
@@ -103,16 +79,20 @@ class Ui_Page3(object):
     # setupUi
 
     def retranslateUi(self, Page3):
-        Page3.setWindowTitle(QCoreApplication.translate("Page3", u"IP List", None))
-        self.blockedButton.setText("")
-        self.allowedButton.setText("")
+        Page3.setWindowTitle(QCoreApplication.translate("Page3", u"Security Log", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Page3", u"ASC", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Page3", u"IP", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Page3", u"Date", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Page3", u"Date", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Page3", u"Source-IP", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Page3", u"Description", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Page3", u"Source-Port", None));
+        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Page3", u"Destination-IP", None));
+        ___qtablewidgetitem5 = self.tableWidget.horizontalHeaderItem(5)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Page3", u"Destination-Port", None));
+        ___qtablewidgetitem6 = self.tableWidget.horizontalHeaderItem(6)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Page3", u"Description", None));
     # retranslateUi
 
