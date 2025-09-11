@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>937</width>
+    <width>935</width>
     <height>500</height>
    </rect>
   </property>
@@ -32,14 +32,17 @@
     <property name="styleSheet">
      <string notr="true"># border-image:url(&quot;images/page1.png&quot;)</string>
     </property>
-    <widget class="QWidget" name="verticalLayoutWidget">
+    <widget class="QWidget" name="verticalWidget" native="true">
      <property name="geometry">
       <rect>
-       <x>-10</x>
+       <x>-14</x>
        <y>-10</y>
-       <width>980</width>
+       <width>985</width>
        <height>320</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 0;</string>
      </property>
      <layout class="QVBoxLayout" name="chartContainer">
       <property name="spacing">
@@ -602,7 +605,7 @@ QProgressBar::chunk {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>937</width>
+     <width>935</width>
      <height>33</height>
     </rect>
    </property>
