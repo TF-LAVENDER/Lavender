@@ -9,6 +9,9 @@ class Page3(QWidget):
 
         self.ui.blockedButton.clicked.connect(self.blocked_clicked)
         self.ui.allowedButton.clicked.connect(self.allowed_clicked)
+
+        self.ui.blockedButton.setFlat(True)
+        self.ui.allowedButton.setFlat(True)
     
     def menuChange(self, menuNum):
         self.ui.blockedButton.setStyleSheet("border-image: url('components/page3/images/blocked_off.png');")
