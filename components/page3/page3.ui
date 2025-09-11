@@ -39,6 +39,9 @@
     gridline-color: rgb(50, 55, 100);
     border: 0;
     alternate-background-color: rgb(68, 64, 122);
+	  padding: 0;
+	  margin: 0;
+	  border: 0 ;
 }
 QTableWidget::item {
     padding: 5px;
