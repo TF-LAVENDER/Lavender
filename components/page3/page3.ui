@@ -131,6 +131,7 @@ margin: 0;</string>
     alternate-background-color: rgb(68, 64, 122);
 	padding: 0;
 	margin: 0;
+	border: 0 ;
 }
 QTableWidget::item {
     padding: 5px;
