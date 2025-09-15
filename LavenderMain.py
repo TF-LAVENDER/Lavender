@@ -17,21 +17,16 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # 1) 프레임리스 + 투명 배경
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        # 2) UI 로드 및 중앙 위젯 투명 처리 (중요!)
         self.ui = load_ui_file("MainWindow.ui")
         self.setCentralWidget(self.ui)
         self.ui.setAttribute(Qt.WA_TranslucentBackground, True)
         self.ui.setAutoFillBackground(False)
-        self.ui.setStyleSheet("background: transparent;")  # UI 파일에서 배경색 줬다면 지워져야 함
+        self.ui.setStyleSheet("background: transparent;")
 
-        # 3) 윈도우 크기
         self.setFixedSize(960, 545)
-
-        # 4) 절대 쓰지 말 것: setMask(...)  ← 이거 있으면 모서리 계단짐(AA 불가)
 
         self.show()
 
@@ -39,8 +34,7 @@ class MainWindow(QMainWindow):
         if self.content_widget is None:
             raise RuntimeError("horizontalLayoutWidget 위젯을 찾을 수 없습니다. .ui 파일 확인 필요.")
         self.content_container = self.content_widget.layout()
-        print(self.content_container)  # QHBoxLayout 출력됨
-
+        print(self.content_container)
 
         self.page1 = Page1()
         self.page2 = Page2()
@@ -53,11 +47,9 @@ class MainWindow(QMainWindow):
         self.ui.minimizeButton.clicked.connect(self.showMinimized)
 
     def paintEvent(self, event):
-        # 5) 메인 윈도우에 직접 둥근 배경을 그리고 AA 켜기
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing, True)
 
-        # 경계선 반픽셀 깔끔하게 하려고 살짝 안쪽으로
         r = self.rect().adjusted(0, 0, -1, -1)
 
         path = QPainterPath()
