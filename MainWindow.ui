@@ -112,9 +112,16 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #ff5f57;
-border-radius: 6px;
-border: 1px solid #cc4c46;</string>
+     <string notr="true">QPushButton {
+    background-color: #ff5f57;
+    border-radius: 6px;
+    border: 1px solid #cc4c46;
+}
+
+QPushButton:hover {
+    background-color: #ff7a72; 
+    border: 1px solid #d95b54; 
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -133,9 +140,16 @@ border: 1px solid #cc4c46;</string>
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #FEBC2E;
-border-radius: 6px;
-border: 1px solid #cb9625;</string>
+     <string notr="true">QPushButton {
+    background-color: #FEBC2E;
+    border-radius: 6px;
+    border: 1px solid #cb9625;
+}
+
+QPushButton:hover {
+    background-color: #FFC94A; 
+    border: 1px solid #D4A230;  
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -169,7 +183,7 @@ border: 1px solid #bcb6bc;</string>
      <x>0</x>
      <y>0</y>
      <width>960</width>
-     <height>36</height>
+     <height>33</height>
     </rect>
    </property>
    <property name="cursor">

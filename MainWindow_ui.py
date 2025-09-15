@@ -59,16 +59,30 @@ class Ui_MainWindow(object):
         self.exitButton.setObjectName(u"exitButton")
         self.exitButton.setGeometry(QRect(18, 17, 12, 12))
         self.exitButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.exitButton.setStyleSheet(u"background-color: #ff5f57;\n"
-"border-radius: 6px;\n"
-"border: 1px solid #cc4c46;")
+        self.exitButton.setStyleSheet(u"QPushButton {\n"
+"    background-color: #ff5f57;\n"
+"    border-radius: 6px;\n"
+"    border: 1px solid #cc4c46;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #ff7a72; \n"
+"    border: 1px solid #d95b54; \n"
+"}")
         self.minimizeButton = QPushButton(self.centralwidget)
         self.minimizeButton.setObjectName(u"minimizeButton")
         self.minimizeButton.setGeometry(QRect(38, 17, 12, 12))
         self.minimizeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.minimizeButton.setStyleSheet(u"background-color: #FEBC2E;\n"
-"border-radius: 6px;\n"
-"border: 1px solid #cb9625;")
+        self.minimizeButton.setStyleSheet(u"QPushButton {\n"
+"    background-color: #FEBC2E;\n"
+"    border-radius: 6px;\n"
+"    border: 1px solid #cb9625;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #FFC94A; \n"
+"    border: 1px solid #D4A230;  \n"
+"}")
         self.dummyButton = QPushButton(self.centralwidget)
         self.dummyButton.setObjectName(u"dummyButton")
         self.dummyButton.setGeometry(QRect(58, 17, 12, 12))
@@ -79,7 +93,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 960, 36))
+        self.menubar.setGeometry(QRect(0, 0, 960, 33))
         self.menubar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         MainWindow.setMenuBar(self.menubar)
 
