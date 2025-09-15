@@ -8,41 +8,34 @@ from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasin
 
 from utils import load_ui_file
 
-WAN_IFACE = "en0"  # 외부망 인터페이스
-LAN_IFACE = "en1"  # 내부망 인터페이스
+WAN_IFACE = "en0"
+LAN_IFACE = "en1"
 
 class Page1(QWidget):
     def __init__(self):
         super().__init__()
 
-        # .ui 파일 로딩 및 레이아웃 세팅
         self.ui = load_ui_file("components/page1/page1.ui")
         self.setLayout(self.ui.layout())
 
-        # 라인 시리즈 (보낸/받은 트래픽)
         self.series_sent = QSplineSeries(name="보낸 데이터 (KB/s)")
         self.series_recv = QSplineSeries(name="받은 데이터 (KB/s)")
 
-        # 누적 트래픽 초기화
         self.total_sent = 0
         self.total_recv = 0
-        # WAN/LAN별 누적 트래픽 초기화
         self.total_wan_sent = 0
         self.total_wan_recv = 0
         self.total_lan_sent = 0
         self.total_lan_recv = 0
 
-        # QChart 구성
         self.chart = QChart()
         self.chart.addSeries(self.series_sent)
         self.chart.addSeries(self.series_recv)
         self.chart.createDefaultAxes()
 
-        # 축 객체 가져오기
         axis_x = self.chart.axisX()
         axis_y = self.chart.axisY()
 
-        # 축 라벨 색상 하얗게
         axis_x.setLabelsBrush(QColor("white"))
         axis_y.setLabelsBrush(QColor("white"))
 
@@ -54,21 +47,17 @@ class Page1(QWidget):
         axis_y.setGridLineVisible(False)
 
 
-        # 선 색상 명시 (선택)
         self.series_sent.setPen(QPen(QColor.fromRgbF(1.0, 0.3176, 0.3176, 1.0), 5))
         self.series_recv.setPen(QPen(QColor.fromRgbF(1.0, 0.9686, 0.0, 0.86), 5))
 
-        # 축 범위 강제 지정 (초기값)
         self.chart.axisX().setRange(0, 60)
         self.chart.axisY().setRange(0, 2000)
 
         self.chart.setMargins(QMargins(0, 0, 0, 0))
-        self.chart.setTitle("")            # 제목 제거
-        self.chart.legend().hide()         # 범례 제거
+        self.chart.setTitle("")
+        self.chart.legend().hide()
 
-        # 차트 뷰 생성
         self.chart_view = QChartView(self.chart)
-        # self.chart.setBackgroundVisible(False)
         self.chart.setBackgroundVisible(True)
         self.chart.setBackgroundRoundness(0)
         self.chart.setPlotAreaBackgroundVisible(False)
