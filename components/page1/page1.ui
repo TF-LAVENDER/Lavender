@@ -231,6 +231,11 @@ QProgressBar::chunk {
               <height>75</height>
              </rect>
             </property>
+            <property name="font">
+             <font>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
             <property name="styleSheet">
              <string notr="true">border-image:url(&quot;images/Union1.png&quot;);
 background-color : rgb(0,0,0,0);</string>
@@ -250,6 +255,11 @@ background-color : rgb(0,0,0,0);</string>
               <width>37</width>
               <height>75</height>
              </rect>
+            </property>
+            <property name="font">
+             <font>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
             </property>
             <property name="styleSheet">
              <string notr="true">border-image:url(&quot;images/Union2.png&quot;);
