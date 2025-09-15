@@ -109,7 +109,7 @@ class MainWindow(QMainWindow):
     def menu3_clicked(self):
         self.menuChange(3)
 
-    def mousePressEvent(self, event):       #마우스 드레그 함수
+    def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.old_pos = event.globalPosition().toPoint()
 
