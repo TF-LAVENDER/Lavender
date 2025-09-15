@@ -46,6 +46,8 @@ class MainWindow(QMainWindow):
         self.ui.exitButton.clicked.connect(self.close)
         self.ui.minimizeButton.clicked.connect(self.showMinimized)
 
+        self.menu1_clicked()
+
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing, True)
