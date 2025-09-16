@@ -16,7 +16,7 @@ from PySide6.QtGui import QPainter, QPainterPath, QColor
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
+        self.selectedMenu = 0
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         self.ui.menuButton1.clicked.connect(self.menu1_clicked)
         self.ui.menuButton2.clicked.connect(self.menu2_clicked)
         self.ui.menuButton3.clicked.connect(self.menu3_clicked)
+
         self.ui.exitButton.clicked.connect(self.close)
         self.ui.minimizeButton.clicked.connect(self.showMinimized)
 
@@ -101,13 +102,20 @@ class MainWindow(QMainWindow):
             self.load_page3()
 
     def menu1_clicked(self):
-        self.menuChange(1)
+        if self.selectedMenu != 1:
+            self.selectedMenu = 1
+            self.menuChange(1)
 
     def menu2_clicked(self):
-        self.menuChange(2)
+        if self.selectedMenu != 2:
+            self.selectedMenu = 2
+            self.menuChange(2)
 
     def menu3_clicked(self):
-        self.menuChange(3)
+        if self.selectedMenu != 3:
+            self.selectedMenu = 3
+            self.menuChange(3)
+
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
