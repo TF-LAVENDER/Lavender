@@ -5,3 +5,13 @@
 
 blocked_ips.db
 *.sqlite3
+
+# build tests
+netchury
+dist
+__init__.py
+LICENSE
+*.spec
+setup.py
+requirements.txt
+build/

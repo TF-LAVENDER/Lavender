@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt
 from components.page1.Page1 import Page1
 from components.page2.Page2 import Page2
 from components.page3.Page3 import Page3
-from utils import load_ui_file
+from utils import load_ui_file, resource_path
 
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt
@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        self.ui = load_ui_file("MainWindow.ui")
+        self.ui = load_ui_file(resource_path("MainWindow.ui"))
         self.setCentralWidget(self.ui)
         self.ui.setAttribute(Qt.WA_TranslucentBackground, True)
         self.ui.setAutoFillBackground(False)
@@ -79,17 +79,17 @@ class MainWindow(QMainWindow):
         self.content_container.addWidget(self.page3)
 
     def menuChange(self, menuNum):
-        self.ui.menuButton1.setStyleSheet("border-image:url('images/menu1_off.png');")
-        self.ui.menuButton2.setStyleSheet("border-image:url('images/menu2_off.png');")
-        self.ui.menuButton3.setStyleSheet("border-image:url('images/menu3_off.png');")
+        self.ui.menuButton1.setStyleSheet(f"border-image:url('{resource_path('images/menu1_off.png')}');")
+        self.ui.menuButton2.setStyleSheet(f"border-image:url('{resource_path('images/menu2_off.png')}');")
+        self.ui.menuButton3.setStyleSheet(f"border-image:url('{resource_path('images/menu3_off.png')}');")
         if menuNum == 1:
-            self.ui.menuButton1.setStyleSheet("border-image:url('images/menu1_on.png');")
+            self.ui.menuButton1.setStyleSheet(f"border-image:url('{resource_path('images/menu1_on.png')}');")
             self.load_page1()
         elif menuNum == 2:
-            self.ui.menuButton2.setStyleSheet("border-image:url('images/menu2_on.png');")
+            self.ui.menuButton2.setStyleSheet(f"border-image:url('{resource_path('images/menu2_on.png')}');")
             self.load_page2()
         elif menuNum == 3:
-            self.ui.menuButton3.setStyleSheet("border-image:url('images/menu3_on.png');")
+            self.ui.menuButton3.setStyleSheet(f"border-image:url('{resource_path('images/menu3_on.png')}');")
             self.load_page3()
 
     def menu1_clicked(self):
