@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'page2.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -41,8 +41,7 @@ class Ui_Page3(object):
         self.blockedButton.setGeometry(QRect(0, 0, 100, 40))
         self.blockedButton.setMinimumSize(QSize(100, 40))
         self.blockedButton.setMaximumSize(QSize(100, 40))
-        self.blockedButton.setStyleSheet(u"border-image: url(\"components/page2/images/blocked_on.png\");\n"
-"margin: 0;")
+        self.blockedButton.setStyleSheet(u"")
         self.blockedButton.setCheckable(True)
         self.blockedButton.setChecked(True)
         self.allowedButton = QPushButton(self.headerWidget)
@@ -50,8 +49,7 @@ class Ui_Page3(object):
         self.allowedButton.setGeometry(QRect(101, 0, 100, 40))
         self.allowedButton.setMinimumSize(QSize(100, 40))
         self.allowedButton.setMaximumSize(QSize(100, 40))
-        self.allowedButton.setStyleSheet(u"border-image: url(\"components/page2/images/allowed_off.png\");\n"
-"margin: 0;")
+        self.allowedButton.setStyleSheet(u"")
         self.allowedButton.setCheckable(True)
         self.allowedButton.setChecked(False)
 

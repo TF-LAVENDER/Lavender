@@ -73,8 +73,7 @@ color: white;</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(&quot;components/page2/images/blocked_on.png&quot;);
-margin: 0;</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string/>
@@ -108,8 +107,7 @@ margin: 0;</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(&quot;components/page2/images/allowed_off.png&quot;);
-margin: 0;</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string/>
