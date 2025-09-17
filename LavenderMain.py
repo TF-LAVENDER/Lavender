@@ -66,15 +66,6 @@ class MainWindow(QMainWindow):
             if widget:
                 widget.setParent(None)
 
-    def show_page1(self):
-        self.setCentralWidget(Page1())
-
-    def show_page2(self):
-        self.setCentralWidget(Page2())
-
-    def show_page3(self):
-        self.setCentralWidget(Page3())
-
     def load_page1(self):
         self.clear_content()
         self.content_container.addWidget(self.page1)
