@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolTip
 from PySide6.QtCharts import QChart, QChartView, QSplineSeries
 from PySide6.QtCore import QTimer, QPointF, QMargins, QPropertyAnimation, QEasingCurve
 
-from utils import load_ui_file
+from utils import load_ui_file, resource_path
 
 WAN_IFACE = "en0"
 LAN_IFACE = "en1"
@@ -15,7 +15,7 @@ class Page1(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.ui = load_ui_file("components/page1/page1.ui")
+        self.ui = load_ui_file(resource_path("components/page1/page1.ui"))
         self.setLayout(self.ui.layout())
 
         self.series_sent = QSplineSeries(name="보낸 데이터 (KB/s)")
@@ -63,6 +63,11 @@ class Page1(QWidget):
         self.chart.setPlotAreaBackgroundVisible(False)
         self.chart.setBackgroundBrush(QBrush(QColor("#44407A")))
         self.chart.setPlotAreaBackgroundVisible(True)
+
+        self.ui.left_radius_mask.setStyleSheet(f"border-image: url('{resource_path('components/page1/images/left_radius_mask.png')}');")
+        self.ui.right_radius_mask.setStyleSheet(f"border-image: url('{resource_path('components/page1/images/right_radius_mask.png')}');")
+        self.ui.recv_vector.setStyleSheet(f"border-image: url('{resource_path('components/page1/images/recv_vector.png')}');")
+        self.ui.send_vector.setStyleSheet(f"border-image: url('{resource_path('components/page1/images/send_vector.png')}');")
 
         self.chart_view.setStyleSheet("background: transparent; border: none; margin: 0; padding: 0;")
         self.chart_view.setContentsMargins(0, 0, 0, 0)

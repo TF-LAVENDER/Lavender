@@ -222,7 +222,7 @@ QProgressBar::chunk {
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="right_radius_mask">
             <property name="geometry">
              <rect>
               <x>204</x>
@@ -237,8 +237,7 @@ QProgressBar::chunk {
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">border-image:url(&quot;images/Union1.png&quot;);
-background-color : rgb(0,0,0,0);</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
@@ -247,7 +246,7 @@ background-color : rgb(0,0,0,0);</string>
              <enum>QFrame::Shadow::Raised</enum>
             </property>
            </widget>
-           <widget class="QFrame" name="frame_3">
+           <widget class="QFrame" name="left_radius_mask">
             <property name="geometry">
              <rect>
               <x>110</x>
@@ -262,8 +261,7 @@ background-color : rgb(0,0,0,0);</string>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">border-image:url(&quot;images/Union2.png&quot;);
-background-color : rgb(0,0,0,0);</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
@@ -272,7 +270,7 @@ background-color : rgb(0,0,0,0);</string>
              <enum>QFrame::Shadow::Raised</enum>
             </property>
            </widget>
-           <widget class="QFrame" name="frame">
+           <widget class="QFrame" name="send_vector">
             <property name="geometry">
              <rect>
               <x>249</x>
@@ -282,7 +280,7 @@ background-color : rgb(0,0,0,0);</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">border-image:url(&quot;images/Vector 20.png&quot;);</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
@@ -291,7 +289,7 @@ background-color : rgb(0,0,0,0);</string>
              <enum>QFrame::Shadow::Raised</enum>
             </property>
            </widget>
-           <widget class="QFrame" name="frame_4">
+           <widget class="QFrame" name="recv_vector">
             <property name="geometry">
              <rect>
               <x>89</x>
@@ -301,7 +299,7 @@ background-color : rgb(0,0,0,0);</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">border-image:url(&quot;images/Vector 21.png&quot;);</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
@@ -616,7 +614,7 @@ QProgressBar::chunk {
      <x>0</x>
      <y>0</y>
      <width>935</width>
-     <height>33</height>
+     <height>36</height>
     </rect>
    </property>
   </widget>
