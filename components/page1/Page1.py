@@ -249,7 +249,7 @@ class Page1(QWidget):
             self.total_wan_recv += wan_recv_speed
             self.total_lan_sent += lan_sent_speed
             self.total_lan_recv += lan_recv_speed
-            print(f"Total WAN Sent: {self.total_wan_sent:.1f} KB, Total WAN Recv: {self.total_wan_recv:.1f} KB")
+            # print(f"Total WAN Sent: {self.total_wan_sent:.1f} KB, Total WAN Recv: {self.total_wan_recv:.1f} KB")
 
             total_wan = self.total_wan_recv + self.total_wan_sent
             total_lan = self.total_lan_recv + self.total_lan_sent

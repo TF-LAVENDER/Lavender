@@ -73,7 +73,8 @@ color: white;</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">border-image: url(&quot;components/page2/images/blocked_on.png&quot;);
+margin: 0;</string>
       </property>
       <property name="text">
        <string/>
@@ -107,7 +108,8 @@ color: white;</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">border-image: url(&quot;components/page2/images/allowed_off.png&quot;);
+margin: 0;</string>
       </property>
       <property name="text">
        <string/>
@@ -119,19 +121,32 @@ color: white;</string>
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="addButton">
+      <property name="geometry">
+       <rect>
+        <x>870</x>
+        <y>0</y>
+        <width>75</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableView" name="blockedTableView">
      <property name="styleSheet">
-      <string notr="true">QTableWidget {
+      <string notr="true">QTableView {
     gridline-color: rgb(50, 55, 100);
     alternate-background-color: rgb(68, 64, 122);
 	padding: 0;
 	margin: 0;
 	border: 0;
 }
-QTableWidget::item {
+QTableView::item {
     padding: 5px;
     border-bottom: 1px solid rgb(68, 64, 122);
 }
@@ -142,42 +157,10 @@ QHeaderView::section {
     border: none;
     font-weight: bold;
 }
-QTableWidget::item:selected {
+QTableView::item:selected {
     background-color: rgb(70, 77, 140);
 }</string>
      </property>
-     <property name="alternatingRowColors">
-      <bool>false</bool>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-     </property>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>ASC</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>IP</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Description</string>
-      </property>
-     </column>
     </widget>
    </item>
   </layout>
