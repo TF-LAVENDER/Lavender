@@ -10,7 +10,6 @@ from components.page2.Page2 import Page2
 from components.page3.Page3 import Page3
 from utils import load_ui_file, resource_path
 
-# utils.py(파일)과 utils/(디렉토리) 이름 충돌 회피를 위해 utils 디렉토리를 우선 경로로 추가
 _ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 _UTILS_DIR = os.path.join(_ROOT_DIR, "utils")
 if _UTILS_DIR not in sys.path:
@@ -132,10 +131,8 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
-    # 앱 시작 시 데몬 시작
     daemon.start()
     exit_code = app.exec()
-    # 앱 종료 직전에 데몬 정지
     try:
         daemon.stop()
     except Exception:
