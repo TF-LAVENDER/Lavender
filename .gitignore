@@ -1,5 +1,13 @@
 # Python
-__pycache__/
+*/__pycache__/
+
+**/__pycache__/
+netchury
+__init__.py
+*.spec
+LICENSE
+setup.py
+
 *.py[cod]
 *$py.class
 *.so
