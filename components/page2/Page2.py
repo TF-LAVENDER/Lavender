@@ -49,12 +49,12 @@ class Page2(QWidget):
         self.load_from_csv()
     
     def menuChange(self, menuNum):
-        self.ui.blockedButton.setStyleSheet("border-image: url('components/page2/images/blocked_off.png');")
-        self.ui.allowedButton.setStyleSheet("border-image: url('components/page2/images/allowed_off.png');")
+        self.ui.blockedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/blocked_off.png')}');")
+        self.ui.allowedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/allowed_off.png')}');")
         if menuNum == 1:
-            self.ui.blockedButton.setStyleSheet("border-image: url('components/page2/images/blocked_on.png');")
+            self.ui.blockedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/blocked_on.png')}');")
         elif menuNum == 2:
-            self.ui.allowedButton.setStyleSheet("border-image: url('components/page2/images/allowed_on.png');")
+            self.ui.allowedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/allowed_on.png')}');")
 
     def blocked_clicked(self):
         self.menuChange(1)
