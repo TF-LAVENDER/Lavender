@@ -131,7 +131,20 @@ margin: 0;</string>
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>추가</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="delButton">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>0</y>
+        <width>75</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>삭제</string>
       </property>
      </widget>
     </widget>
