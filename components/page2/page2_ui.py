@@ -56,6 +56,9 @@ class Ui_Page3(object):
         self.addButton = QPushButton(self.headerWidget)
         self.addButton.setObjectName(u"addButton")
         self.addButton.setGeometry(QRect(870, 0, 75, 24))
+        self.delButton = QPushButton(self.headerWidget)
+        self.delButton.setObjectName(u"delButton")
+        self.delButton.setGeometry(QRect(790, 0, 75, 24))
 
         self.verticalLayout.addWidget(self.headerWidget)
 
@@ -95,6 +98,7 @@ class Ui_Page3(object):
         Page3.setWindowTitle(QCoreApplication.translate("Page3", u"IP List", None))
         self.blockedButton.setText("")
         self.allowedButton.setText("")
-        self.addButton.setText(QCoreApplication.translate("Page3", u"PushButton", None))
+        self.addButton.setText(QCoreApplication.translate("Page3", u"\ucd94\uac00", None))
+        self.delButton.setText(QCoreApplication.translate("Page3", u"\uc0ad\uc81c", None))
     # retranslateUi
 

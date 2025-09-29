@@ -37,8 +37,9 @@ class Page2(QWidget):
 
         self.ui.blockedButton.clicked.connect(self.blocked_clicked)
         self.ui.allowedButton.clicked.connect(self.allowed_clicked)
-        self.ui.addButton.clicked.connect(self.show_network_popup)
-        self.ui.delButton.clicked.connect(self.delete_selected_row)
+        self.ui.addBtn.clicked.connect(self.show_network_popup)
+        self.ui.delBtn.clicked.connect(self.delete_selected_row)
+        self.ui.blockedTableView.doubleClicked.connect(self.edit_selected_row)
 
         self.ui.blockedButton.setFlat(True)
         self.ui.allowedButton.setFlat(True)
@@ -74,9 +75,15 @@ class Page2(QWidget):
     def add_row(self, row_data):
         items = [QStandardItem(field) for field in row_data]
         self.model.appendRow(items)
+        port = row_data[1]  # 두 번째 컬럼이 PORT
+        add_firewall_rule(port)
+
+        
+
+        
 
     def save_to_csv(self):
-        with open(resource_path("data.csv"), mode="w", newline="", encoding="utf-8") as file:
+        with open("data.csv", mode="w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             for row in range(self.model.rowCount()):
                 row_values = [
@@ -86,9 +93,9 @@ class Page2(QWidget):
                 writer.writerow(row_values)
 
     def load_from_csv(self):
-        if not os.path.exists(resource_path("data.csv")):
+        if not os.path.exists("data.csv"):
             return
-        with open(resource_path("data.csv"), mode="r", newline="", encoding="utf-8") as file:
+        with open("data.csv", mode="r", newline="", encoding="utf-8") as file:
             reader = csv.reader(file)
             for row in reader:
                 self.add_row(row)
@@ -101,11 +108,18 @@ class Page2(QWidget):
             return
 
         for index in sorted(indexes, key=lambda x: x.row(), reverse=True):
+            #self.model.removeRow(index.row())
             port_item = self.model.item(index.row(), 1)
             if port_item:
                 delete_firewall_rule(port_item.text())  # 삭제 전에 포트 얻기
             self.model.removeRow(index.row())
         self.save_to_csv()
+        
+        # for index in sorted(indexes, key=lambda x: x.row(), reverse=True):
+        #     port_item = self.model.item(index.row(), 1)
+        #     if port_item:
+        #         delete_firewall_rule(port_item.text())  # 삭제 전에 포트 얻기
+        #     self.model.removeRow(index.row())
 
     def edit_selected_row(self, index):
         if not index.isValid():
@@ -142,10 +156,6 @@ def add_firewall_rule(port):
         "protocol=TCP", f"localport={port}",
         "profile=any", "enable=yes"
     ]
-    ## 검증 안 됨 주석 해제 유의
-    # mac_linux_cmd = [
-    #     "sudo", "iptables", "-A", "INPUT", "-p", "tcp", "--dport", str(port), "-j", "ACCEPT"
-    # ]
     subprocess.run(cmd, shell=True)
 
 def delete_firewall_rule(port):
@@ -155,9 +165,7 @@ def delete_firewall_rule(port):
         f"name={rule_name}",
         "protocol=TCP", f"localport={port}"
     ]
-    ## 검증 안 됨 주석 해제 유의
-    # mac_linux_cmd = [
-    #     "sudo", "iptables", "-D", "INPUT", "-p", "tcp", "--dport", str(port), "-j", "ACCEPT"
-    # ]
     subprocess.run(cmd, shell=True)
 
+
+        
