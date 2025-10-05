@@ -25,6 +25,9 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string>Protocol</string>
    </property>
@@ -87,6 +90,9 @@ margin: 0;</string>
      <height>16</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string>Port Range</string>
    </property>
@@ -115,6 +121,9 @@ border-radius: 10px;
      <height>16</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string>Source IP</string>
    </property>
@@ -142,6 +151,9 @@ border-radius: 10px;
      <width>71</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Description</string>

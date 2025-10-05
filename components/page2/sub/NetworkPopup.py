@@ -3,17 +3,17 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtWidgets import QDialog, QMessageBox
 from PySide6.QtGui import QRegularExpressionValidator
 from PySide6.QtCore import QRegularExpression
-from components.page2.sub.NetworkPopup_ui import Ui_NetworkPopup
-from utils import resource_path
+from utils import resource_path, load_ui_file
 
 class NetworkPopup(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.ui = Ui_NetworkPopup()
-        self.ui.setupUi(self)
+        self.ui = load_ui_file(resource_path("components/page2/sub/NetworkPopup.ui"))
+        self.ui.setParent(self)
+        self.ui.setGeometry(0, 0, self.ui.width(), self.ui.height())
 
         self.setWindowTitle("네트워크 규칙 추가")
-        self.setFixedSize(500, 200)
+        self.setFixedSize(self.ui.size())
 
         port_regex = QRegularExpression(r"^\d{1,5}$")
         self.ui.portRangeLane.setValidator(QRegularExpressionValidator(port_regex))
