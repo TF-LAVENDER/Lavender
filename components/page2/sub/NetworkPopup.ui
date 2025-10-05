@@ -60,11 +60,13 @@ color: #ffffff;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(&quot;components/page2/sub/images/2.png&quot;);
-margin: 0;</string>
+    <string notr="true">margin: 0;
+border: 1px solid white;
+border-radius: 20px;
+color: #ffffff;</string>
    </property>
    <property name="text">
-    <string/>
+    <string>cancel</string>
    </property>
   </widget>
   <widget class="QPushButton" name="confirmButton">
@@ -77,11 +79,13 @@ margin: 0;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(&quot;components/page2/sub/images/1.png&quot;);
-margin: 0;</string>
+    <string notr="true">margin: 0;
+border-radius: 20px;
+background: #44407A;
+color: #ffffff;</string>
    </property>
    <property name="text">
-    <string/>
+    <string>confirm</string>
    </property>
   </widget>
   <widget class="QLabel" name="portRangeLabel">

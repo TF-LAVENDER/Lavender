@@ -21,9 +21,6 @@ class NetworkPopup(QDialog):
         ipv4_regex = QRegularExpression(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")
         self.ui.IpLane.setValidator(QRegularExpressionValidator(ipv4_regex))
 
-        self.ui.confirmButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/sub/images/1.png')}');")
-        self.ui.cancelButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/sub/images/2.png')}');")
-
         self.ui.confirmButton.clicked.connect(self.on_confirm)
         self.ui.cancelButton.clicked.connect(self.reject)
 
