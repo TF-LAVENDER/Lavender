@@ -37,6 +37,9 @@ class Ui_NetworkPopup(object):
         self.cancelButton = QPushButton(NetworkPopup)
         self.cancelButton.setObjectName(u"cancelButton")
         self.cancelButton.setGeometry(QRect(280, 150, 100, 40))
+        font = QFont()
+        font.setWeight(QFont.DemiBold)
+        self.cancelButton.setFont(font)
         self.cancelButton.setStyleSheet(u"margin: 0;\n"
 "border: 1px solid white;\n"
 "border-radius: 20px;\n"
@@ -44,6 +47,10 @@ class Ui_NetworkPopup(object):
         self.confirmButton = QPushButton(NetworkPopup)
         self.confirmButton.setObjectName(u"confirmButton")
         self.confirmButton.setGeometry(QRect(390, 150, 100, 40))
+        font1 = QFont()
+        font1.setPointSize(13)
+        font1.setWeight(QFont.DemiBold)
+        self.confirmButton.setFont(font1)
         self.confirmButton.setStyleSheet(u"margin: 0;\n"
 "border-radius: 20px;\n"
 "background: #44407A;\n"

@@ -59,6 +59,11 @@ color: #ffffff;</string>
      <height>40</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <fontweight>DemiBold</fontweight>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">margin: 0;
 border: 1px solid white;
@@ -77,6 +82,12 @@ color: #ffffff;</string>
      <width>100</width>
      <height>40</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+     <fontweight>DemiBold</fontweight>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">margin: 0;
