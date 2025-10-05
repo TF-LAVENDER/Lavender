@@ -33,7 +33,7 @@ class Ui_NetworkPopup(object):
         self.protocolLane.setGeometry(QRect(20, 30, 120, 30))
         self.protocolLane.setStyleSheet(u"border: 1px solid white;\n"
 "border-radius: 10px;\n"
-"")
+"color: #ffffff;")
         self.cancelButton = QPushButton(NetworkPopup)
         self.cancelButton.setObjectName(u"cancelButton")
         self.cancelButton.setGeometry(QRect(280, 150, 100, 40))
@@ -53,7 +53,7 @@ class Ui_NetworkPopup(object):
         self.portRangeLane.setGeometry(QRect(160, 30, 120, 30))
         self.portRangeLane.setStyleSheet(u"border: 1px solid white;\n"
 "border-radius: 10px;\n"
-"")
+"color: #ffffff;")
         self.IpLabel = QLabel(NetworkPopup)
         self.IpLabel.setObjectName(u"IpLabel")
         self.IpLabel.setGeometry(QRect(20, 80, 71, 16))
@@ -63,7 +63,7 @@ class Ui_NetworkPopup(object):
         self.IpLane.setGeometry(QRect(20, 100, 120, 30))
         self.IpLane.setStyleSheet(u"border: 1px solid white;\n"
 "border-radius: 10px;\n"
-"")
+"color: #ffffff;")
         self.descriptionLabel = QLabel(NetworkPopup)
         self.descriptionLabel.setObjectName(u"descriptionLabel")
         self.descriptionLabel.setGeometry(QRect(160, 80, 71, 16))
@@ -73,7 +73,7 @@ class Ui_NetworkPopup(object):
         self.descriptionLane.setGeometry(QRect(160, 100, 120, 30))
         self.descriptionLane.setStyleSheet(u"border: 1px solid white;\n"
 "border-radius: 10px;\n"
-"")
+"color: #ffffff;")
 
         self.retranslateUi(NetworkPopup)
 
@@ -83,6 +83,7 @@ class Ui_NetworkPopup(object):
     def retranslateUi(self, NetworkPopup):
         NetworkPopup.setWindowTitle(QCoreApplication.translate("NetworkPopup", u"IP \ucd94\uac00", None))
         self.protocolLabel.setText(QCoreApplication.translate("NetworkPopup", u"Protocol", None))
+        self.protocolLane.setText("")
         self.cancelButton.setText("")
         self.confirmButton.setText("")
         self.portRangeLabel.setText(QCoreApplication.translate("NetworkPopup", u"Port Range", None))

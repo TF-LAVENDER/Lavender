@@ -44,7 +44,10 @@
    <property name="styleSheet">
     <string notr="true">border: 1px solid white;
 border-radius: 10px;
-</string>
+color: #ffffff;</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="cancelButton">
@@ -109,7 +112,7 @@ margin: 0;</string>
    <property name="styleSheet">
     <string notr="true">border: 1px solid white;
 border-radius: 10px;
-</string>
+color: #ffffff;</string>
    </property>
   </widget>
   <widget class="QLabel" name="IpLabel">
@@ -140,7 +143,7 @@ border-radius: 10px;
    <property name="styleSheet">
     <string notr="true">border: 1px solid white;
 border-radius: 10px;
-</string>
+color: #ffffff;</string>
    </property>
   </widget>
   <widget class="QLabel" name="descriptionLabel">
@@ -171,7 +174,7 @@ border-radius: 10px;
    <property name="styleSheet">
     <string notr="true">border: 1px solid white;
 border-radius: 10px;
-</string>
+color: #ffffff;</string>
    </property>
   </widget>
  </widget>
