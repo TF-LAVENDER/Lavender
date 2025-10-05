@@ -23,7 +23,8 @@ class Ui_NetworkPopup(object):
         if not NetworkPopup.objectName():
             NetworkPopup.setObjectName(u"NetworkPopup")
         NetworkPopup.resize(500, 200)
-        NetworkPopup.setStyleSheet(u"background-color: #232323;")
+        NetworkPopup.setStyleSheet(u"background-color: #232323;\n"
+"border-radius: 10px;")
         self.protocolLabel = QLabel(NetworkPopup)
         self.protocolLabel.setObjectName(u"protocolLabel")
         self.protocolLabel.setGeometry(QRect(20, 10, 65, 16))

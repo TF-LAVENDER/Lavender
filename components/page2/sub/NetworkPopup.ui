@@ -14,7 +14,8 @@
    <string>IP 추가</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #232323;</string>
+   <string notr="true">background-color: #232323;
+border-radius: 10px;</string>
   </property>
   <widget class="QLabel" name="protocolLabel">
    <property name="geometry">

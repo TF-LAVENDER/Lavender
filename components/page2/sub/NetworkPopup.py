@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QDialog
 
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QMessageBox
 from PySide6.QtGui import QRegularExpressionValidator
 from PySide6.QtCore import QRegularExpression
@@ -9,6 +10,7 @@ class NetworkPopup(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = load_ui_file(resource_path("components/page2/sub/NetworkPopup.ui"))
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.ui.setParent(self)
         self.ui.setGeometry(0, 0, self.ui.width(), self.ui.height())
 
@@ -57,3 +59,16 @@ class NetworkPopup(QDialog):
             self.ui.IpLane.text(),
             self.ui.descriptionLane.text()
         ]
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.old_pos = event.globalPosition().toPoint()
+
+    def mouseMoveEvent(self, event):
+        if self.old_pos:
+            delta = event.globalPosition().toPoint() - self.old_pos
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.old_pos = event.globalPosition().toPoint()
+
+    def mouseReleaseEvent(self, event):
+        self.old_pos = None
