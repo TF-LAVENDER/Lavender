@@ -1,6 +1,6 @@
 import csv
 import os
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QTableView
 from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from components.page2.sub.NetworkPopup import NetworkPopup
@@ -28,7 +28,7 @@ class SimpleTableModel(QAbstractTableModel):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
             return self._headers[section]
         return None
-    
+
 class Page2(QWidget):
     def __init__(self):
         super().__init__()
@@ -43,20 +43,30 @@ class Page2(QWidget):
         self.ui.blockedButton.setFlat(True)
         self.ui.allowedButton.setFlat(True)
 
-        self.model = QStandardItemModel(0, 3)
-        self.model.setHorizontalHeaderLabels(["프로토콜", "포트", "IP", "비고"])
-        self.ui.blockedTableView.setModel(self.model)
-        self.ui.blockedTableView.horizontalHeader().setStretchLastSection(True)
+        self.model_blocked = QStandardItemModel(0, 4)
+        self.model_blocked.setHorizontalHeaderLabels(["프로토콜", "포트", "IP", "비고"])
+        self.model_allowed = QStandardItemModel(0, 4)
+        self.model_allowed.setHorizontalHeaderLabels(["프로토콜", "포트", "IP", "비고"])
 
-        self.load_from_csv()
-    
+        self.current_mode = "blocked"  # blocked or allowed
+        self.ui.blockedTableView.setModel(self.model_blocked)
+        self.ui.blockedTableView.horizontalHeader().setStretchLastSection(True)
+        self.ui.blockedTableView.verticalHeader().hide()
+        self.ui.blockedTableView.setSelectionBehavior(QTableView.SelectRows)
+
+        self.load_from_csvs()
+
     def menuChange(self, menuNum):
         self.ui.blockedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/blocked_off.png')}');")
         self.ui.allowedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/allowed_off.png')}');")
         if menuNum == 1:
             self.ui.blockedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/blocked_on.png')}');")
+            self.ui.blockedTableView.setModel(self.model_blocked)
+            self.current_mode = "blocked"
         elif menuNum == 2:
             self.ui.allowedButton.setStyleSheet(f"border-image: url('{resource_path('components/page2/images/allowed_on.png')}');")
+            self.ui.blockedTableView.setModel(self.model_allowed)
+            self.current_mode = "allowed"
 
     def blocked_clicked(self):
         self.menuChange(1)
@@ -69,29 +79,46 @@ class Page2(QWidget):
         if dialog.exec():
             row_data = dialog.get_data()
             self.add_row(row_data)
-            self.save_to_csv()  # 저장
+            self.save_to_csvs()  # 저장
 
     def add_row(self, row_data):
         items = [QStandardItem(field) for field in row_data]
-        self.model.appendRow(items)
+        if self.current_mode == "blocked":
+            self.model_blocked.appendRow(items)
+        else:
+            self.model_allowed.appendRow(items)
 
-    def save_to_csv(self):
-        with open(resource_path("data.csv"), mode="w", newline="", encoding="utf-8") as file:
+    def save_to_csvs(self):
+        with open(resource_path("data/blocked.csv"), mode="w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
-            for row in range(self.model.rowCount()):
+            for row in range(self.model_blocked.rowCount()):
                 row_values = [
-                    self.model.item(row, col).text() if self.model.item(row, col) else ""
-                    for col in range(self.model.columnCount())
+                    self.model_blocked.item(row, col).text() if self.model_blocked.item(row, col) else ""
+                    for col in range(self.model_blocked.columnCount())
+                ]
+                writer.writerow(row_values)
+        with open(resource_path("data/allowed.csv"), mode="w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            for row in range(self.model_allowed.rowCount()):
+                row_values = [
+                    self.model_allowed.item(row, col).text() if self.model_allowed.item(row, col) else ""
+                    for col in range(self.model_allowed.columnCount())
                 ]
                 writer.writerow(row_values)
 
-    def load_from_csv(self):
-        if not os.path.exists(resource_path("data.csv")):
-            return
-        with open(resource_path("data.csv"), mode="r", newline="", encoding="utf-8") as file:
-            reader = csv.reader(file)
-            for row in reader:
-                self.add_row(row)
+    def load_from_csvs(self):
+        if os.path.exists(resource_path("data/blocked.csv")):
+            with open(resource_path("data/blocked.csv"), mode="r", newline="", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    items = [QStandardItem(field) for field in row]
+                    self.model_blocked.appendRow(items)
+        if os.path.exists(resource_path("data/allowed.csv")):
+            with open(resource_path("data/allowed.csv"), mode="r", newline="", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    items = [QStandardItem(field) for field in row]
+                    self.model_allowed.appendRow(items)
 
     def delete_selected_row(self):
         selection_model = self.ui.blockedTableView.selectionModel()
@@ -100,23 +127,25 @@ class Page2(QWidget):
         if not indexes:
             return
 
+        model = self.model_blocked if self.current_mode == "blocked" else self.model_allowed
         for index in sorted(indexes, key=lambda x: x.row(), reverse=True):
-            port_item = self.model.item(index.row(), 1)
-            if port_item:
+            port_item = model.item(index.row(), 1)
+            if port_item and self.current_mode == "blocked":
                 delete_firewall_rule(port_item.text())  # 삭제 전에 포트 얻기
-            self.model.removeRow(index.row())
-        self.save_to_csv()
+            model.removeRow(index.row())
+        self.save_to_csvs()
 
     def edit_selected_row(self, index):
         if not index.isValid():
             return
 
+        model = self.model_blocked if self.current_mode == "blocked" else self.model_allowed
         row = index.row()
         current_data = [
-            self.model.item(row, 0).text(),
-            self.model.item(row, 1).text(),
-            self.model.item(row, 2).text(),
-            self.model.item(row, 3).text() if self.model.columnCount() > 3 else ""
+            model.item(row, 0).text(),
+            model.item(row, 1).text(),
+            model.item(row, 2).text(),
+            model.item(row, 3).text() if model.columnCount() > 3 else ""
         ]
 
         # 팝업 열고 기존 데이터 설정
@@ -129,8 +158,8 @@ class Page2(QWidget):
         if dialog.exec():
             new_data = dialog.get_data()
             for col, value in enumerate(new_data):
-                self.model.setItem(row, col, QStandardItem(value))
-            self.save_to_csv()        
+                model.setItem(row, col, QStandardItem(value))
+            self.save_to_csvs()
 
 
 def add_firewall_rule(port):
