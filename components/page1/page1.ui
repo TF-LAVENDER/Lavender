@@ -413,7 +413,7 @@ QProgressBar::chunk {
              <rect>
               <x>0</x>
               <y>66</y>
-              <width>40</width>
+              <width>41</width>
               <height>16</height>
              </rect>
             </property>
@@ -427,15 +427,15 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string>WAN</string>
+             <string>전 세계</string>
             </property>
            </widget>
            <widget class="QLabel" name="LAN">
             <property name="geometry">
              <rect>
-              <x>4</x>
+              <x>0</x>
               <y>96</y>
-              <width>30</width>
+              <width>41</width>
               <height>16</height>
              </rect>
             </property>
@@ -449,7 +449,7 @@ QProgressBar::chunk {
              <string notr="true">color: rgb(255, 255,255);</string>
             </property>
             <property name="text">
-             <string>LAN</string>
+             <string>내 지역</string>
             </property>
            </widget>
            <widget class="QProgressBar" name="LAN_BAR">
@@ -558,9 +558,9 @@ QProgressBar::chunk {
            <widget class="QLabel" name="WAN_LABEL">
             <property name="geometry">
              <rect>
-              <x>40</x>
+              <x>50</x>
               <y>66</y>
-              <width>90</width>
+              <width>80</width>
               <height>16</height>
              </rect>
             </property>
@@ -580,9 +580,9 @@ QProgressBar::chunk {
            <widget class="QLabel" name="LAN_LABEL">
             <property name="geometry">
              <rect>
-              <x>40</x>
+              <x>50</x>
               <y>96</y>
-              <width>90</width>
+              <width>80</width>
               <height>16</height>
              </rect>
             </property>

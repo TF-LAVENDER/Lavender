@@ -282,7 +282,7 @@ class Page1(QWidget):
                 self.mapToGlobal(self.chart_view.mapFromScene(
                     self.chart.mapToPosition(point, self.series_sent)
                 )),
-                f"Sent: {point.y():.1f} KB/s"
+                f"보낸 양: {point.y():.1f} KB/s"
             )
 
     def on_point_hovered_recv(self, point, state):
@@ -291,6 +291,6 @@ class Page1(QWidget):
                 self.mapToGlobal(self.chart_view.mapFromScene(
                     self.chart.mapToPosition(point, self.series_recv)
                 )),
-                f"Recv: {point.y():.1f} KB/s"
+                f"받은 양: {point.y():.1f} KB/s"
             )
 
