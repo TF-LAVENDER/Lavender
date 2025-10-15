@@ -1,6 +1,6 @@
 import csv
 import os
-from PySide6.QtWidgets import QWidget, QTableView
+from PySide6.QtWidgets import QWidget, QTableView, QHeaderView
 from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from components.page2.sub.NetworkPopup import NetworkPopup
@@ -43,16 +43,22 @@ class Page2(QWidget):
         self.ui.blockedButton.setFlat(True)
         self.ui.allowedButton.setFlat(True)
 
-        self.model_blocked = QStandardItemModel(0, 4)
-        self.model_blocked.setHorizontalHeaderLabels(["프로토콜", "포트", "IP", "비고"])
-        self.model_allowed = QStandardItemModel(0, 4)
-        self.model_allowed.setHorizontalHeaderLabels(["프로토콜", "포트", "IP", "비고"])
+        self.model_blocked = QStandardItemModel(0, 5)
+        self.model_blocked.setHorizontalHeaderLabels(["", "프로토콜", "포트", "IP", "비고"])
+        self.model_allowed = QStandardItemModel(0, 5)
+        self.model_allowed.setHorizontalHeaderLabels(["", "프로토콜", "포트", "IP", "비고"])
 
         self.current_mode = "blocked"  # blocked or allowed
         self.ui.blockedTableView.setModel(self.model_blocked)
         self.ui.blockedTableView.horizontalHeader().setStretchLastSection(True)
         self.ui.blockedTableView.verticalHeader().hide()
         self.ui.blockedTableView.setSelectionBehavior(QTableView.SelectRows)
+
+        self.ui.blockedTableView.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.ui.blockedTableView.setColumnWidth(0, 45)
+        self.ui.blockedTableView.setColumnWidth(1, 75)
+        self.ui.blockedTableView.setColumnWidth(2, 75)
+        self.ui.blockedTableView.setColumnWidth(3, 200) 
 
         self.load_from_csvs()
 
@@ -82,10 +88,14 @@ class Page2(QWidget):
             self.save_to_csvs()  # 저장
 
     def add_row(self, row_data):
-        items = [QStandardItem(field) for field in row_data]
+        # 인덱스는 현재 행 개수 + 1
         if self.current_mode == "blocked":
+            idx = self.model_blocked.rowCount() + 1
+            items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_blocked.appendRow(items)
         else:
+            idx = self.model_allowed.rowCount() + 1
+            items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_allowed.appendRow(items)
 
     def save_to_csvs(self):
@@ -107,18 +117,31 @@ class Page2(QWidget):
                 writer.writerow(row_values)
 
     def load_from_csvs(self):
+        # blocked
         if os.path.exists(resource_path("data/blocked.csv")):
             with open(resource_path("data/blocked.csv"), mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.reader(file)
+                idx = 1
                 for row in reader:
-                    items = [QStandardItem(field) for field in row]
+                    # 기존 csv에 인덱스 컬럼이 없으면 자동 부여
+                    if len(row) == 4:
+                        items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row]
+                    else:
+                        items = [QStandardItem(field) for field in row]
                     self.model_blocked.appendRow(items)
+                    idx += 1
+        # allowed
         if os.path.exists(resource_path("data/allowed.csv")):
             with open(resource_path("data/allowed.csv"), mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.reader(file)
+                idx = 1
                 for row in reader:
-                    items = [QStandardItem(field) for field in row]
+                    if len(row) == 4:
+                        items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row]
+                    else:
+                        items = [QStandardItem(field) for field in row]
                     self.model_allowed.appendRow(items)
+                    idx += 1
 
     def delete_selected_row(self):
         selection_model = self.ui.blockedTableView.selectionModel()
@@ -129,10 +152,13 @@ class Page2(QWidget):
 
         model = self.model_blocked if self.current_mode == "blocked" else self.model_allowed
         for index in sorted(indexes, key=lambda x: x.row(), reverse=True):
-            port_item = model.item(index.row(), 1)
+            port_item = model.item(index.row(), 2)  # 인덱스 컬럼 추가로 포트는 2번 인덱스
             if port_item and self.current_mode == "blocked":
                 delete_firewall_rule(port_item.text())  # 삭제 전에 포트 얻기
             model.removeRow(index.row())
+        # 삭제 후 인덱스 재정렬
+        for row in range(model.rowCount()):
+            model.setItem(row, 0, QStandardItem(str(row + 1)))
         self.save_to_csvs()
 
     def edit_selected_row(self, index):
@@ -142,10 +168,10 @@ class Page2(QWidget):
         model = self.model_blocked if self.current_mode == "blocked" else self.model_allowed
         row = index.row()
         current_data = [
-            model.item(row, 0).text(),
-            model.item(row, 1).text(),
-            model.item(row, 2).text(),
-            model.item(row, 3).text() if model.columnCount() > 3 else ""
+            model.item(row, 1).text(),  # 프로토콜
+            model.item(row, 2).text(),  # 포트
+            model.item(row, 3).text(),  # IP
+            model.item(row, 4).text() if model.columnCount() > 4 else ""  # 비고
         ]
 
         # 팝업 열고 기존 데이터 설정
@@ -157,8 +183,9 @@ class Page2(QWidget):
 
         if dialog.exec():
             new_data = dialog.get_data()
+            # 인덱스는 그대로 두고 나머지 값만 수정
             for col, value in enumerate(new_data):
-                model.setItem(row, col, QStandardItem(value))
+                model.setItem(row, col + 1, QStandardItem(value))
             self.save_to_csvs()
 
 
