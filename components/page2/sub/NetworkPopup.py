@@ -72,3 +72,4 @@ class NetworkPopup(QDialog):
 
     def mouseReleaseEvent(self, event):
         self.old_pos = None
+        
