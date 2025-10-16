@@ -53,9 +53,11 @@ ehthumbs.db
 Thumbs.db
 
 # Logs
-*.log
-logs/
+# *.log
+# logs/
 
 # Temporary files
 *.tmp
 *.temp
+
+data/

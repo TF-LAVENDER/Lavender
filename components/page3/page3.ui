@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableView" name="logsTableView">
      <property name="styleSheet">
       <string notr="true">QTableWidget {
     gridline-color: rgb(50, 55, 100);
@@ -64,47 +64,6 @@ QTableWidget::item:selected {
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>ASC</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Source-IP</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Source-Port</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Destination-IP</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Destination-Port</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Description</string>
-      </property>
-     </column>
     </widget>
    </item>
   </layout>
