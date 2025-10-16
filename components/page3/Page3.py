@@ -43,6 +43,7 @@ class Page3(QWidget):
         """
         # 현재 시간 추가
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        current_date = datetime.now().strftime("%Y-%m-%d")
         
         # 인덱스는 현재 행 개수 + 1
         idx = self.model_logs.rowCount() + 1
@@ -57,12 +58,13 @@ class Page3(QWidget):
         # 행 높이 설정
         self.ui.logsTableView.setRowHeight(self.model_logs.rowCount() - 1, 40)
         
-        # CSV 파일에 저장
-        self.save_logs_to_csv()
+        # 날짜별 CSV 파일에 저장
+        self.save_logs_to_csv(current_date)
 
     def load_logs_from_csv(self):
-        """logs.csv 파일에서 로그 데이터 로드"""
-        csv_path = resource_path("data/logs.csv")
+        """오늘 날짜의 로그 파일에서 로그 데이터 로드"""
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        csv_path = resource_path(f"logs/{current_date}.csv")
         
         if os.path.exists(csv_path):
             try:
@@ -77,9 +79,17 @@ class Page3(QWidget):
             except Exception as e:
                 print(f"로그 파일 로드 중 오류: {e}")
 
-    def save_logs_to_csv(self):
-        """현재 로그 데이터를 logs.csv에 저장"""
-        csv_path = resource_path("data/logs.csv")
+    def save_logs_to_csv(self, date_str=None):
+        """현재 로그 데이터를 날짜별 CSV 파일에 저장"""
+        if date_str is None:
+            date_str = datetime.now().strftime("%Y-%m-%d")
+        
+        # logs 디렉토리가 없으면 생성
+        logs_dir = resource_path("logs")
+        if not os.path.exists(logs_dir):
+            os.makedirs(logs_dir)
+        
+        csv_path = resource_path(f"logs/{date_str}.csv")
         
         try:
             with open(csv_path, mode="w", newline="", encoding="utf-8") as file:
