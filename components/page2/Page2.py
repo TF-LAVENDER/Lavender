@@ -165,7 +165,7 @@ class Page2(QWidget):
         dialog = NetworkPopup(self)
         dialog.ui.protocolLane.setText(current_data[0])
         dialog.ui.portRangeLane.setText(current_data[1])
-        dialog.ui.IpLane.setText(current_data[2])
+        dialog.ui.ipLane.setText(current_data[2])
         dialog.ui.descriptionLane.setText(current_data[3])
 
         if dialog.exec():
