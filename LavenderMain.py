@@ -14,7 +14,7 @@ _ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 _UTILS_DIR = os.path.join(_ROOT_DIR, "utils")
 if _UTILS_DIR not in sys.path:
     sys.path.insert(0, _UTILS_DIR)
-from daemon.daemon import daemon
+from daemon.daemon import daemon, network_daemon
 
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt
@@ -132,9 +132,17 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     daemon.start()
+    try:
+        network_daemon.start()
+    except Exception:
+        pass
     exit_code = app.exec()
     try:
         daemon.stop()
+    except Exception:
+        pass
+    try:
+        network_daemon.stop()
     except Exception:
         pass
     sys.exit(exit_code)
