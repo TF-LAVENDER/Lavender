@@ -21,7 +21,7 @@ class NetworkPopup(QDialog):
         self.ui.portRangeLane.setValidator(QRegularExpressionValidator(port_regex))
 
         ipv4_regex = QRegularExpression(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")
-        self.ui.IpLane.setValidator(QRegularExpressionValidator(ipv4_regex))
+        self.ui.ipLane.setValidator(QRegularExpressionValidator(ipv4_regex))
 
         self.ui.confirmButton.clicked.connect(self.on_confirm)
         self.ui.cancelButton.clicked.connect(self.reject)
@@ -56,7 +56,7 @@ class NetworkPopup(QDialog):
         return [
             self.ui.protocolLane.text(),
             self.ui.portRangeLane.text(),
-            self.ui.IpLane.text(),
+            self.ui.ipLane.text(),
             self.ui.descriptionLane.text()
         ]
 

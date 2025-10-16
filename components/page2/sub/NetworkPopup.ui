@@ -15,7 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #232323;
-border-radius: 30px;</string>
+border-radius: 10px;</string>
   </property>
   <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
@@ -81,7 +81,7 @@ color: #ffffff;</string>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="protocolLane">
+   <widget class="QLineEdit" name="ipLane">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -99,7 +99,7 @@ color: #ffffff;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="protocolLabel">
+   <widget class="QLabel" name="ipLabel">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -112,7 +112,7 @@ color: #ffffff;</string>
      <string notr="true">color: #ffffff;</string>
     </property>
     <property name="text">
-     <string>Protocol</string>
+     <string>IP 입력</string>
     </property>
    </widget>
   </widget>
@@ -154,7 +154,7 @@ color: #ffffff;</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>91</width>
+      <width>100</width>
       <height>16</height>
      </rect>
     </property>
@@ -162,7 +162,7 @@ color: #ffffff;</string>
      <string notr="true">color: #ffffff;</string>
     </property>
     <property name="text">
-     <string>Port Range</string>
+     <string>포트 입력 (숫자만)</string>
     </property>
    </widget>
   </widget>
@@ -181,7 +181,7 @@ color: #ffffff;</string>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="IpLane">
+   <widget class="QLineEdit" name="protocolLane">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -199,7 +199,7 @@ color: #ffffff;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="IpLabel">
+   <widget class="QLabel" name="protocolLabel">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -212,7 +212,7 @@ color: #ffffff;</string>
      <string notr="true">color: #ffffff;</string>
     </property>
     <property name="text">
-     <string>Source IP</string>
+     <string>프로토콜 (선택)</string>
     </property>
    </widget>
   </widget>
@@ -262,7 +262,7 @@ color: #ffffff;</string>
      <string notr="true">color: #ffffff;</string>
     </property>
     <property name="text">
-     <string>Description</string>
+     <string>설명 (선택 사항)</string>
     </property>
    </widget>
   </widget>
