@@ -1,33 +1,10 @@
 import csv
 import os
 from PySide6.QtWidgets import QWidget, QTableView, QHeaderView
-from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from components.page2.sub.NetworkPopup import NetworkPopup
 from utils import load_ui_file, resource_path
 import subprocess
-
-class SimpleTableModel(QAbstractTableModel):
-    def __init__(self, data):
-        super().__init__()
-        self._data = data
-        self._headers = ["PROTOCOL", "PORT", "IP", "Description"]
-
-    def rowCount(self, parent=QModelIndex()):
-        return len(self._data)
-
-    def columnCount(self, parent=QModelIndex()):
-        return len(self._headers)
-
-    def data(self, index, role):
-        if role == Qt.DisplayRole:
-            return str(self._data[index.row()][index.column()])
-        return None
-
-    def headerData(self, section, orientation, role):
-        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
-            return self._headers[section]
-        return None
 
 class Page2(QWidget):
     def __init__(self):
@@ -55,10 +32,16 @@ class Page2(QWidget):
         self.ui.blockedTableView.setSelectionBehavior(QTableView.SelectRows)
 
         self.ui.blockedTableView.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.ui.blockedTableView.horizontalHeader().setFixedHeight(30)
         self.ui.blockedTableView.setColumnWidth(0, 45)
         self.ui.blockedTableView.setColumnWidth(1, 75)
         self.ui.blockedTableView.setColumnWidth(2, 75)
-        self.ui.blockedTableView.setColumnWidth(3, 200) 
+        self.ui.blockedTableView.setColumnWidth(3, 200)
+
+        for row in range(self.model_blocked.rowCount()):
+            self.ui.blockedTableView.setRowHeight(row, 40)
+        for row in range(self.model_allowed.rowCount()):
+            self.ui.blockedTableView.setRowHeight(row, 40)
 
         self.load_from_csvs()
 
@@ -93,10 +76,12 @@ class Page2(QWidget):
             idx = self.model_blocked.rowCount() + 1
             items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_blocked.appendRow(items)
+            self.ui.blockedTableView.setRowHeight(self.model_blocked.rowCount() - 1, 40)
         else:
             idx = self.model_allowed.rowCount() + 1
             items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_allowed.appendRow(items)
+            self.ui.blockedTableView.setRowHeight(self.model_allowed.rowCount() - 1, 40)
 
     def save_to_csvs(self):
         with open(resource_path("data/blocked.csv"), mode="w", newline="", encoding="utf-8") as file:
@@ -129,6 +114,7 @@ class Page2(QWidget):
                     else:
                         items = [QStandardItem(field) for field in row]
                     self.model_blocked.appendRow(items)
+                    self.ui.blockedTableView.setRowHeight(self.model_blocked.rowCount() - 1, 40)
                     idx += 1
         # allowed
         if os.path.exists(resource_path("data/allowed.csv")):
@@ -141,6 +127,7 @@ class Page2(QWidget):
                     else:
                         items = [QStandardItem(field) for field in row]
                     self.model_allowed.appendRow(items)
+                    self.ui.blockedTableView.setRowHeight(self.model_allowed.rowCount() - 1, 40)
                     idx += 1
 
     def delete_selected_row(self):
