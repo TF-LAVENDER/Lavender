@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>250</height>
+    <height>240</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@ border-radius: 30px;</string>
   <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>240</x>
      <y>190</y>
      <width>100</width>
      <height>40</height>
@@ -44,7 +44,7 @@ color: #ffffff;</string>
   <widget class="QPushButton" name="confirmButton">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>350</x>
      <y>190</y>
      <width>100</width>
      <height>40</height>
@@ -119,7 +119,7 @@ color: #ffffff;</string>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>330</x>
      <y>20</y>
      <width>120</width>
      <height>50</height>
@@ -169,7 +169,7 @@ color: #ffffff;</string>
   <widget class="QFrame" name="frame_3">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>20</y>
      <width>120</width>
      <height>50</height>
@@ -219,9 +219,9 @@ color: #ffffff;</string>
   <widget class="QFrame" name="frame_4">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>90</y>
-     <width>421</width>
+     <width>441</width>
      <height>81</height>
     </rect>
    </property>
@@ -236,7 +236,7 @@ color: #ffffff;</string>
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>421</width>
+      <width>441</width>
       <height>60</height>
      </rect>
     </property>
