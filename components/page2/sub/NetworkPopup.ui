@@ -104,7 +104,7 @@ color: #ffffff;</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>65</width>
+      <width>121</width>
       <height>16</height>
      </rect>
     </property>
@@ -112,7 +112,7 @@ color: #ffffff;</string>
      <string notr="true">color: #ffffff;</string>
     </property>
     <property name="text">
-     <string>IP 입력</string>
+     <string>IP 입력 (서브넷 지원)</string>
     </property>
    </widget>
   </widget>
