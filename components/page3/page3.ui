@@ -35,31 +35,37 @@
    <item>
     <widget class="QTableView" name="logsTableView">
      <property name="styleSheet">
-      <string notr="true">QTableWidget {
-    gridline-color: rgb(50, 55, 100);
+      <string notr="true">QTableView {
+    gridline-color: transparent;
     border: 0;
-    alternate-background-color: rgb(68, 64, 122);
-	  padding: 0;
-	  margin: 0;
-	  border: 0 ;
+    alternate-background-color: #44407A;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
 }
-QTableWidget::item {
-    padding: 5px;
-    border-bottom: 1px solid rgb(50, 55, 100);
+QTableView::item {
+    padding: 8px;
+    border: none;
+    border-bottom: none;
+    background-color: #5056A5;
+}
+QTableView::item:alternate {
+    background-color: #44407A;
 }
 QHeaderView::section {
     background-color: rgb(39, 43, 77);
     color: white;
-    padding: 5px;
+    padding: 8px;
     border: none;
     font-weight: bold;
 }
-QTableWidget::item:selected {
+QTableView::item:selected {
     background-color: rgb(70, 77, 140);
 }</string>
      </property>
      <property name="alternatingRowColors">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>

@@ -77,6 +77,13 @@ class Page2(QWidget):
             items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_blocked.appendRow(items)
             self.ui.blockedTableView.setRowHeight(self.model_blocked.rowCount() - 1, 40)
+            
+            # 방화벽 규칙 추가 (CIDR 지원)
+            if len(row_data) >= 4:
+                protocol = row_data[0]  # 프로토콜
+                port = row_data[1]      # 포트
+                ip = row_data[2]        # IP (CIDR 지원)
+                add_firewall_rule(port, ip, protocol)
         else:
             idx = self.model_allowed.rowCount() + 1
             items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
@@ -139,9 +146,17 @@ class Page2(QWidget):
 
         model = self.model_blocked if self.current_mode == "blocked" else self.model_allowed
         for index in sorted(indexes, key=lambda x: x.row(), reverse=True):
-            port_item = model.item(index.row(), 2)  # 인덱스 컬럼 추가로 포트는 2번 인덱스
-            if port_item and self.current_mode == "blocked":
-                delete_firewall_rule(port_item.text())  # 삭제 전에 포트 얻기
+            if self.current_mode == "blocked":
+                # 프로토콜, 포트, IP 정보를 가져와서 방화벽 규칙 삭제
+                protocol_item = model.item(index.row(), 1)  # 프로토콜
+                port_item = model.item(index.row(), 2)      # 포트
+                ip_item = model.item(index.row(), 3)        # IP
+                
+                if protocol_item and port_item and ip_item:
+                    protocol = protocol_item.text()
+                    port = port_item.text()
+                    ip = ip_item.text()
+                    delete_firewall_rule(port, ip, protocol)
             model.removeRow(index.row())
         # 삭제 후 인덱스 재정렬
         for row in range(model.rowCount()):
@@ -163,7 +178,7 @@ class Page2(QWidget):
 
         # 팝업 열고 기존 데이터 설정
         dialog = NetworkPopup(self)
-        dialog.ui.protocolLane.setText(current_data[0])
+        dialog.protocol_combo.setCurrentText(current_data[0])
         dialog.ui.portRangeLane.setText(current_data[1])
         dialog.ui.ipLane.setText(current_data[2])
         dialog.ui.descriptionLane.setText(current_data[3])
@@ -176,31 +191,137 @@ class Page2(QWidget):
             self.save_to_csvs()
 
 
-def add_firewall_rule(port):
-    rule_name = f"MyApp_Inbound_{port}"
-    cmd = [
-        "netsh", "advfirewall", "firewall", "add", "rule",
-        f"name={rule_name}",
-        "dir=in", "action=allow",
-        "protocol=TCP", f"localport={port}",
-        "profile=any", "enable=yes"
-    ]
-    ## 검증 안 됨 주석 해제 유의
-    # mac_linux_cmd = [
-    #     "sudo", "iptables", "-A", "INPUT", "-p", "tcp", "--dport", str(port), "-j", "ACCEPT"
-    # ]
-    subprocess.run(cmd, shell=True)
+def get_pfctl_rules_file():
+    """macOS 방화벽 규칙 파일 경로 반환"""
+    return "/tmp/netchury_rules.pf"
 
-def delete_firewall_rule(port):
-    rule_name = f"MyApp_Inbound_{port}"
-    cmd = [
-        "netsh", "advfirewall", "firewall", "delete", "rule",
-        f"name={rule_name}",
-        "protocol=TCP", f"localport={port}"
-    ]
-    ## 검증 안 됨 주석 해제 유의
-    # mac_linux_cmd = [
-    #     "sudo", "iptables", "-D", "INPUT", "-p", "tcp", "--dport", str(port), "-j", "ACCEPT"
-    # ]
-    subprocess.run(cmd, shell=True)
+def add_firewall_rule(port, ip_address=None, protocol="TCP"):
+    """
+    macOS 방화벽 규칙 추가 (CIDR 지원)
+    """
+    import ipaddress
+    import os
+    
+    # 프로토콜 변환 (TCP -> tcp, UDP -> udp)
+    proto = protocol.lower()
+    
+    # pfctl 규칙 생성
+    if ip_address:
+        try:
+            # CIDR 표기법인지 확인
+            if "/" in ip_address:
+                # CIDR 표기법인 경우
+                network = ipaddress.ip_network(ip_address, strict=False)
+                rule = f"pass in proto {proto} from {str(network)} to any port {port}"
+            else:
+                # 단일 IP인 경우
+                rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+        except ValueError:
+            # IP 주소가 잘못된 경우 단일 IP로 처리
+            rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+    else:
+        # 모든 IP에서 허용
+        rule = f"pass in proto {proto} to any port {port}"
+    
+    # 기존 규칙 파일 읽기
+    rules_file = get_pfctl_rules_file()
+    existing_rules = []
+    
+    if os.path.exists(rules_file):
+        with open(rules_file, 'r') as f:
+            existing_rules = f.readlines()
+    
+    # 새 규칙 추가 (중복 확인)
+    rule_line = f"{rule}\n"
+    if rule_line not in existing_rules:
+        existing_rules.append(rule_line)
+        
+        # 규칙 파일에 저장
+        with open(rules_file, 'w') as f:
+            f.write("# Netchury firewall rules\n")
+            f.writelines(existing_rules)
+        
+        try:
+            # pfctl로 규칙 로드
+            subprocess.run([
+                "sudo", "pfctl", "-f", rules_file,
+                "-a", "netchury_rules",
+                "-e"
+            ], check=True)
+            print(f"방화벽 규칙 추가: {rule.strip()}")
+        except subprocess.CalledProcessError as e:
+            print(f"방화벽 규칙 추가 실패: {e}")
+    else:
+        print(f"방화벽 규칙이 이미 존재합니다: {rule.strip()}")
+
+def delete_firewall_rule(port, ip_address=None, protocol="TCP"):
+    """
+    macOS 방화벽 규칙 삭제 (CIDR 지원)
+    """
+    import ipaddress
+    import os
+    
+    # 프로토콜 변환 (TCP -> tcp, UDP -> udp)
+    proto = protocol.lower()
+    
+    # 삭제할 규칙 생성
+    if ip_address:
+        try:
+            # CIDR 표기법인지 확인
+            if "/" in ip_address:
+                # CIDR 표기법인 경우
+                network = ipaddress.ip_network(ip_address, strict=False)
+                rule = f"pass in proto {proto} from {str(network)} to any port {port}"
+            else:
+                # 단일 IP인 경우
+                rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+        except ValueError:
+            # IP 주소가 잘못된 경우 단일 IP로 처리
+            rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+    else:
+        # 모든 IP에서 허용
+        rule = f"pass in proto {proto} to any port {port}"
+    
+    # 기존 규칙 파일 읽기
+    rules_file = get_pfctl_rules_file()
+    
+    if os.path.exists(rules_file):
+        with open(rules_file, 'r') as f:
+            existing_rules = f.readlines()
+        
+        # 삭제할 규칙 제거
+        rule_line = f"{rule}\n"
+        if rule_line in existing_rules:
+            existing_rules.remove(rule_line)
+            
+            # 남은 규칙이 있으면 파일에 저장하고 로드
+            if len(existing_rules) > 1:  # 헤더 주석 제외
+                with open(rules_file, 'w') as f:
+                    f.writelines(existing_rules)
+                
+                try:
+                    # pfctl로 업데이트된 규칙 로드
+                    subprocess.run([
+                        "sudo", "pfctl", "-f", rules_file,
+                        "-a", "netchury_rules",
+                        "-e"
+                    ], check=True)
+                    print(f"방화벽 규칙 삭제: {rule.strip()}")
+                except subprocess.CalledProcessError as e:
+                    print(f"방화벽 규칙 삭제 실패: {e}")
+            else:
+                # 규칙이 없으면 파일 삭제하고 pfctl 비활성화
+                os.remove(rules_file)
+                try:
+                    subprocess.run([
+                        "sudo", "pfctl", "-a", "netchury_rules",
+                        "-d"
+                    ], check=True)
+                    print(f"방화벽 규칙 삭제: {rule.strip()}")
+                except subprocess.CalledProcessError as e:
+                    print(f"방화벽 규칙 삭제 실패: {e}")
+        else:
+            print(f"삭제할 방화벽 규칙을 찾을 수 없습니다: {rule.strip()}")
+    else:
+        print("방화벽 규칙 파일이 존재하지 않습니다.")
 
