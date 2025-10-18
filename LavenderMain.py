@@ -3,22 +3,19 @@
 import sys
 import os
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout
-from PySide6.QtGui import QPainterPath
+from PySide6.QtGui import QPainter, QPainterPath, QColor
 from PySide6.QtCore import Qt
 from components.page1.Page1 import Page1
 from components.page2.Page2 import Page2
 from components.page3.Page3 import Page3
 from utils import load_ui_file, resource_path
+from util.daemon.daemon import daemon
 
 _ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 _UTILS_DIR = os.path.join(_ROOT_DIR, "utils")
 if _UTILS_DIR not in sys.path:
     sys.path.insert(0, _UTILS_DIR)
-from daemon.daemon import daemon
 
-from PySide6.QtWidgets import QMainWindow
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QPainter, QPainterPath, QColor
 
 class MainWindow(QMainWindow):
     def __init__(self):
