@@ -9,7 +9,8 @@ from components.page1.Page1 import Page1
 from components.page2.Page2 import Page2
 from components.page3.Page3 import Page3
 from utils import load_ui_file, resource_path
-from util.daemon.daemon import daemon
+from util.daemon.daemon import daemon, network_daemon, page3_instance
+import util.daemon.daemon as daemon_module
 
 _ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 _UTILS_DIR = os.path.join(_ROOT_DIR, "utils")
@@ -21,6 +22,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.selectedMenu = 0
+        self.old_pos = None  # 드래그용 위치 저장
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
@@ -41,8 +43,16 @@ class MainWindow(QMainWindow):
         print(self.content_container)
 
         self.page1 = Page1()
-        self.page2 = Page2()
+        
         self.page3 = Page3()
+        daemon_module.page3_instance = self.page3
+        self.page2 = Page2()
+        daemon_module.page2_instance = self.page2
+        self.page2.page3_instance = self.page3
+        print(f"Page2 인스턴스가 daemon에 등록 : {daemon_module.page2_instance is not None}")
+        print(f"Page3 인스턴스가 daemon에 등록 : {daemon_module.page3_instance is not None}")
+
+        
 
         self.ui.menuButton1.clicked.connect(self.menu1_clicked)
         self.ui.menuButton2.clicked.connect(self.menu2_clicked)
@@ -129,9 +139,10 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     daemon.start()
+    network_daemon.start()
+
     exit_code = app.exec()
-    try:
-        daemon.stop()
-    except Exception:
-        pass
+
+    daemon.stop()
+    network_daemon.stop()
     sys.exit(exit_code)
