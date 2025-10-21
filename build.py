@@ -9,10 +9,11 @@ opts = [
     'LavenderMain.py',
     '--onefile',
     '--noconsole',
-    '--name', 'Netchury demo',
+    '--name', 'Netchury',
     '--add-data', 'MainWindow.ui:.',
     '--add-data', 'images:images',
-    '--add-data', 'components:components'
+    '--add-data', 'components:components',
+    '-i', 'icon.icns'
 ]
 
 run(opts)

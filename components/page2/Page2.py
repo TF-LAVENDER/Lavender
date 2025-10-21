@@ -33,6 +33,8 @@ class Page2(QWidget):
         self.ui.blockedTableView.horizontalHeader().setStretchLastSection(True)
         self.ui.blockedTableView.verticalHeader().hide()
         self.ui.blockedTableView.setSelectionBehavior(QTableView.SelectRows)
+        self.ui.blockedTableView.setSelectionMode(QTableView.SingleSelection)
+        self.ui.blockedTableView.setEditTriggers(QTableView.NoEditTriggers)
 
         self.ui.blockedTableView.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
         self.ui.blockedTableView.horizontalHeader().setFixedHeight(30)
@@ -220,7 +222,7 @@ def add_firewall_rule(port, ip_address=None, protocol="TCP"):
     
     # 프로토콜 변환 (TCP -> tcp, UDP -> udp)
     proto = protocol.lower()
-    
+    port_clause = "" if not port or port == "*" else f" port {port}"
     # pfctl 규칙 생성
     if ip_address:
         try:
@@ -228,16 +230,16 @@ def add_firewall_rule(port, ip_address=None, protocol="TCP"):
             if "/" in ip_address:
                 # CIDR 표기법인 경우
                 network = ipaddress.ip_network(ip_address, strict=False)
-                rule = f"pass in proto {proto} from {str(network)} to any port {port}"
+                rule = f"pass in proto {proto} from {str(network)} to any{port_clause}"
             else:
                 # 단일 IP인 경우
-                rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+                rule = f"pass in proto {proto} from {ip_address} to any{port_clause}"
         except ValueError:
             # IP 주소가 잘못된 경우 단일 IP로 처리
-            rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+            rule = f"pass in proto {proto} from {ip_address} to any{port_clause}"
     else:
         # 모든 IP에서 허용
-        rule = f"pass in proto {proto} to any port {port}"
+        rule = f"pass in proto {proto} to any{port_clause}"
     
     # 기존 규칙 파일 읽기
     rules_file = get_pfctl_rules_file()
@@ -276,7 +278,7 @@ def delete_firewall_rule(port, ip_address=None, protocol="TCP"):
     
     # 프로토콜 변환 (TCP -> tcp, UDP -> udp)
     proto = protocol.lower()
-    
+    port_clause = "" if not port or port == "*" else f" port {port}"
     # 삭제할 규칙 생성
     if ip_address:
         try:
@@ -284,16 +286,16 @@ def delete_firewall_rule(port, ip_address=None, protocol="TCP"):
             if "/" in ip_address:
                 # CIDR 표기법인 경우
                 network = ipaddress.ip_network(ip_address, strict=False)
-                rule = f"pass in proto {proto} from {str(network)} to any port {port}"
+                rule = f"pass in proto {proto} from {str(network)} to any{port_clause}"
             else:
                 # 단일 IP인 경우
-                rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+                rule = f"pass in proto {proto} from {ip_address} to any{port_clause}"
         except ValueError:
             # IP 주소가 잘못된 경우 단일 IP로 처리
-            rule = f"pass in proto {proto} from {ip_address} to any port {port}"
+            rule = f"pass in proto {proto} from {ip_address} to any{port_clause}"
     else:
         # 모든 IP에서 허용
-        rule = f"pass in proto {proto} to any port {port}"
+        rule = f"pass in proto {proto} to any{port_clause}"
     
     # 기존 규칙 파일 읽기
     rules_file = get_pfctl_rules_file()
