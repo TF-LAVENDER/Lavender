@@ -73,7 +73,7 @@ class NetworkPopup(QDialog):
 
     def on_confirm(self):
         port = self.ui.portRangeLane.text()
-        ip = self.ui.IpLane.text()
+        ip = self.ui.ipLane.text()
         if not port.isdigit():
             QMessageBox.warning(self, "입력 오류", "포트는 숫자만 입력하세요.")
             return

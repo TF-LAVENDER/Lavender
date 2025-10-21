@@ -124,27 +124,41 @@ margin: 0;</string>
      <widget class="QPushButton" name="addButton">
       <property name="geometry">
        <rect>
-        <x>870</x>
-        <y>0</y>
-        <width>75</width>
-        <height>24</height>
+        <x>920</x>
+        <y>10</y>
+        <width>20</width>
+        <height>20</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(&quot;components/page2/images/add_rule.png&quot;);
+margin: 0;</string>
+      </property>
       <property name="text">
-       <string>추가</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="delButton">
       <property name="geometry">
        <rect>
-        <x>790</x>
-        <y>0</y>
-        <width>75</width>
-        <height>24</height>
+        <x>880</x>
+        <y>10</y>
+        <width>20</width>
+        <height>20</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(&quot;components/page2/images/delete_rule.png&quot;);
+margin: 0;</string>
+      </property>
       <property name="text">
-       <string>삭제</string>
+       <string/>
       </property>
      </widget>
     </widget>
@@ -160,8 +174,13 @@ margin: 0;</string>
 	border: 0;
 }
 QTableView::item {
-    padding: 5px;
-    border-bottom: 1px solid rgb(68, 64, 122);
+    padding: 8px;
+    border: none;
+    border-bottom: none;
+    background-color: #5056A5;
+}
+QTableView::item:alternate {
+    background-color: #44407A;
 }
 QHeaderView::section {
     background-color: rgb(68, 64, 122);

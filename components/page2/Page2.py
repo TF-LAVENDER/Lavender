@@ -1,10 +1,13 @@
 import csv
+from datetime import datetime
 import os
 from PySide6.QtWidgets import QWidget, QTableView, QHeaderView
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from components.page2.sub.NetworkPopup import NetworkPopup
+from util.daemon.daemon import page3_instance
 from utils import load_ui_file, resource_path
 import subprocess
+import ipaddress
 
 class Page2(QWidget):
     def __init__(self):
@@ -43,6 +46,8 @@ class Page2(QWidget):
         for row in range(self.model_allowed.rowCount()):
             self.ui.blockedTableView.setRowHeight(row, 40)
 
+        self.page3_instance = None
+
         self.load_from_csvs()
 
     def menuChange(self, menuNum):
@@ -70,9 +75,11 @@ class Page2(QWidget):
             self.add_row(row_data)
             self.save_to_csvs()  # 저장
 
-    def add_row(self, row_data):
+    def add_row(self, row_data, mode = None):
+        if mode == None :
+            mode = self.current_mode
         # 인덱스는 현재 행 개수 + 1
-        if self.current_mode == "blocked":
+        if mode == "blocked":
             idx = self.model_blocked.rowCount() + 1
             items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_blocked.appendRow(items)
@@ -84,11 +91,14 @@ class Page2(QWidget):
                 port = row_data[1]      # 포트
                 ip = row_data[2]        # IP (CIDR 지원)
                 add_firewall_rule(port, ip, protocol)
+            
+            self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), ip, port, "", "", f"사용자 차단 규칙 추가 - {ip}:{port}({protocol})"])
         else:
             idx = self.model_allowed.rowCount() + 1
             items = [QStandardItem(str(idx))] + [QStandardItem(field) for field in row_data]
             self.model_allowed.appendRow(items)
             self.ui.blockedTableView.setRowHeight(self.model_allowed.rowCount() - 1, 40)
+            self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), row_data[2], row_data[1], "", "", f"사용자 허용 규칙 추가 - {row_data[2]}:{row_data[1]}({row_data[0]})"])
 
     def save_to_csvs(self):
         with open(resource_path("data/blocked.csv"), mode="w", newline="", encoding="utf-8") as file:
@@ -157,11 +167,16 @@ class Page2(QWidget):
                     port = port_item.text()
                     ip = ip_item.text()
                     delete_firewall_rule(port, ip, protocol)
+            else:
+                protocol = model.item(index.row(), 1).text()
+                port = model.item(index.row(), 2).text()
+                ip = model.item(index.row(), 3).text()
             model.removeRow(index.row())
         # 삭제 후 인덱스 재정렬
         for row in range(model.rowCount()):
             model.setItem(row, 0, QStandardItem(str(row + 1)))
         self.save_to_csvs()
+        self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), ip, port, "", "", f"사용자 {"차단" if self.current_mode == "blocked" else "허용"} 규칙 삭제 - {ip}:{port}({protocol})"])
 
     def edit_selected_row(self, index):
         if not index.isValid():
@@ -189,6 +204,7 @@ class Page2(QWidget):
             for col, value in enumerate(new_data):
                 model.setItem(row, col + 1, QStandardItem(value))
             self.save_to_csvs()
+            self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), model.item(row, 3).text(), model.item(row, 2).text(), "", "", f"사용자 {"차단" if self.current_mode == "blocked" else "허용"} 규칙 수정 - {model.item(row, 3).text()}:{model.item(row, 2).text()}({model.item(row, 1).text()})"])
 
 
 def get_pfctl_rules_file():
@@ -242,11 +258,10 @@ def add_firewall_rule(port, ip_address=None, protocol="TCP"):
             f.writelines(existing_rules)
         
         try:
-            # pfctl로 규칙 로드
+            # 올바른 pfctl 명령어 구조
             subprocess.run([
-                "sudo", "pfctl", "-f", rules_file,
-                "-a", "netchury_rules",
-                "-e"
+                "sudo", "pfctl", "-a", "netchury_rules", 
+                "-f", rules_file
             ], check=True)
             print(f"방화벽 규칙 추가: {rule.strip()}")
         except subprocess.CalledProcessError as e:
@@ -258,8 +273,6 @@ def delete_firewall_rule(port, ip_address=None, protocol="TCP"):
     """
     macOS 방화벽 규칙 삭제 (CIDR 지원)
     """
-    import ipaddress
-    import os
     
     # 프로토콜 변환 (TCP -> tcp, UDP -> udp)
     proto = protocol.lower()
@@ -303,8 +316,7 @@ def delete_firewall_rule(port, ip_address=None, protocol="TCP"):
                     # pfctl로 업데이트된 규칙 로드
                     subprocess.run([
                         "sudo", "pfctl", "-f", rules_file,
-                        "-a", "netchury_rules",
-                        "-e"
+                        "-a", "netchury_rules"
                     ], check=True)
                     print(f"방화벽 규칙 삭제: {rule.strip()}")
                 except subprocess.CalledProcessError as e:

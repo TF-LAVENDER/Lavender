@@ -11,10 +11,10 @@ class Page3(QWidget):
         self.ui = load_ui_file(resource_path("components/page3/page3.ui"))
         self.setLayout(self.ui.layout())
 
-        # 로그 테이블 모델 설정
-        self.model_logs = QStandardItemModel(0, 8)
+       # 테이블 초기화 시
+        self.model_logs = QStandardItemModel(0, 7)
         self.model_logs.setHorizontalHeaderLabels([
-            "", "유형", "날짜", "송신 주소", "송신 포트", "수신 주소", "수신 포트", "비고"
+            "유형", "시간", "송신 주소", "송신 포트", "수신 주소", "수신 포트", "비고"
         ])
 
         # 테이블 뷰 설정
@@ -22,48 +22,35 @@ class Page3(QWidget):
         self.ui.logsTableView.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
         self.ui.logsTableView.horizontalHeader().setFixedHeight(30)
         self.ui.logsTableView.verticalHeader().hide()
-        
-        # 컬럼 너비 설정
-        self.ui.logsTableView.setColumnWidth(0, 45)   # 인덱스
-        self.ui.logsTableView.setColumnWidth(1, 80)   # 유형
-        self.ui.logsTableView.setColumnWidth(2, 140)  # 날짜
-        self.ui.logsTableView.setColumnWidth(3, 120)  # 송신 주소
-        self.ui.logsTableView.setColumnWidth(4, 80)   # 송신 포트
-        self.ui.logsTableView.setColumnWidth(5, 120)  # 수신 주소
-        self.ui.logsTableView.setColumnWidth(6, 80)   # 수신 포트
-        self.ui.logsTableView.horizontalHeader().setStretchLastSection(True)  # 비고 컬럼
 
-        # CSV 파일 로드
+        # 컬럼 너비 설정
+        self.ui.logsTableView.setColumnWidth(0, 100)   # 유형
+        self.ui.logsTableView.setColumnWidth(1, 90)  # 날짜
+        self.ui.logsTableView.setColumnWidth(2, 140)  # 송신 주소
+        self.ui.logsTableView.setColumnWidth(3, 60)   # 송신 포트
+        self.ui.logsTableView.setColumnWidth(4, 140)  # 수신 주소
+        self.ui.logsTableView.setColumnWidth(5, 60)   # 수신 포트
+        self.ui.logsTableView.horizontalHeader().setStretchLastSection(True)  # 비고
+
         self.load_logs_from_csv()
-        
-        # 테스트용 더미 데이터 추가 (CSV 파일이 없을 때)
-        if self.model_logs.rowCount() == 0:
-            self.add_dummy_data()
 
     def add_log_entry(self, log_data):
-        """
-        새로운 로그 항목 추가
-        log_data: [유형, 송신주소, 송신포트, 수신주소, 수신포트, 비고]
-        """
-        # 현재 시간 추가
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        current_date = datetime.now().strftime("%Y-%m-%d")
+        # current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
-        # 인덱스는 현재 행 개수 + 1
-        idx = self.model_logs.rowCount() + 1
+        # 데이터 준비: [유형, 날짜, 송신주소, 송신포트, 수신주소, 수신포트, 비고]
+        # row_data = [log_data[0], current_time] + log_data[1:]
+        # items = [QStandardItem(field) for field in row_data]
+        items = [QStandardItem(field) for field in log_data]
         
-        # 데이터 준비: [인덱스, 유형, 날짜, 송신주소, 송신포트, 수신주소, 수신포트, 비고]
-        row_data = [str(idx), log_data[0], current_time] + log_data[1:]
-        
-        # 테이블에 추가
-        items = [QStandardItem(field) for field in row_data]
-        self.model_logs.appendRow(items)
+        # 맨 위에 추가 (역순 표시)
+        self.model_logs.insertRow(0, items)
         
         # 행 높이 설정
-        self.ui.logsTableView.setRowHeight(self.model_logs.rowCount() - 1, 40)
+        self.ui.logsTableView.setRowHeight(0, 40)
         
-        # 날짜별 CSV 파일에 저장
-        self.save_logs_to_csv(current_date)
+        # CSV 저장
+        self.save_logs_to_csv(datetime.now().strftime("%Y-%m-%d"))
+        # self.refresh_display()
 
     def load_logs_from_csv(self):
         """오늘 날짜의 로그 파일에서 로그 데이터 로드"""
@@ -71,17 +58,19 @@ class Page3(QWidget):
         csv_path = resource_path(f"logs/{current_date}.csv")
         
         if os.path.exists(csv_path):
-            try:
-                with open(csv_path, mode="r", newline="", encoding="utf-8") as file:
-                    reader = csv.reader(file)
-                    for row in reader:
-                        if len(row) >= 8:  # 8개 컬럼이 모두 있는지 확인
-                            items = [QStandardItem(field) for field in row]
-                            self.model_logs.appendRow(items)
-                            # 행 높이 설정
-                            self.ui.logsTableView.setRowHeight(self.model_logs.rowCount() - 1, 40)
-            except Exception as e:
-                print(f"로그 파일 로드 중 오류: {e}")
+            with open(csv_path, mode="r", newline="", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if len(row) >= 7:  # 8개 컬럼이 모두 있는지 확인
+                        display_row = row.copy()
+
+                        if len(display_row) >= 3:
+                            display_row[1] = display_row[1].split(" ")[1] if " " in display_row[1] else display_row[1]
+                        items = [QStandardItem(field) for field in display_row]
+                        self.model_logs.appendRow(items)
+                        # 행 높이 설정
+                        self.ui.logsTableView.setRowHeight(self.model_logs.rowCount() - 1, 40)
+            self.ui.logsTableView.repaint()
 
     def save_logs_to_csv(self, date_str=None):
         """현재 로그 데이터를 날짜별 CSV 파일에 저장"""
@@ -95,38 +84,16 @@ class Page3(QWidget):
         
         csv_path = resource_path(f"logs/{date_str}.csv")
         
-        try:
-            with open(csv_path, mode="w", newline="", encoding="utf-8") as file:
-                writer = csv.writer(file)
-                for row in range(self.model_logs.rowCount()):
-                    row_values = [
-                        self.model_logs.item(row, col).text() if self.model_logs.item(row, col) else ""
-                        for col in range(self.model_logs.columnCount())
-                    ]
-                    writer.writerow(row_values)
-        except Exception as e:
-            print(f"로그 파일 저장 중 오류: {e}")
+        with open(csv_path, mode="w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            for row in range(self.model_logs.rowCount()):
+                row_values = [
+                    self.model_logs.item(row, col).text() if self.model_logs.item(row, col) else ""
+                    for col in range(self.model_logs.columnCount())
+                ]
+                writer.writerow(row_values)
 
-    def clear_old_logs(self, days=30):
-        """오래된 로그 자동 정리 (선택사항)"""
-        # TODO: 날짜 기준으로 오래된 로그 삭제 구현
-        pass
-
-    def add_dummy_data(self):
-        """테스트용 더미 데이터 추가"""
-        dummy_logs = [
-            # ["침입시도", "192.168.1.100", "8080", "192.168.1.1", "80", "의심스러운 포트 스캔"],
-            # ["비정상접속", "10.0.0.50", "22", "10.0.0.1", "22", "SSH 무차별 대입 공격 시도"],
-            # ["트래픽폭증", "203.248.252.2", "443", "192.168.1.10", "443", "DDoS 공격 의심"],
-            # ["알려진위협", "45.123.45.67", "25", "192.168.1.5", "25", "스팸 메일 발송 시도"],
-            # ["포트스캔", "172.16.0.100", "135", "172.16.0.1", "135", "Windows 서비스 포트 스캔"],
-            # ["웜탐지", "198.51.100.1", "445", "192.168.1.20", "445", "SMB 익스플로잇 시도"],
-            # ["정상접속", "8.8.8.8", "53", "192.168.1.1", "53", "DNS 쿼리"],
-            # ["침입시도", "185.220.101.42", "3389", "192.168.1.15", "3389", "RDP 공격 시도"],
-        ]
         
-        for log_data in dummy_logs:
-            self.add_log_entry(log_data)
 
     def refresh_display(self):
         """테이블 새로고침"""
