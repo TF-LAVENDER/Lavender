@@ -153,12 +153,12 @@ class Page1(QWidget):
 
         total = lan_recv_speed + wan_recv_speed
         max_width = 400
-        if total > 0:
-            lan_width = int((lan_recv_speed / total) * max_width)
+        if total >= 0:
+            lan_width = int((lan_recv_speed / (total if total != 0 else 1)) * max_width)
             wan_width = max_width - lan_width
-        else:
-            lan_width = 0
-            wan_width = 0
+        # else:
+        #     lan_width = 0
+        #     wan_width = 0
         if hasattr(self.ui, 'LAN_BAR'):
             self.ui.LAN_BAR.setFixedWidth(lan_width)
         if hasattr(self.ui, 'WAN_BAR'):
@@ -168,7 +168,8 @@ class Page1(QWidget):
         self.chart.axisX().setRange(max(0, self.x - 60), self.x)
 
     def update_traffic_ratio(self, sent_speed, recv_speed, wan_sent_speed, wan_recv_speed, lan_sent_speed, lan_recv_speed):
-
+        maxKb = 1500
+        maxMb = 1500 * 1024
         if hasattr(self.ui, 'recv_send_ratio'):
             progress_bar = self.ui.recv_send_ratio
 
@@ -231,7 +232,7 @@ class Page1(QWidget):
                         self.ui.send_kbs_2.setText(f"{self.total_sent/1024:.1f} MB")
             else:
                 self.progress_animation.setStartValue(progress_bar.value())
-                self.progress_animation.setEndValue(0)
+                self.progress_animation.setEndValue(50)
                 self.progress_animation.start()
                 
                 if hasattr(self.ui, 'recv_kbs'):
@@ -253,11 +254,14 @@ class Page1(QWidget):
 
             total_wan = self.total_wan_recv + self.total_wan_sent
             total_lan = self.total_lan_recv + self.total_lan_sent
+            # print(total_wan, total_lan)
 
-            if total_wan > 0:
+            # if wan_sent_speed + wan_recv_speed <= 0 :
+            #     return
+            if total_wan > 1:
                 wan_recv_ratio = (self.total_wan_recv / total_wan) * 100
                 wan_progress_bar.setValue(int(wan_recv_ratio))
-            if total_lan > 0:
+            if total_lan > 1:
                 lan_recv_ratio = (self.total_lan_recv / total_lan) * 100
                 lan_progress_bar.setValue(int(lan_recv_ratio))
 
