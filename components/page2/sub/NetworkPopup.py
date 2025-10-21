@@ -21,7 +21,7 @@ class NetworkPopup(QDialog):
         # 프로토콜 드롭다운 설정
         self.setup_protocol_dropdown()
 
-        port_regex = QRegularExpression(r"^\d{1,5}$")
+        port_regex = QRegularExpression(r"^(?:\d{1,5}(?:-\d{1,5})?|\*)$")
         self.ui.portRangeLane.setValidator(QRegularExpressionValidator(port_regex))
 
         # CIDR 표기법을 지원하는 IP 주소 정규식 (예: 192.168.1.1 또는 192.168.1.0/24)
@@ -72,14 +72,32 @@ class NetworkPopup(QDialog):
             return False
 
     def on_confirm(self):
-        port = self.ui.portRangeLane.text()
-        ip = self.ui.ipLane.text()
-        if not port.isdigit():
-            QMessageBox.warning(self, "입력 오류", "포트는 숫자만 입력하세요.")
-            return
-        if not (0 <= int(port) <= 65535):
-            QMessageBox.warning(self, "입력 오류", "포트는 0~65535 사이여야 합니다.")
-            return
+        port = self.ui.portRangeLane.text().strip()
+        ip = self.ui.ipLane.text().strip()
+        if not port:
+            port = "*"
+
+        # 포트 검증
+        if port != "*":
+            # 범위 포트일 경우
+            if "-" in port:
+                try:
+                    start, end = map(int, port.split("-"))
+                    if not (0 <= start <= 65535 and 0 <= end <= 65535 and start <= end):
+                        QMessageBox.warning(self, "입력 오류", "올바른 포트 범위를 입력하세요. (예: 80-443)")
+                        return
+                except ValueError:
+                    QMessageBox.warning(self, "입력 오류", "포트 범위 형식이 잘못되었습니다. (예: 80-443)")
+                    return
+            else:
+                # 단일 포트
+                if not port.isdigit():
+                    QMessageBox.warning(self, "입력 오류", "포트는 숫자나 *만 입력하세요.")
+                    return
+                port_num = int(port)
+                if not (0 <= port_num <= 65535):
+                    QMessageBox.warning(self, "입력 오류", "포트는 0~65535 사이여야 합니다.")
+                    return
         
         # CIDR 표기법 지원 IP 주소 검증
         if not self.validate_ip_cidr(ip):

@@ -176,7 +176,7 @@ class Page2(QWidget):
         for row in range(model.rowCount()):
             model.setItem(row, 0, QStandardItem(str(row + 1)))
         self.save_to_csvs()
-        self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), ip, port, "", "", f"사용자 {"차단" if self.current_mode == "blocked" else "허용"} 규칙 삭제 - {ip}:{port}({protocol})"])
+        self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), ip, port, "", "", f"사용자 {'차단' if self.current_mode == 'blocked' else '허용'} 규칙 삭제 - {ip}:{port}({protocol})"])
 
     def edit_selected_row(self, index):
         if not index.isValid():
@@ -204,7 +204,7 @@ class Page2(QWidget):
             for col, value in enumerate(new_data):
                 model.setItem(row, col + 1, QStandardItem(value))
             self.save_to_csvs()
-            self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), model.item(row, 3).text(), model.item(row, 2).text(), "", "", f"사용자 {"차단" if self.current_mode == "blocked" else "허용"} 규칙 수정 - {model.item(row, 3).text()}:{model.item(row, 2).text()}({model.item(row, 1).text()})"])
+            self.page3_instance.add_log_entry(["사용자 활동", datetime.now().strftime("%H:%M:%S"), model.item(row, 3).text(), model.item(row, 2).text(), "", "", f"사용자 {'차단' if self.current_mode == 'blocked' else '허용'} 규칙 수정 - {model.item(row, 3).text()}:{model.item(row, 2).text()}({model.item(row, 1).text()})"])
 
 
 def get_pfctl_rules_file():
