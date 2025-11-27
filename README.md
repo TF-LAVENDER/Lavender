@@ -17,8 +17,6 @@ Lavender팀은 이러한 문제점을 인식하고, **전문 지식이 없어도
 
 ### **목표**
 
-<img width="640" height="361" alt="image" src="https://github.com/user-attachments/assets/087c366d-5e9d-40e9-ba78-a60caa737875" />
-
 
 Lavender팀은 Netchury를 개발하며 세 가지 핵심 목표를 중심으로 설계하였습니다.
 
